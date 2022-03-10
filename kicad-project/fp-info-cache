@@ -1,4 +1,11 @@
-19407926323055476
+19407926323055193
+AA_PPSE_2021
+RP2040
+
+
+0
+60
+57
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -83026,10 +83033,3 @@ varistor SIOV
 0
 2
 2
-footprints
-RP2040
-
-
-0
-60
-57

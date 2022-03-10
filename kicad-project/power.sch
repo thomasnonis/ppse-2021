@@ -1,0 +1,221 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 4 4
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Device:D_Schottky D?
+U 1 1 622D10BF
+P 1400 1050
+F 0 "D?" H 1400 833 50  0000 C CNN
+F 1 "D_Schottky" H 1400 924 50  0000 C CNN
+F 2 "" H 1400 1050 50  0001 C CNN
+F 3 "~" H 1400 1050 50  0001 C CNN
+	1    1400 1050
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:D_Schottky D?
+U 1 1 622D1B65
+P 1400 1600
+F 0 "D?" H 1400 1383 50  0000 C CNN
+F 1 "D_Schottky" H 1400 1474 50  0000 C CNN
+F 2 "" H 1400 1600 50  0001 C CNN
+F 3 "~" H 1400 1600 50  0001 C CNN
+	1    1400 1600
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	1550 1050 1800 1050
+Wire Wire Line
+	1800 1050 1800 1600
+Wire Wire Line
+	1800 1600 1550 1600
+$Comp
+L Device:Battery_Cell BT?
+U 1 1 622D208E
+P 800 2050
+F 0 "BT?" H 918 2146 50  0000 L CNN
+F 1 "Battery_Cell" H 918 2055 50  0000 L CNN
+F 2 "" V 800 2110 50  0001 C CNN
+F 3 "~" V 800 2110 50  0001 C CNN
+	1    800  2050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	800  1850 800  1600
+Wire Wire Line
+	800  1600 1250 1600
+Text Label 800  1600 0    50   ~ 0
+V_BAT
+Wire Wire Line
+	1250 1050 800  1050
+Text Label 800  1050 0    50   ~ 0
+V_USB
+$Comp
+L power:GND #PWR?
+U 1 1 622D2D23
+P 800 2150
+F 0 "#PWR?" H 800 1900 50  0001 C CNN
+F 1 "GND" H 805 1977 50  0000 C CNN
+F 2 "" H 800 2150 50  0001 C CNN
+F 3 "" H 800 2150 50  0001 C CNN
+	1    800  2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:D_Schottky D?
+U 1 1 622D3344
+P 1600 2650
+F 0 "D?" H 1600 2433 50  0000 C CNN
+F 1 "D_Schottky" H 1600 2524 50  0000 C CNN
+F 2 "" H 1600 2650 50  0001 C CNN
+F 3 "~" H 1600 2650 50  0001 C CNN
+	1    1600 2650
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	1450 2650 1350 2650
+$Comp
+L power:+24V #PWR?
+U 1 1 622D3576
+P 800 2650
+F 0 "#PWR?" H 800 2500 50  0001 C CNN
+F 1 "+24V" H 815 2823 50  0000 C CNN
+F 2 "" H 800 2650 50  0001 C CNN
+F 3 "" H 800 2650 50  0001 C CNN
+	1    800  2650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1800 1600 1800 2650
+Wire Wire Line
+	1800 2650 1750 2650
+Connection ~ 1800 1600
+Text Notes 2600 1050 0    50   ~ 0
+MP2322 Buck
+$Comp
+L Connector_Generic:Conn_01x02 J?
+U 1 1 622D5A89
+P 1050 3900
+F 0 "J?" H 1000 3600 50  0000 C CNN
+F 1 "Conn_01x02" H 1200 3700 50  0000 C CNN
+F 2 "" H 1050 3900 50  0001 C CNN
+F 3 "~" H 1050 3900 50  0001 C CNN
+	1    1050 3900
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 622D644F
+P 1250 3900
+F 0 "#PWR?" H 1250 3650 50  0001 C CNN
+F 1 "GND" H 1255 3727 50  0000 C CNN
+F 2 "" H 1250 3900 50  0001 C CNN
+F 3 "" H 1250 3900 50  0001 C CNN
+	1    1250 3900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1800 1050 2600 1050
+Connection ~ 1800 1050
+Wire Wire Line
+	3100 1050 3650 1050
+Wire Wire Line
+	1250 3800 1500 3800
+Text Label 1500 3800 2    50   ~ 0
+V_BAT
+$Comp
+L Connector_Generic:Conn_01x02 J?
+U 1 1 622D9060
+P 1050 4600
+F 0 "J?" H 1000 4300 50  0000 C CNN
+F 1 "Conn_01x02" H 1200 4400 50  0000 C CNN
+F 2 "" H 1050 4600 50  0001 C CNN
+F 3 "~" H 1050 4600 50  0001 C CNN
+	1    1050 4600
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 622D92BF
+P 1250 4600
+F 0 "#PWR?" H 1250 4350 50  0001 C CNN
+F 1 "GND" H 1255 4427 50  0000 C CNN
+F 2 "" H 1250 4600 50  0001 C CNN
+F 3 "" H 1250 4600 50  0001 C CNN
+	1    1250 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+24V #PWR?
+U 1 1 622D9709
+P 1250 4500
+F 0 "#PWR?" H 1250 4350 50  0001 C CNN
+F 1 "+24V" H 1265 4673 50  0000 C CNN
+F 2 "" H 1250 4500 50  0001 C CNN
+F 3 "" H 1250 4500 50  0001 C CNN
+	1    1250 4500
+	1    0    0    -1  
+$EndComp
+Text Notes 1750 3900 2    50   ~ 0
+JST
+Text Notes 2050 4550 2    50   ~ 0
+Screw Conn
+Text Notes 3600 2700 2    50   ~ 0
+S1B (SMD version of 1N4007) works too
+Text Notes 3050 1600 2    50   ~ 0
+Schottky\n\nPMEG 3020, 3040, 4030\n\nSK14 SK13 SK16 SK18
+$Comp
+L Device:Polyfuse F?
+U 1 1 622DB47A
+P 1100 2650
+F 0 "F?" V 875 2650 50  0000 C CNN
+F 1 "Polyfuse" V 966 2650 50  0000 C CNN
+F 2 "" H 1150 2450 50  0001 L CNN
+F 3 "~" H 1100 2650 50  0001 C CNN
+	1    1100 2650
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	950  2650 800  2650
+$Comp
+L Diode:1.5KExxA D?
+U 1 1 622DDF1F
+P 1350 2900
+F 0 "D?" V 1304 2980 50  0000 L CNN
+F 1 "1.5KExxA" V 1395 2980 50  0000 L CNN
+F 2 "Diode_THT:D_DO-201AE_P15.24mm_Horizontal" H 1350 2700 50  0001 C CNN
+F 3 "https://www.vishay.com/docs/88301/15ke.pdf" H 1300 2900 50  0001 C CNN
+	1    1350 2900
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1350 2750 1350 2650
+Connection ~ 1350 2650
+Wire Wire Line
+	1350 2650 1250 2650
+$Comp
+L power:GND #PWR?
+U 1 1 622DEBB3
+P 1350 3050
+F 0 "#PWR?" H 1350 2800 50  0001 C CNN
+F 1 "GND" H 1355 2877 50  0000 C CNN
+F 2 "" H 1350 3050 50  0001 C CNN
+F 3 "" H 1350 3050 50  0001 C CNN
+	1    1350 3050
+	1    0    0    -1  
+$EndComp
+Text Notes 1950 3150 2    50   ~ 0
+SMA524A
+$EndSCHEMATC

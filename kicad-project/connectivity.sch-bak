@@ -1,0 +1,95 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 3 4
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L pspice:MPMOS M?
+U 1 1 622B44AF
+P 5400 2450
+F 0 "M?" V 5825 2450 50  0000 C CNN
+F 1 "MPMOS" V 5734 2450 50  0000 C CNN
+F 2 "" H 5400 2450 50  0001 C CNN
+F 3 "~" H 5400 2450 50  0001 C CNN
+	1    5400 2450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 622B4C68
+P 5050 2650
+F 0 "R?" V 4843 2650 50  0000 C CNN
+F 1 "R" V 4934 2650 50  0000 C CNN
+F 2 "" V 4980 2650 50  0001 C CNN
+F 3 "~" H 5050 2650 50  0001 C CNN
+	1    5050 2650
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5200 2650 5400 2650
+Wire Wire Line
+	4800 2650 4800 2350
+Wire Wire Line
+	4800 2350 5200 2350
+Wire Wire Line
+	4800 2650 4900 2650
+$Comp
+L power:+3V3 #PWR?
+U 1 1 622B5D41
+P 4800 2350
+F 0 "#PWR?" H 4800 2200 50  0001 C CNN
+F 1 "+3V3" H 4815 2523 50  0000 C CNN
+F 2 "" H 4800 2350 50  0001 C CNN
+F 3 "" H 4800 2350 50  0001 C CNN
+	1    4800 2350
+	1    0    0    -1  
+$EndComp
+Connection ~ 4800 2350
+Wire Wire Line
+	5600 2350 6250 2350
+Text Label 6250 2350 2    50   ~ 0
+GPS_VDD
+$Comp
+L power:GND #PWR?
+U 1 1 622B65CC
+P 5400 3150
+F 0 "#PWR?" H 5400 2900 50  0001 C CNN
+F 1 "GND" H 5405 2977 50  0000 C CNN
+F 2 "" H 5400 3150 50  0001 C CNN
+F 3 "" H 5400 3150 50  0001 C CNN
+	1    5400 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Transistor_BJT:DTA214Y Q?
+U 1 1 622BA047
+P 5300 2900
+F 0 "Q?" H 5488 2946 50  0000 L CNN
+F 1 "DTA214Y" H 5488 2855 50  0000 L CNN
+F 2 "" H 5300 2900 50  0001 L CNN
+F 3 "" H 5300 2900 50  0001 L CNN
+	1    5300 2900
+	1    0    0    -1  
+$EndComp
+Text Notes 7400 2750 2    50   ~ 0
+Componenti a caso, solo per topologia
+Wire Wire Line
+	4650 2900 5050 2900
+Text Label 4650 2900 0    50   ~ 0
+GPS_EN
+Wire Wire Line
+	5400 2700 5400 2650
+Connection ~ 5400 2650
+Wire Wire Line
+	5400 3100 5400 3150
+$EndSCHEMATC
