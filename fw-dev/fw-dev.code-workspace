@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"timer.h": "c",
+			"clocks.h": "c",
+			"*.pio": "c"
+		}
+	}
+}
