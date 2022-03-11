@@ -27,7 +27,18 @@
 # To research
 
 - RMII (Ethernet)
-- Search where to buy the RT5150B Buck Boost on the Rpi Pico
+- Search where to buy the RT6150B Buck Boost on the Rpi Pico
+
+Modello non disponibile da nessuna parte. Esempi di alternative su farnell:
+
+[Farnell](https://it.farnell.com/w/c/semiconduttori-circuiti-integrati/circuiti-integrati-di-gestione-di-potenza-pmic/regolatori-di-tensione/regolatori-switching-fissi-dc-dc?tensione-di-ingresso-min=3v|3.3v&tensione-di-ingresso-max=36v|45v&tensione-di-uscita-nom-=3.3v&range=inc-in-stock)
+
+| Device | In range | Out range | Out current | URL |
+|---|---|---|---|---|
+| MPQ4313 | 3.3 - 45 | 3.3V, 5V fixed | 3A | [datasheet](https://www.farnell.com/datasheets/3183543.pdf) | 
+| MAX2040x | 3.0 - 36 | 0.8 - 10 | 4-8A | [datasheet](https://www.farnell.com/datasheets/3497518.pdf) | 
+| MAX20004/6/8 | 3.0 - 36 | 1 - 5 | 4/6/8A | [datasheet](https://www.farnell.com/datasheets/3108373.pdf) | 
+| MPQ9840 | 3.3 - 36 | ? | 3.5A | [datasheet](https://www.farnell.com/datasheets/3380075.pdf) | 
 
 # Peripherals
 

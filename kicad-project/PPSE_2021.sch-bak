@@ -31,4 +31,10 @@ U 622D0E2D
 F0 "Power" 50
 F1 "power.sch" 50
 $EndSheet
+Text Notes 5450 2850 0    79   ~ 16
+CONNECTIVITY
+Text Notes 5350 5100 0    79   ~ 16
+POWER
+Text Notes 2600 3050 0    79   ~ 16
+Control
 $EndSCHEMATC
