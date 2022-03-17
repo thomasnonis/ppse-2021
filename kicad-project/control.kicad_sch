@@ -1339,7 +1339,7 @@
     (uuid 00000000-0000-0000-0000-00006222e3b7)
     (property "Reference" "U1" (id 0) (at 132.08 138.43 0))
     (property "Value" "RP2040" (id 1) (at 54.61 38.1 0))
-    (property "Footprint" "AA_PSE_2021:RP2040" (id 2) (at 139.7 60.96 0)
+    (property "Footprint" "AA_PPSE_2021:RP2040-Hand-Solder" (id 2) (at 139.7 60.96 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "" (id 3) (at 139.7 60.96 0)

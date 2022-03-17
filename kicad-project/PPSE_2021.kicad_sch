@@ -375,7 +375,7 @@
       (reference "SW1") (unit 1) (value "RST_SW") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00006222e27b/00000000-0000-0000-0000-00006222e3b7"
-      (reference "U1") (unit 1) (value "RP2040") (footprint "AA_PSE_2021:RP2040")
+      (reference "U1") (unit 1) (value "RP2040") (footprint "AA_PPSE_2021:RP2040-Hand-Solder")
     )
     (path "/00000000-0000-0000-0000-0000622b4158/00000000-0000-0000-0000-0000622d572d"
       (reference "U?") (unit 1) (value "SAM-M8Q") (footprint "AA_PPSE_2021:SAM-M8Q")

@@ -771,7 +771,7 @@
     (uuid f28e56e7-283b-4b9a-ae27-95e89770fbf8)
   )
 
-  (symbol (lib_id "Device:C") (at 215.9 38.1 0)
+  (symbol (lib_id "Device:C") (at 215.9 38.1 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfddb)
     (property "Reference" "C?" (id 0) (at 218.821 36.9316 0)
@@ -790,7 +790,7 @@
     (pin "2" (uuid 10a350d6-8422-43d7-ac4d-95eefa29a37b))
   )
 
-  (symbol (lib_id "power:GND") (at 215.9 41.91 0)
+  (symbol (lib_id "power:GND") (at 215.9 41.91 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfde1)
     (property "Reference" "#PWR?" (id 0) (at 215.9 48.26 0)
@@ -806,7 +806,7 @@
     (pin "1" (uuid 7c499df9-f05a-41de-aad2-d93480d35509))
   )
 
-  (symbol (lib_id "power:+3V3") (at 215.9 34.29 0)
+  (symbol (lib_id "power:+3V3") (at 215.9 34.29 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfde7)
     (property "Reference" "#PWR?" (id 0) (at 215.9 38.1 0)
@@ -822,7 +822,7 @@
     (pin "1" (uuid ad2eb344-17b4-41ba-ac02-625fb368fbf0))
   )
 
-  (symbol (lib_id "Device:C") (at 227.33 38.1 0)
+  (symbol (lib_id "Device:C") (at 227.33 38.1 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfded)
     (property "Reference" "C?" (id 0) (at 230.251 36.9316 0)
@@ -841,7 +841,7 @@
     (pin "2" (uuid f9074c0c-ee55-4431-984a-b8bfe2aef0f3))
   )
 
-  (symbol (lib_id "power:GND") (at 227.33 41.91 0)
+  (symbol (lib_id "power:GND") (at 227.33 41.91 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfdf3)
     (property "Reference" "#PWR?" (id 0) (at 227.33 48.26 0)
@@ -857,7 +857,7 @@
     (pin "1" (uuid 6bf623fa-efbf-41e3-8787-c843a2fe130c))
   )
 
-  (symbol (lib_id "power:+3V3") (at 227.33 34.29 0)
+  (symbol (lib_id "power:+3V3") (at 227.33 34.29 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfdf9)
     (property "Reference" "#PWR?" (id 0) (at 227.33 38.1 0)
@@ -873,7 +873,7 @@
     (pin "1" (uuid 978487bd-ee30-4924-97b3-aebd4b5ef373))
   )
 
-  (symbol (lib_id "Device:C") (at 238.76 38.1 0)
+  (symbol (lib_id "Device:C") (at 238.76 38.1 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfdff)
     (property "Reference" "C?" (id 0) (at 241.681 36.9316 0)
@@ -892,7 +892,7 @@
     (pin "2" (uuid fa76264f-7601-4301-9d59-d4826eaeff26))
   )
 
-  (symbol (lib_id "power:GND") (at 238.76 41.91 0)
+  (symbol (lib_id "power:GND") (at 238.76 41.91 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe05)
     (property "Reference" "#PWR?" (id 0) (at 238.76 48.26 0)
@@ -908,7 +908,7 @@
     (pin "1" (uuid f326c0d3-9b72-4bfb-8c2b-1723cf1fcab8))
   )
 
-  (symbol (lib_id "power:+3V3") (at 238.76 34.29 0)
+  (symbol (lib_id "power:+3V3") (at 238.76 34.29 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe0b)
     (property "Reference" "#PWR?" (id 0) (at 238.76 38.1 0)
@@ -924,7 +924,7 @@
     (pin "1" (uuid 84d19078-b280-4d1d-a5d9-dcff48e8c1a7))
   )
 
-  (symbol (lib_id "Device:C") (at 250.19 38.1 0)
+  (symbol (lib_id "Device:C") (at 250.19 38.1 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe11)
     (property "Reference" "C?" (id 0) (at 253.111 36.9316 0)
@@ -943,7 +943,7 @@
     (pin "2" (uuid 019d3651-b04b-45d0-868f-186c00dc35e3))
   )
 
-  (symbol (lib_id "power:GND") (at 250.19 41.91 0)
+  (symbol (lib_id "power:GND") (at 250.19 41.91 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe17)
     (property "Reference" "#PWR?" (id 0) (at 250.19 48.26 0)
@@ -959,7 +959,7 @@
     (pin "1" (uuid e1654fb6-f26a-4a4a-8f4b-6535612db10d))
   )
 
-  (symbol (lib_id "power:+3V3") (at 250.19 34.29 0)
+  (symbol (lib_id "power:+3V3") (at 250.19 34.29 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe1d)
     (property "Reference" "#PWR?" (id 0) (at 250.19 38.1 0)
@@ -975,7 +975,7 @@
     (pin "1" (uuid fd4bbdfe-7981-45bc-8ff1-0f723de426a9))
   )
 
-  (symbol (lib_id "Device:C") (at 181.61 67.31 0)
+  (symbol (lib_id "Device:C") (at 181.61 67.31 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe23)
     (property "Reference" "C?" (id 0) (at 184.531 66.1416 0)
@@ -994,7 +994,7 @@
     (pin "2" (uuid 52ff7738-5fff-464c-aba1-3cc0be5b94aa))
   )
 
-  (symbol (lib_id "power:GND") (at 181.61 71.12 0)
+  (symbol (lib_id "power:GND") (at 181.61 71.12 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe29)
     (property "Reference" "#PWR?" (id 0) (at 181.61 77.47 0)
@@ -1010,7 +1010,7 @@
     (pin "1" (uuid 2d3731a3-4a0c-45f3-a2a9-7fdb3e01c7e7))
   )
 
-  (symbol (lib_id "power:+3V3") (at 181.61 63.5 0)
+  (symbol (lib_id "power:+3V3") (at 181.61 63.5 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe2f)
     (property "Reference" "#PWR?" (id 0) (at 181.61 67.31 0)
@@ -1026,7 +1026,7 @@
     (pin "1" (uuid 55bb2626-c12f-450d-8b02-74a72aa541df))
   )
 
-  (symbol (lib_id "Device:C") (at 181.61 38.1 0)
+  (symbol (lib_id "Device:C") (at 181.61 38.1 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe35)
     (property "Reference" "C?" (id 0) (at 184.531 36.9316 0)
@@ -1045,7 +1045,7 @@
     (pin "2" (uuid 95a84ac1-d3a3-4494-a7b8-0e0d15dea50b))
   )
 
-  (symbol (lib_id "power:GND") (at 181.61 41.91 0)
+  (symbol (lib_id "power:GND") (at 181.61 41.91 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe3b)
     (property "Reference" "#PWR?" (id 0) (at 181.61 48.26 0)
@@ -1061,7 +1061,7 @@
     (pin "1" (uuid 716d32e1-1386-4604-847c-a18b9d9cdc41))
   )
 
-  (symbol (lib_id "power:+3V3") (at 181.61 34.29 0)
+  (symbol (lib_id "power:+3V3") (at 181.61 34.29 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe41)
     (property "Reference" "#PWR?" (id 0) (at 181.61 38.1 0)
@@ -1077,7 +1077,7 @@
     (pin "1" (uuid 3ddcd53a-57b9-44dc-b5f2-09936502b83e))
   )
 
-  (symbol (lib_id "Device:C") (at 193.04 38.1 0)
+  (symbol (lib_id "Device:C") (at 193.04 38.1 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe47)
     (property "Reference" "C?" (id 0) (at 195.961 36.9316 0)
@@ -1096,7 +1096,7 @@
     (pin "2" (uuid 70ec5f92-c51c-461e-badf-47ed70d507dd))
   )
 
-  (symbol (lib_id "power:GND") (at 193.04 41.91 0)
+  (symbol (lib_id "power:GND") (at 193.04 41.91 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe4d)
     (property "Reference" "#PWR?" (id 0) (at 193.04 48.26 0)
@@ -1112,7 +1112,7 @@
     (pin "1" (uuid b59bc9f6-cec9-47e8-a50a-bda4634d9452))
   )
 
-  (symbol (lib_id "power:+3V3") (at 193.04 34.29 0)
+  (symbol (lib_id "power:+3V3") (at 193.04 34.29 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe53)
     (property "Reference" "#PWR?" (id 0) (at 193.04 38.1 0)
@@ -1128,7 +1128,7 @@
     (pin "1" (uuid 14a943bc-fbfe-4f2e-8c86-9cc162214958))
   )
 
-  (symbol (lib_id "Device:C") (at 204.47 38.1 0)
+  (symbol (lib_id "Device:C") (at 204.47 38.1 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe59)
     (property "Reference" "C?" (id 0) (at 207.391 36.9316 0)
@@ -1147,7 +1147,7 @@
     (pin "2" (uuid 8e72f443-e6cc-4d2a-8965-08001d5a4bc6))
   )
 
-  (symbol (lib_id "power:GND") (at 204.47 41.91 0)
+  (symbol (lib_id "power:GND") (at 204.47 41.91 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe5f)
     (property "Reference" "#PWR?" (id 0) (at 204.47 48.26 0)
@@ -1163,7 +1163,7 @@
     (pin "1" (uuid b9314991-c54c-4740-a892-7244732c0b63))
   )
 
-  (symbol (lib_id "power:+3V3") (at 204.47 34.29 0)
+  (symbol (lib_id "power:+3V3") (at 204.47 34.29 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe65)
     (property "Reference" "#PWR?" (id 0) (at 204.47 38.1 0)
@@ -1179,7 +1179,7 @@
     (pin "1" (uuid cd38167c-9406-4ccf-8ba5-aaace03a2edb))
   )
 
-  (symbol (lib_id "Device:C") (at 261.62 38.1 0)
+  (symbol (lib_id "Device:C") (at 261.62 38.1 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe6b)
     (property "Reference" "C?" (id 0) (at 264.541 36.9316 0)
@@ -1198,7 +1198,7 @@
     (pin "2" (uuid fde71df8-7d6d-48d0-bcf0-7d08110ca0c6))
   )
 
-  (symbol (lib_id "power:GND") (at 261.62 41.91 0)
+  (symbol (lib_id "power:GND") (at 261.62 41.91 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe71)
     (property "Reference" "#PWR?" (id 0) (at 261.62 48.26 0)
@@ -1214,7 +1214,7 @@
     (pin "1" (uuid 190ee6e8-a762-4baf-b6cb-98394d009d79))
   )
 
-  (symbol (lib_id "Device:C") (at 273.05 38.1 0)
+  (symbol (lib_id "Device:C") (at 273.05 38.1 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe77)
     (property "Reference" "C?" (id 0) (at 275.971 36.9316 0)
@@ -1233,7 +1233,7 @@
     (pin "2" (uuid 1d236c36-4fb7-449e-a5ef-ba95fa00c8a2))
   )
 
-  (symbol (lib_id "power:GND") (at 273.05 41.91 0)
+  (symbol (lib_id "power:GND") (at 273.05 41.91 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe7d)
     (property "Reference" "#PWR?" (id 0) (at 273.05 48.26 0)
@@ -1249,7 +1249,7 @@
     (pin "1" (uuid 2e921298-701b-47b4-bfe7-a5c7d668c7c3))
   )
 
-  (symbol (lib_id "Device:C") (at 191.77 67.31 0)
+  (symbol (lib_id "Device:C") (at 191.77 67.31 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe83)
     (property "Reference" "C?" (id 0) (at 194.691 66.1416 0)
@@ -1268,7 +1268,7 @@
     (pin "2" (uuid b3a983c4-297a-4a5f-98a5-1f2b72c171f4))
   )
 
-  (symbol (lib_id "power:GND") (at 191.77 71.12 0)
+  (symbol (lib_id "power:GND") (at 191.77 71.12 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe89)
     (property "Reference" "#PWR?" (id 0) (at 191.77 77.47 0)
@@ -1284,7 +1284,7 @@
     (pin "1" (uuid 99f890c1-5f98-42e1-987c-bd64ef24c845))
   )
 
-  (symbol (lib_id "power:+1V1") (at 261.62 34.29 0)
+  (symbol (lib_id "power:+1V1") (at 261.62 34.29 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe8f)
     (property "Reference" "#PWR?" (id 0) (at 261.62 38.1 0)
@@ -1300,7 +1300,7 @@
     (pin "1" (uuid 3be67ebf-6874-4a37-9de4-67284b3f4778))
   )
 
-  (symbol (lib_id "power:+1V1") (at 273.05 34.29 0)
+  (symbol (lib_id "power:+1V1") (at 273.05 34.29 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe95)
     (property "Reference" "#PWR?" (id 0) (at 273.05 38.1 0)
@@ -1316,7 +1316,7 @@
     (pin "1" (uuid 620bf9ed-970d-4032-8838-a4543ad12b07))
   )
 
-  (symbol (lib_id "power:+1V1") (at 191.77 63.5 0)
+  (symbol (lib_id "power:+1V1") (at 191.77 63.5 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000622bfe9b)
     (property "Reference" "#PWR?" (id 0) (at 191.77 67.31 0)
