@@ -18,12 +18,12 @@ Following are the prefix conventions for this repository.
 - `notes:` for lecture notes
 - `chore:` for general tasks (file management, moving stuff around, ...)
 
-:x: `git commit -m "fw: add uart implementation to gps driver"`  
-:heavy_check_mark: `git commit -m "Added some features to code"`
+:x: `git commit -m "Added some features to code"`  
+:heavy_check_mark: `git commit -m "fw: add uart implementation to gps driver"`
 
 ## File naming
 
 All files must have no spaces and should be lowercase.
 
 :x: Name of file.ext  
-:heavy_check_mark: name-of-file.ext
+:heavy_check_mark: name-of-file.ext 
