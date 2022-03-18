@@ -269,17 +269,17 @@
     (path "/00000000-0000-0000-0000-00006222e27b/00000000-0000-0000-0000-0000622fb24c"
       (reference "#PWR?") (unit 1) (value "+1V1") (footprint "")
     )
+    (path "/00000000-0000-0000-0000-00006222e27b/b8bf4972-8d6c-46cf-a5f4-aa6807c0b38f"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-00006222e27b/d2bff82d-d938-4c52-8d22-d52677ea090d"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+    )
     (path "/00000000-0000-0000-0000-00006222e27b/00000000-0000-0000-0000-00006225ff2d"
       (reference "27,4") (unit 1) (value "R") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/00000000-0000-0000-0000-00006222e27b/00000000-0000-0000-0000-0000622604f7"
       (reference "27,4") (unit 1) (value "R") (footprint "Resistor_SMD:R_0603_1608Metric")
-    )
-    (path "/00000000-0000-0000-0000-00006222e27b/00000000-0000-0000-0000-00006229fa2b"
-      (reference "C?") (unit 1) (value "C") (footprint "")
-    )
-    (path "/00000000-0000-0000-0000-00006222e27b/00000000-0000-0000-0000-0000622a02c7"
-      (reference "C?") (unit 1) (value "C") (footprint "")
     )
     (path "/00000000-0000-0000-0000-0000622b4158/00000000-0000-0000-0000-0000622bbccf"
       (reference "C?") (unit 1) (value "C") (footprint "")
@@ -319,6 +319,12 @@
     )
     (path "/00000000-0000-0000-0000-0000622d0e2d/00000000-0000-0000-0000-0000622bfe83"
       (reference "C?") (unit 1) (value "1u") (footprint "Capacitor_SMD:C_0603_1608Metric")
+    )
+    (path "/00000000-0000-0000-0000-00006222e27b/395d9032-1866-4257-b5f0-be7ac403008f"
+      (reference "C?") (unit 1) (value "C") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-00006222e27b/3da7e419-f555-43e5-a254-92f4766f8586"
+      (reference "C?") (unit 1) (value "C") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00006222e27b/00000000-0000-0000-0000-0000622bca88"
       (reference "D?") (unit 1) (value "LED_RGB") (footprint "")
@@ -383,8 +389,8 @@
     (path "/00000000-0000-0000-0000-0000622d0e2d/00000000-0000-0000-0000-0000622c69c2"
       (reference "V?") (unit 1) (value "+VUSB") (footprint "")
     )
-    (path "/00000000-0000-0000-0000-00006222e27b/00000000-0000-0000-0000-00006229d1ea"
-      (reference "Y?") (unit 1) (value "Crystal_GND23") (footprint "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm")
+    (path "/00000000-0000-0000-0000-00006222e27b/b0aa0484-92ab-41af-b89f-b78a70ba8ef0"
+      (reference "Y?") (unit 1) (value "Crystal_GND23") (footprint "")
     )
   )
 )
