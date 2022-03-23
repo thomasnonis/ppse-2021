@@ -1,5 +1,6 @@
 # Abstract
-This is the repository for SALMO, the Solar Azimuth and Longitude Motorized lOcator. It is a PCB used for driving a tracking solar panel system, using GPS location and a MPPT algorithm to maximise the incident power.
+This is the repository for SALMO, the Solar Azimuth and Longitude Motorized lOcator. It is a PCB used for driving a tracking solar panel system, using GPS location and a MPPT algorithm to maximise the incident power.  
+The official name of the project is `PPS2021_SUN_TRK`
 
 # Repo structure & guidelines
 
