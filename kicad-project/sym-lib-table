@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "PPSE_2021")(type "KiCad")(uri "${KIPRJMOD}/lib/symbols/PPSE_2021.kicad_sym")(options "")(descr ""))
+)
