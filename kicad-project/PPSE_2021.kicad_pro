@@ -425,6 +425,10 @@
     [
       "00000000-0000-0000-0000-0000622b4158",
       "Connectivity"
+    ],
+    [
+      "e92ed148-d831-4ee6-93c4-e593d47b2e2f",
+      "Sensing"
     ]
   ],
   "text_variables": {}

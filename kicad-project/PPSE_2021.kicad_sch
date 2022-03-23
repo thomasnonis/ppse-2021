@@ -12,51 +12,67 @@
   )
 
 
-  (text "CONNECTIVITY" (at 138.43 72.39 0)
+  (text "CONNECTIVITY" (at 224.79 60.96 0)
     (effects (font (size 2.0066 2.0066) (thickness 0.4013) bold) (justify left bottom))
     (uuid 101ef598-601d-400e-9ef6-d655fbb1dbfa)
   )
-  (text "Control" (at 66.04 77.47 0)
+  (text "SENSING" (at 228.6 127 0)
+    (effects (font (size 2.0066 2.0066) (thickness 0.4013) bold) (justify left bottom))
+    (uuid 12838ac1-bc65-4c88-9043-ac30158b837e)
+  )
+  (text "CONTROL" (at 132.08 92.71 0)
     (effects (font (size 2.0066 2.0066) (thickness 0.4013) bold) (justify left bottom))
     (uuid 6781326c-6e0d-4753-8f28-0f5c687e01f9)
   )
-  (text "POWER" (at 135.89 129.54 0)
+  (text "POWER" (at 40.005 66.04 0)
     (effects (font (size 2.0066 2.0066) (thickness 0.4013) bold) (justify left bottom))
     (uuid c8029a4c-945d-42ca-871a-dd73ff50a1a3)
   )
 
-  (sheet (at 50.8 39.37) (size 45.72 78.74) (fields_autoplaced)
+  (sheet (at 108.585 40.005) (size 60.96 104.775) (fields_autoplaced)
     (stroke (width 0) (type solid) (color 0 0 0 0))
     (fill (color 0 0 0 0.0000))
     (uuid 00000000-0000-0000-0000-00006222e27b)
-    (property "Sheet name" "Control" (id 0) (at 50.8 38.6584 0)
+    (property "Sheet name" "Control" (id 0) (at 108.585 39.2934 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
     )
-    (property "Sheet file" "control.kicad_sch" (id 1) (at 50.8 118.6946 0)
+    (property "Sheet file" "control.kicad_sch" (id 1) (at 108.585 145.3646 0)
       (effects (font (size 1.27 1.27)) (justify left top))
     )
   )
 
-  (sheet (at 123.19 53.34) (size 53.34 36.83) (fields_autoplaced)
+  (sheet (at 214.63 31.75) (size 41.275 57.785) (fields_autoplaced)
     (stroke (width 0) (type solid) (color 0 0 0 0))
     (fill (color 0 0 0 0.0000))
     (uuid 00000000-0000-0000-0000-0000622b4158)
-    (property "Sheet name" "Connectivity" (id 0) (at 123.19 52.6284 0)
+    (property "Sheet name" "Connectivity" (id 0) (at 214.63 31.0384 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
     )
-    (property "Sheet file" "connectivity.kicad_sch" (id 1) (at 123.19 90.7546 0)
+    (property "Sheet file" "connectivity.kicad_sch" (id 1) (at 214.63 90.1196 0)
       (effects (font (size 1.27 1.27)) (justify left top))
     )
   )
 
-  (sheet (at 119.38 110.49) (size 39.37 35.56) (fields_autoplaced)
+  (sheet (at 27.305 40.64) (size 37.465 47.625) (fields_autoplaced)
     (stroke (width 0) (type solid) (color 0 0 0 0))
     (fill (color 0 0 0 0.0000))
     (uuid 00000000-0000-0000-0000-0000622d0e2d)
-    (property "Sheet name" "Power" (id 0) (at 119.38 109.7784 0)
+    (property "Sheet name" "Power" (id 0) (at 27.305 39.9284 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
     )
-    (property "Sheet file" "power.kicad_sch" (id 1) (at 119.38 146.6346 0)
+    (property "Sheet file" "power.kicad_sch" (id 1) (at 27.305 88.8496 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+  )
+
+  (sheet (at 214.63 97.155) (size 41.275 57.785) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid) (color 0 0 0 0))
+    (fill (color 0 0 0 0.0000))
+    (uuid e92ed148-d831-4ee6-93c4-e593d47b2e2f)
+    (property "Sheet name" "Sensing" (id 0) (at 214.63 96.4434 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheet file" "sensing.kicad_sch" (id 1) (at 214.63 155.5246 0)
       (effects (font (size 1.27 1.27)) (justify left top))
     )
   )
@@ -66,6 +82,7 @@
     (path "/00000000-0000-0000-0000-00006222e27b" (page "2"))
     (path "/00000000-0000-0000-0000-0000622d0e2d" (page "3"))
     (path "/00000000-0000-0000-0000-0000622b4158" (page "4"))
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f" (page "5"))
   )
 
   (symbol_instances
@@ -198,6 +215,12 @@
     (path "/00000000-0000-0000-0000-00006222e27b/06e22566-4030-4692-ac83-64426da70ef4"
       (reference "#PWR?") (unit 1) (value "+3V3") (footprint "")
     )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/0f8c049a-74aa-49fb-88e0-8100b529cb45"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/178096a9-355f-4b77-b895-9470d785b3ba"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+    )
     (path "/00000000-0000-0000-0000-00006222e27b/18392ba2-c872-4bc7-8742-8d9474d292c4"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
@@ -211,6 +234,9 @@
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-0000622d0e2d/283644c8-e504-4d29-ac28-692c64f7a922"
+      (reference "#PWR?") (unit 1) (value "+3V3") (footprint "")
+    )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/2add4251-7da1-4e81-92e5-4d6bad9b3c37"
       (reference "#PWR?") (unit 1) (value "+3V3") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00006222e27b/3b5b1438-d1d0-4f58-9f29-526d25e48592"
@@ -252,6 +278,9 @@
     (path "/00000000-0000-0000-0000-00006222e27b/ae59fe96-0bfe-469c-8ebd-94bb9de58a81"
       (reference "#PWR?") (unit 1) (value "+3V3") (footprint "")
     )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/b18046a2-5005-4f1e-a713-909235ac1cf4"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+    )
     (path "/00000000-0000-0000-0000-00006222e27b/b1b8f7ab-a25c-4411-a2ae-6a61f24e870f"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
@@ -276,6 +305,9 @@
     (path "/00000000-0000-0000-0000-00006222e27b/d410b46c-f7fd-4361-b9e2-92339d04ec0f"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/d5e7cf8a-fcd8-49f5-bb5b-891a7b7e4c5f"
+      (reference "#PWR?") (unit 1) (value "+3V3") (footprint "")
+    )
     (path "/00000000-0000-0000-0000-0000622d0e2d/da14c723-3458-4fa6-bc5d-30313bed2338"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
@@ -284,6 +316,9 @@
     )
     (path "/00000000-0000-0000-0000-0000622d0e2d/e000128c-b612-4c35-8d07-75a0f0704555"
       (reference "#PWR?") (unit 1) (value "+12V") (footprint "")
+    )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/e0b4cafa-07e3-4fa9-85d2-3fad5b17429e"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00006222e27b/e4a1a699-249b-4fa7-9d26-ace0601b3c82"
       (reference "#PWR?") (unit 1) (value "GND") (footprint "")
@@ -411,6 +446,9 @@
     (path "/00000000-0000-0000-0000-0000622d0e2d/00000000-0000-0000-0000-0000622e83ec"
       (reference "J?") (unit 1) (value "Screw_Terminal_01x02") (footprint "")
     )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/d971ee45-43a3-4243-ac16-a8c40ad35aa9"
+      (reference "J?") (unit 1) (value "Screw_Terminal_01x04") (footprint "")
+    )
     (path "/00000000-0000-0000-0000-00006222e27b/7d84260a-fa22-4d79-8c7a-214c2c72161d"
       (reference "JP?") (unit 1) (value "SolderJumper_2_Open") (footprint "")
     )
@@ -453,11 +491,32 @@
     (path "/00000000-0000-0000-0000-00006222e27b/448bd731-28a3-43a3-b7bd-d73908b0db06"
       (reference "R?") (unit 1) (value "1k") (footprint "")
     )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/4eecb6f5-b080-4f5f-9bcf-d4e05c93c37f"
+      (reference "R?") (unit 1) (value "R") (footprint "")
+    )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/54d69e97-f940-46ae-8662-3a15059a9bdf"
+      (reference "R?") (unit 1) (value "R") (footprint "")
+    )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/77974df4-9826-4ef7-b829-5d6faf385f24"
+      (reference "R?") (unit 1) (value "R") (footprint "")
+    )
     (path "/00000000-0000-0000-0000-00006222e27b/80198411-a019-4296-9154-9c0df7fa049d"
       (reference "R?") (unit 1) (value "1k") (footprint "")
     )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/a739816b-c26a-41f0-b6a4-af8e06388273"
+      (reference "R?") (unit 1) (value "R") (footprint "")
+    )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/c7a7b759-bfd8-4247-969b-3a8d42e65385"
+      (reference "R?") (unit 1) (value "R") (footprint "")
+    )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/cfb676d4-7ad2-4e96-b314-65db38ece868"
+      (reference "R?") (unit 1) (value "R_Shunt") (footprint "")
+    )
     (path "/00000000-0000-0000-0000-0000622d0e2d/e691ce7c-7910-49cf-b230-0ea8e1b30f6e"
       (reference "R?") (unit 1) (value "1k") (footprint "")
+    )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/eb288f72-e17f-441a-a95d-d989994ed43d"
+      (reference "R?") (unit 1) (value "R") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00006222e27b/f6b96e8d-3422-4b74-8627-5d7f566a7ffe"
       (reference "R?") (unit 1) (value "DNP 10k") (footprint "")
@@ -474,8 +533,14 @@
     (path "/00000000-0000-0000-0000-0000622b4158/a9f33099-54d4-4b0e-80ec-129c6d02b3f5"
       (reference "U?") (unit 1) (value "PAM-7Q-0") (footprint "PAM7Q0")
     )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/bc523eca-d9b5-40c2-8f8f-203aeb42c34d"
+      (reference "U?") (unit 1) (value "OPAMP") (footprint "")
+    )
     (path "/00000000-0000-0000-0000-00006222e27b/c9428947-9de7-4ab0-b30d-b8cff1508223"
       (reference "U?") (unit 1) (value "W25Q16JVSS") (footprint "Package_SO:SOIC-8_5.23x5.23mm_P1.27mm")
+    )
+    (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/d90cb12e-ea8c-4cf1-9dce-f67d7a85eea7"
+      (reference "U?") (unit 1) (value "OPAMP") (footprint "")
     )
     (path "/00000000-0000-0000-0000-00006222e27b/b0aa0484-92ab-41af-b89f-b78a70ba8ef0"
       (reference "Y?") (unit 1) (value "Crystal_GND23") (footprint "")
