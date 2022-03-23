@@ -1,3 +1,4 @@
 (sym_lib_table
-  (lib (name "PPSE_2021")(type "KiCad")(uri "${KIPRJMOD}/lib/symbols/PPSE_2021.kicad_sym")(options "")(descr ""))
+  (lib (name "PPSE_2021")(type "KiCad")(uri "${KIPRJMOD}/lib/symbols/PPSE_2021.kicad_sym")(options "")(descr "")(disabled))
+  (lib (name "MPU-9250")(type "KiCad")(uri "${KIPRJMOD}/lib/symbols/MPU-9250.kicad_sym")(options "")(descr ""))
 )
