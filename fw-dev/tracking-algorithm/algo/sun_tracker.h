@@ -1,9 +1,8 @@
 #ifndef __SUN_TRACKER_H
 #define __SUN_TRACKER_H
 
-#include "stdio.h"
-#include "math.h"
-#include <inttypes.h>
+#include <stdio.h>
+#include <math.h>
 
 // Constants:
 #define PI             3.14159265358979323846    // Pi
@@ -12,7 +11,7 @@
 #define R2D            57.2957795130823208768    // Radians to degrees conversion factor
 #define R2H            3.81971863420548805845    // Radians to hours conversion factor
 #define DEG_TO_RAD         PI/180.0                  // Degree to radians
-
+#define RAD_TO_DEG     180.0/PI
 typedef struct Position{
   double jd, ecliptic_coordinates;
   double mean_longitude, mean_anomaly;
@@ -66,7 +65,7 @@ void compute_right_ascension(double ecl_obq, double ec_long,  struct Position* p
 void compute_declination(double ecl_obq, double ec_long,  struct Position* pos);
 
 //local coords
-void compute_gmst(double n, uint8_t hour,  struct Position* pos);
+void compute_gmst(double n, int hour,  struct Position* pos);
 void compute_lmst(double gmst, double east_longitude,  struct Position* pos);
 void compute_hour_angle(double lmst, double right_ascension,  struct Position* pos);
 void compute_elevation_and_azimuth(double lat, double declination, double hour_angle,  struct Position* pos);

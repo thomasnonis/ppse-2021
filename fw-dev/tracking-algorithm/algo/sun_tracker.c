@@ -70,13 +70,13 @@ void compute_declination(double ecl_obq, double ec_long,  struct Position* pos){
 }
 
 /**
- * @brief Compute Greenwich mean sidereal time (gmst)
+ * @brief Compute Greenwich mean sidereal time (gmst) [in hour]
  * 
  * @param n 
  * @param hour 
  * @return double 
  */
-void compute_gmst(double n, uint8_t hour,  struct Position* pos){
+void compute_gmst(double n, int hour,  struct Position* pos){
     // TODO: make a check on hour, is it hour(UT)?
     double gmst = 6.697375 + (0.0657098242 * n) + hour;
     gmst = fmod(gmst,24.0);
@@ -86,7 +86,7 @@ void compute_gmst(double n, uint8_t hour,  struct Position* pos){
     pos->gmst = gmst;
 }
 /**
- * @brief Compute longitude mean sidereal time
+ * @brief Compute longitude mean sidereal time [in hour]
  * 
  * @param gmst 
  * @param east_longitude 
@@ -101,7 +101,7 @@ void compute_lmst(double gmst, double east_longitude,  struct Position* pos){
     if(lmst < 0){
         lmst += 24;
     }
-    pos->lmst = lmst*15*DEG_TO_RAD;
+    pos->lmst = lmst;//*15*DEG_TO_RAD;
 }
 
 /**
@@ -214,6 +214,115 @@ void compute_noaa(int year, int month, int day,  int hour, int minute, double se
 
 
 }
+long JulianDate(int year, int month, int day) {
+	long JD_whole;
+	int A, B;
+	if (month <= 2) {
+		year--;
+		month += 12;
+	}
+	A = year / 100;
+	B = 2 - A + A / 4;
+	JD_whole = (long) (365.25 * (year + 4716)) + (int) (30.6001 * (month + 1))
+			+ day + B - 1524;
+	return JD_whole;
+}
+void calculateSolarPosition(int year, int month, int day,  int hour, int minute, double second, float Latitude,
+		float Longitude, struct Position* pos) {
+
+	const float DAYS_PER_JULIAN_CENTURY = 36525.0;
+	const long Y2K_JULIAN_DAY = 2451545;
+
+	static float latPrevious;
+	static float lonPrevious;
+
+	long JD_whole;
+	long JDx;
+	float JD_frac;
+	float rightAscension;
+	float Declination;
+	float hourAngle;
+	float GreenwichHourAngle;
+	float elapsedT;
+	float solarLongitude;
+	float solarMeanAnomaly;
+	float earthOrbitEccentricity;
+	float sunCenter;
+	float solarTrueLongitude;
+	float solarTrueAnomaly;
+	float equatorObliquity;
+
+	// if (tParam != timePrevious or Latitude != latPrevious
+	// 		or Longitude != lonPrevious) // only calculate if time or location has changed
+	// 				{
+	// 	breakTime(tParam, timeCandidate);
+		JD_whole = JulianDate(year, month, day);
+		JD_frac = (hour + minute / 60.0
+				+ second / 3600.0) / 24.0 - 0.5;
+		printf("JD_whole: %ld \r\n",(JD_whole));
+		printf("JD_frac:  %f \r\n",(JD_frac));
+		elapsedT = JD_whole - Y2K_JULIAN_DAY;
+		elapsedT = (elapsedT + JD_frac) / DAYS_PER_JULIAN_CENTURY;
+        printf("ELAPSED T:  %f \r\n",(elapsedT));
+		solarLongitude = DEG_TO_RAD
+				* fmod(280.46645 + 36000.76983 * elapsedT, 360);
+		solarMeanAnomaly = DEG_TO_RAD
+				* fmod(357.5291 + 35999.0503 * elapsedT, 360);
+		earthOrbitEccentricity = 0.016708617 - 0.000042037 * elapsedT;
+
+		sunCenter = DEG_TO_RAD
+				* ((1.9146 - 0.004847 * elapsedT) * sin(solarMeanAnomaly)
+						+ (0.019993 - 0.000101 * elapsedT)
+								* sin(2 * solarMeanAnomaly)
+						+ 0.00029 * sin(3 * solarMeanAnomaly));
+
+		solarTrueAnomaly = solarMeanAnomaly + sunCenter;
+		equatorObliquity = DEG_TO_RAD
+				* (23 + 26 / 60. + 21.448 / 3600. - 46.815 / 3600 * elapsedT);
+
+		JDx = JD_whole - Y2K_JULIAN_DAY;
+        JDx = get_yday(month,day,year);
+		printf("JDX_frac: %ld \r\n",(JDx));
+		GreenwichHourAngle = 280.46061837 + (360 * JDx) % 360
+				+ .98564736629 * JDx + 360.98564736629 * JD_frac;
+		GreenwichHourAngle = fmod(GreenwichHourAngle, 360.0);
+        printf("GW hour angle: %f \r\n",(GreenwichHourAngle));
+		solarTrueLongitude = fmod(sunCenter + solarLongitude, TWO_PI);
+
+		rightAscension = atan2(sin(solarTrueLongitude) * cos(equatorObliquity),
+				cos(solarTrueLongitude));
+
+		Declination = asin(sin(equatorObliquity) * sin(solarTrueLongitude));
+		hourAngle = DEG_TO_RAD * GreenwichHourAngle + Longitude
+				- rightAscension;
+
+		// results:
+		// result.distance = 1.000001018
+		// 		* (1 - earthOrbitEccentricity * earthOrbitEccentricity)
+		// 		/ (1 + earthOrbitEccentricity * cos(solarTrueAnomaly));
+
+		// elevation from the horizon
+		pos->elevation = asin(
+				sin(Latitude) * sin(Declination)
+						+ cos(Latitude) * (cos(Declination) * cos(hourAngle)));
+
+		// Azimuth measured eastward from north.
+		pos->azimuth = PI
+				+ atan2(sin(hourAngle),
+						cos(hourAngle) * sin(Latitude)
+								- tan(Declination) * cos(Latitude));
+		
+		// copy the time
+		//result.time = tParam;
+
+		// remember the parameters
+		//timePrevious = tParam;
+		// latPrevious = Latitude;
+		// lonPrevious = Longitude;
+	//}
+}
+
+
 
 int main(){
 
@@ -232,7 +341,7 @@ int main(){
     printf("Latitude %f \r\n", latitude);
     printf("Longitude %f \r\n\r\n", longitude);
     compute_JD(year,month,day,hour,minute,second,&pos); //ok
-    printf("Position JD: %f \r\n", pos.jd);
+    printf("! Position JD: %f \r\n", pos.jd);
     compute_ecliptic_coordinates(pos.jd, &pos); 
     printf("Position Ecliptic coords %f \r\n", pos.ecliptic_coordinates);
     compute_mean_longitude(pos.ecliptic_coordinates, &pos);
@@ -242,19 +351,19 @@ int main(){
     compute_ecliptic_longitude(pos.mean_anomaly, pos.mean_longitude, &pos);
     printf("Position Mean Longitude %f \r\n", pos.mean_longitude);
     compute_ecliptic_obliquity(pos.ecliptic_coordinates,&pos);
-    printf("Position Ecliptic Obliquity %f \r\n", pos.ecliptic_obliquity);
+    printf("! Position Ecliptic Obliquity %f \r\n", pos.ecliptic_obliquity);
     compute_right_ascension(pos.ecliptic_obliquity, pos.ecliptic_longitude, &pos);
     printf("Position Right Ascension %f \r\n", pos.right_ascension);
     compute_declination(pos.ecliptic_obliquity, pos.ecliptic_longitude, &pos);
     printf("Position Declination %f \r\n", pos.declination);
     compute_gmst(pos.ecliptic_coordinates, hour, &pos);
-    printf("Position gmst %f \r\n", pos.gmst);
-    compute_lmst(pos.gmst, pos.mean_longitude, &pos); //??
-    printf("Position lmst %f \r\n", pos.lmst);
+    printf("! Position gmst %f \r\n", pos.gmst);
+    compute_lmst(pos.gmst, longitude, &pos); //??
+    printf("!Position lmst %f \r\n", pos.lmst);
     compute_hour_angle(pos.lmst, pos.right_ascension, &pos);
     printf("Position right ascension %f \r\n", pos.right_ascension);
     compute_elevation_and_azimuth(latitude, pos.declination, pos.hour_angle, &pos);
-    printf("Position elevation %f azimuth %f \r\n", pos.elevation, pos.azimuth);
+    printf("Position elevation %f azimuth %f \r\n", pos.elevation*RAD_TO_DEG, pos.azimuth)*RAD_TO_DEG;
     compute_refraction(pos.elevation, &pos);
     printf("Position refraction %f \r\n\r\n", pos.refraction);
 
@@ -311,15 +420,16 @@ int main(){
 						cos(hourAngle) * sin(latitude)
 								- tan(Declination) * cos(latitude));
 
-    printf("\r\n!!! Position elevation %f azimuth %f \r\n", elevation, azimuth);
+    printf("\r\n!!! Position elevation %f azimuth %f \r\n", elevation*RAD_TO_DEG, azimuth*RAD_TO_DEG);
     
     printf("MAPPAZZONE \r\n");
     compute_mappazzone(pos.jd, &pos, latitude, longitude);
 
-    compute_noaa(year, month, day, hour, minute, second, latitude, longitude);
+    //compute_noaa(year, month, day, hour, minute, second, latitude, longitude);
 
+    calculateSolarPosition(year, month, day, hour, minute, second, latitude, longitude, &pos);
 
-
+    printf("\r\n### Position elevation %f azimuth %f \r\n", pos.elevation*RAD_TO_DEG, pos.azimuth*RAD_TO_DEG);
 
     return 0;
 }
