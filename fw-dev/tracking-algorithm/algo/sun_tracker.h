@@ -11,7 +11,7 @@
 #define MPI            3.14159265358979323846e6  // One Megapi...
 #define R2D            57.2957795130823208768    // Radians to degrees conversion factor
 #define R2H            3.81971863420548805845    // Radians to hours conversion factor
-#define TO_RAD         PI/180.0                  // Degree to radians
+#define DEG_TO_RAD         PI/180.0                  // Degree to radians
 
 typedef struct Position{
   double jd, ecliptic_coordinates;
@@ -52,7 +52,7 @@ struct RiseSet {
 };
 
 
-void compute_JD(uint16_t year, uint8_t month, uint8_t day,  uint8_t hour, uint8_t minute, double second, struct Position* pos);
+void compute_JD(int year, int month, int day,  int hour, int minute, double second, struct Position* pos);
 
 //eliptic coords
 void compute_ecliptic_coordinates(double jd, struct Position* pos);
@@ -71,5 +71,6 @@ void compute_lmst(double gmst, double east_longitude,  struct Position* pos);
 void compute_hour_angle(double lmst, double right_ascension,  struct Position* pos);
 void compute_elevation_and_azimuth(double lat, double declination, double hour_angle,  struct Position* pos);
 void compute_refraction(double elevation,  struct Position* pos);
-
+void compute_mappazzone(double jd, struct Position* pos, double latitude, double longitude);
+void compute_noaa(int year, int month, int day,  int hour, int minute, double second, double latitude, double longitude);
 #endif
