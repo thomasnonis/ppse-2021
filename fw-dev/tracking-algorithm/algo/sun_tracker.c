@@ -18,9 +18,11 @@ void compute_JD(int year, int month, int day,  int hour, int minute, double seco
     double jd = (int)(365.25*(year+4716)) + (int)(30.6001*(month + 1)) + jdDay + b - 1524.5;
 
     pos->jd = jd;
+    long double T = (pos->jd-2451545.0)/36525.0;
+    pos->T = T;
 }
 
-void compute_ecliptic_coordinates(double jd, struct Position* pos){
+void compute_ecliptic_time(double jd, struct Position* pos){
     // it returns the n parameter used in the other calcs, like a fancy way to handle time
     pos->ecliptic_coordinates = jd - 2451545.0;
 }
@@ -33,25 +35,32 @@ void compute_mean_longitude(double n,  struct Position* pos){
         mnlong += 360;
     }
     pos->mean_longitude = mnlong;
+
+    // alternative method
+    long double T = (pos->jd-2451545.0)/36525.0; //It's in century
+
+    printf("T: %.8Lf \r\n", T);
+
+    double k = 2*PI/360.0;
+    double M = 357.52910 + 35999.05030*T - 0.0001559*T*T - 0.00000048*T*T*T;
+    double Lo = 280.46645 + 36000.76983*T + 0.0003032*T*T ;
+    //printf("mean longitude altra maniera %f \r\n", Lo * DEG_TO_RAD);
+    // end of alternative method
 }
 
 void compute_mean_anomaly(double n,  struct Position* pos){
     // g parameter
-    double g = 357.528 + (0.9856003 * n);
-    g = fmod(g,360.0);
-    if( g < 0){
-        g += 360; 
-    }
-    pos->mean_anomaly = g * DEG_TO_RAD;
+    double g = 357.52911+pos->T*(35999.05029- (0.0001537*pos->T));
+    pos->mean_anomaly = g;
 }
 
 void compute_ecliptic_longitude(double g, double L,  struct Position* pos){
     double ec_long = L + (1.915 * sin(g)) + (0.020 * sin(2*g));
-    ec_long = fmod(ec_long,360.0);
-    if( ec_long < 0){
-        ec_long += 360;
-    }
-    pos->ecliptic_longitude = ec_long * DEG_TO_RAD;
+    // ec_long = fmod(ec_long,360.0);
+    // if( ec_long < 0){
+    //     ec_long += 360;
+    // }
+    pos->ecliptic_longitude = ec_long ;//* DEG_TO_RAD;
 }
 
 void compute_ecliptic_obliquity(double n,  struct Position* pos){
@@ -59,14 +68,14 @@ void compute_ecliptic_obliquity(double n,  struct Position* pos){
 }
 
 void compute_right_ascension(double ecl_obq, double ec_long,  struct Position* pos){
-    double num = cos(ecl_obq) * sin(ec_long);
-    double den = cos(ec_long);
-    double right_ascension = atan(num/den);
+    double den = cos(ecl_obq*DEG_TO_RAD) * sin(ec_long*DEG_TO_RAD);
+    double num = cos(ec_long*DEG_TO_RAD);
+    double right_ascension = atan2(den,num)*RAD_TO_DEG;
     pos->right_ascension = right_ascension;
 }
 
 void compute_declination(double ecl_obq, double ec_long,  struct Position* pos){
-    pos->declination = asin(sin(ecl_obq)*sin(ec_long));
+    pos->declination = asin(sin(ecl_obq*DEG_TO_RAD)*sin(ec_long*DEG_TO_RAD))*RAD_TO_DEG;
 }
 
 /**
@@ -155,11 +164,18 @@ void compute_refraction(double elevation, struct Position* pos){
 }
 
 void compute_mappazzone(double jd, struct Position* pos, double latitude, double longitude){
-    double T = (jd-2451545.0)/36525.0;
-
+    double T = (jd-2451545.0)/36525.0; //it's in century
+    printf("T: %.8f \r\n", T);
     double k = 2*PI/360.0;
-    double M = 357.52910 + 35999.05030*T - 0.0001559*T*T - 0.00000048*T*T*T;
+    double M = 357.52910 + 35999.05029*T - 0.0001537*T*T; //- 0.00000048*T*T*T;
+    M = fmod(M, 360);
+    if(M < 360) M = M+360;
+    printf("M: %.8f \r\n", M);
+
     double Lo = 280.46645 + 36000.76983*T + 0.0003032*T*T ;
+    Lo = fmod(Lo, 360);
+    if(Lo < 360) Lo = Lo+360;
+    printf("Lo: %.8f \r\n", Lo);
     double DL = (1.914600 - 0.004817*T - 0.000014*T*T)*sin(k*M)
 + (0.019993 - 0.000101*T)*sin(k*2*M) + 0.000290*sin(k*3*M);
     double L = Lo+DL;
@@ -327,8 +343,8 @@ void calculateSolarPosition(int year, int month, int day,  int hour, int minute,
 int main(){
 
     Position pos = {0};
-    int year = 2022;
-    int month = 3;
+    int year = 2000;
+    int month = 8;
     int day = 19;
     int hour = 9;
     int minute = 0;
@@ -342,18 +358,18 @@ int main(){
     printf("Longitude %f \r\n\r\n", longitude);
     compute_JD(year,month,day,hour,minute,second,&pos); //ok
     printf("! Position JD: %f \r\n", pos.jd);
-    compute_ecliptic_coordinates(pos.jd, &pos); 
+    compute_ecliptic_time(pos.jd, &pos); 
     printf("Position Ecliptic coords %f \r\n", pos.ecliptic_coordinates);
     compute_mean_longitude(pos.ecliptic_coordinates, &pos);
-    printf("Position Mean Longitude %f \r\n", pos.mean_longitude);
+    printf("!Position Mean Longitude %f \r\n", pos.mean_longitude);
     compute_mean_anomaly(pos.ecliptic_coordinates, &pos);
-    printf("Position Mean Anomaly %f \r\n", pos.mean_anomaly);
+    printf("!Position Mean Anomaly %f \r\n", pos.mean_anomaly);
     compute_ecliptic_longitude(pos.mean_anomaly, pos.mean_longitude, &pos);
-    printf("Position Mean Longitude %f \r\n", pos.mean_longitude);
+    printf("[1 grado off]Position Ecliptic Longitude %f \r\n", pos.ecliptic_longitude);
     compute_ecliptic_obliquity(pos.ecliptic_coordinates,&pos);
     printf("! Position Ecliptic Obliquity %f \r\n", pos.ecliptic_obliquity);
     compute_right_ascension(pos.ecliptic_obliquity, pos.ecliptic_longitude, &pos);
-    printf("Position Right Ascension %f \r\n", pos.right_ascension);
+    printf("[2 gradi off dovuto da ecliptic] Position Right Ascension %f \r\n", pos.right_ascension);
     compute_declination(pos.ecliptic_obliquity, pos.ecliptic_longitude, &pos);
     printf("Position Declination %f \r\n", pos.declination);
     compute_gmst(pos.ecliptic_coordinates, hour, &pos);
@@ -361,7 +377,7 @@ int main(){
     compute_lmst(pos.gmst, longitude, &pos); //??
     printf("!Position lmst %f \r\n", pos.lmst);
     compute_hour_angle(pos.lmst, pos.right_ascension, &pos);
-    printf("Position right ascension %f \r\n", pos.right_ascension);
+    printf("[1 grado off]Position right ascension %f \r\n", pos.right_ascension);
     compute_elevation_and_azimuth(latitude, pos.declination, pos.hour_angle, &pos);
     printf("Position elevation %f azimuth %f \r\n", pos.elevation*RAD_TO_DEG, pos.azimuth)*RAD_TO_DEG;
     compute_refraction(pos.elevation, &pos);
@@ -420,16 +436,21 @@ int main(){
 						cos(hourAngle) * sin(latitude)
 								- tan(Declination) * cos(latitude));
 
-    printf("\r\n!!! Position elevation %f azimuth %f \r\n", elevation*RAD_TO_DEG, azimuth*RAD_TO_DEG);
+    // printf("\r\n!!! Position elevation %f azimuth %f \r\n", elevation*RAD_TO_DEG, azimuth*RAD_TO_DEG);
     
-    printf("MAPPAZZONE \r\n");
-    compute_mappazzone(pos.jd, &pos, latitude, longitude);
+    // printf("MAPPAZZONE \r\n");
+    // compute_mappazzone(pos.jd, &pos, latitude, longitude);
 
     //compute_noaa(year, month, day, hour, minute, second, latitude, longitude);
 
-    calculateSolarPosition(year, month, day, hour, minute, second, latitude, longitude, &pos);
+    // calculateSolarPosition(year, month, day, hour, minute, second, latitude, longitude, &pos);
 
-    printf("\r\n### Position elevation %f azimuth %f \r\n", pos.elevation*RAD_TO_DEG, pos.azimuth*RAD_TO_DEG);
+    // printf("\r\n### Position elevation %f azimuth %f \r\n", pos.elevation*RAD_TO_DEG, pos.azimuth*RAD_TO_DEG);
+
+
+
+    // printf("MAPPAZZONE LIBRO \r\n");
+    // compute_mappazzone(2448908.5, &pos, latitude, longitude);
 
     return 0;
 }

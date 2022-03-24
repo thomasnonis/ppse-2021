@@ -13,7 +13,7 @@
 #define DEG_TO_RAD         PI/180.0                  // Degree to radians
 #define RAD_TO_DEG     180.0/PI
 typedef struct Position{
-  double jd, ecliptic_coordinates;
+  double jd, T, ecliptic_coordinates;
   double mean_longitude, mean_anomaly;
   double ecliptic_longitude, ecliptic_obliquity;
   double right_ascension, declination;
@@ -54,7 +54,7 @@ struct RiseSet {
 void compute_JD(int year, int month, int day,  int hour, int minute, double second, struct Position* pos);
 
 //eliptic coords
-void compute_ecliptic_coordinates(double jd, struct Position* pos);
+void compute_ecliptic_time(double jd, struct Position* pos);
 void compute_mean_longitude(double n,  struct Position* pos);
 void compute_mean_anomaly(double n,  struct Position* pos);
 void compute_ecliptic_longitude(double g, double L,  struct Position* pos);
