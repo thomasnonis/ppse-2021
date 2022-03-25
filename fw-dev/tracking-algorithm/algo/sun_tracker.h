@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <math.h>
 
+//TODO: add input params to struct pos
+
 // Constants:
 #define PI             3.14159265358979323846    // Pi
 #define TWO_PI         6.28318530717958647693    // 2 pi
@@ -15,61 +17,39 @@
 typedef struct Position{
   double jd, julian_days_since_epoch, julian_centuries_since_epoch;
   double mean_longitude, mean_anomaly;
-  double real_longitude, real_obliquity;
+  double eccent_earth_orbit, sun_eq_of_center;
+  double sun_true_longitude, sun_true_anomaly;
+  double sun_rad_vector, sun_app_long;
+  double obliq_corr, mean_obliq_ecliptic;
   double right_ascension, declination;
-  double gmst, lmst, hour_angle, elevation, azimuth, refraction;
+  double gmst, lmst, eq_of_time, hour_angle, elevation, azimuth, refraction;
 } Position;
-
-// /// @brief Date and time to compute the Sun's position for, in UT
-// struct Time {
-//   int year,month,day,  hour,minute;
-//   double second;
-// };
-
-// /// @brief Location to compute the Sun's position for
-// struct Location {
-//   double longitude, latitude;
-//   double sinLat, cosLat;
-//   double pressure, temperature;
-// };
-
-
-// /// @brief Position of the Sun
-// struct Position {
-//   double julianDay, tJD, tJC,tJC2;
-//   double longitude, distance;
-//   double obliquity,cosObliquity, nutationLon;
-//   double rightAscension,declination, hourAngle,agst;
-//   double altitude, altitudeRefract,azimuthRefract;
-//   double hourAngleRefract, declinationRefract;
-// };
-
-/// @brief Rise and set data for the Sun
-struct RiseSet {
-  double riseTime, transitTime, setTime;
-  double riseAzimuth, transitAltitude, setAzimuth;
-};
-
 
 void compute_JD(int year, int month, int day,  int hour, int minute, double second, struct Position* pos);
 
 //eliptic coords
-void compute_days_since_epoch(double jd, struct Position* pos);
-void compute_mean_longitude(double n,  struct Position* pos);
+void compute_days_since_epoch(struct Position* pos);
+void compute_mean_longitude(struct Position* pos);
 void compute_mean_anomaly(struct Position* pos);
-void compute_real_longitude(double g, double L,  struct Position* pos);
-void compute_real_obliquity(double n,  struct Position* pos);
+void compute_eccent_earth_orbit(struct Position* pos);
+void compute_sun_eq_center(struct Position* pos);
+void compute_sun_true_longitude(struct Position* pos);
+void compute_sun_true_anomaly(struct Position* pos);
+void compute_mean_obliquity_ecliptic(struct Position* pos);
+void compute_obliq_corr(struct Position* pos);
+void compute_sun_app_longitude(struct Position* pos);
+void compute_eq_of_time(struct Position* pos);
+void compute_hour_angle_alternative(int hour, double longitude, struct Position * pos);
+void compute_real_obliquity(double julian_days_since_epoch,  struct Position* pos);
+
 
 //celestial coords
-void compute_right_ascension(double ecl_obq, double ec_long,  struct Position* pos);
-void compute_declination(double ecl_obq, double ec_long,  struct Position* pos);
+void compute_right_ascension(struct Position* pos);
+void compute_declination(Position* pos);
 
 //local coords
-void compute_gmst(double n, int hour,  struct Position* pos);
-void compute_lmst(double gmst, double east_longitude,  struct Position* pos);
-void compute_hour_angle(double lmst, double right_ascension,  struct Position* pos);
-void compute_elevation_and_azimuth(double lat, double declination, double hour_angle,  struct Position* pos);
-void compute_refraction(double elevation,  struct Position* pos);
-void compute_mappazzone(double jd, struct Position* pos, double latitude, double longitude);
-void compute_noaa(int year, int month, int day,  int hour, int minute, double second, double latitude, double longitude);
+void compute_gmst(int hour,  struct Position* pos);
+void compute_lmst(double east_longitude,  struct Position* pos);
+void compute_hour_angle(struct Position* pos);
+void compute_elevation_and_azimuth(double lat,  struct Position* pos);
 #endif
