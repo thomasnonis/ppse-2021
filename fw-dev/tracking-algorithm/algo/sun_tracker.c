@@ -70,7 +70,7 @@ void compute_declination(double ecl_obq, double ec_long,  struct Position* pos){
 }
 
 /**
- * @brief Compute Greenwich mean sidereal time (gmst) [in hour]
+ * @brief Compute Greenwich mean sidereal time (gmst) [in hours]
  * 
  * @param n 
  * @param hour 
@@ -91,7 +91,7 @@ void compute_gmst(double whole_days_since_epoch, int whole_hours_since_midnight,
 }
 
 /**
- * @brief Compute longitude mean sidereal time [in hour]
+ * @brief Compute longitude mean sidereal time (lmst) [in hours]
  * 
  * @param gmst 
  * @param east_longitude 
@@ -100,13 +100,16 @@ void compute_gmst(double whole_days_since_epoch, int whole_hours_since_midnight,
 void compute_lmst(double gmst, double east_longitude,  struct Position* pos){
     // east longitude is usually expressed in degrees, 
     // and should be divided by 15 to convert to hours
-    // East longitude is considered positive.
+    // East longitude is considered positive, west negative.
     double lmst = gmst + (east_longitude/15.0);
     lmst = fmod(lmst, 24.0);
-    if(lmst < 0){
-        lmst += 24;
-    }
-    pos->lmst = lmst;//*15*DEG_TO_RAD;
+
+    double LMST_hours = fmod(floor(lmst),24);
+    double LMST_minutes = (lmst - floor(lmst))*60;
+    double LMST_seconds = (LMST_minutes - floor(LMST_minutes))*60;
+    printf("! LMST Time: %d:%d:%d\n",(int)LMST_hours,(int)LMST_minutes,(int)LMST_seconds);
+
+    pos->lmst = lmst; //lmst in hours
 }
 
 /**
@@ -371,9 +374,9 @@ int main(){
     compute_declination(pos.ecliptic_obliquity, pos.ecliptic_longitude, &pos);
     printf("Position Declination %f \r\n", pos.declination);
     compute_gmst(pos.days_since_epoch, hour, &pos);
-    printf("! GMST %f \r\n", pos.gmst);
+    printf("! GMST [Hours] %f \r\n", pos.gmst);
     compute_lmst(pos.gmst, longitude, &pos); //??
-    printf("! LMST %f \r\n", pos.lmst);
+    printf("! LMST [Hours] %f \r\n", pos.lmst);
     compute_hour_angle(pos.lmst, pos.right_ascension, &pos);
     printf("[1 grado off]Position right ascension %f \r\n", pos.right_ascension);
     compute_elevation_and_azimuth(latitude, pos.declination, pos.hour_angle, &pos);
