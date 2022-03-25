@@ -1,0 +1,14 @@
+(kicad_sch (version 20211123) (generator eeschema)
+
+  (uuid c9c04e2f-912f-443c-8c81-9f9aa9cc8350)
+
+  (paper "A4")
+
+  (title_block
+    (title "Actuation")
+  )
+
+  (lib_symbols
+  )
+
+)
