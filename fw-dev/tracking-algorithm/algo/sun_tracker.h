@@ -13,9 +13,9 @@
 #define DEG_TO_RAD         PI/180.0                  // Degree to radians
 #define RAD_TO_DEG     180.0/PI
 typedef struct Position{
-  double jd, days_since_epoch, centuries_since_epoch;
+  double jd, julian_days_since_epoch, julian_centuries_since_epoch;
   double mean_longitude, mean_anomaly;
-  double ecliptic_longitude, ecliptic_obliquity;
+  double real_longitude, real_obliquity;
   double right_ascension, declination;
   double gmst, lmst, hour_angle, elevation, azimuth, refraction;
 } Position;
@@ -56,9 +56,9 @@ void compute_JD(int year, int month, int day,  int hour, int minute, double seco
 //eliptic coords
 void compute_days_since_epoch(double jd, struct Position* pos);
 void compute_mean_longitude(double n,  struct Position* pos);
-void compute_mean_anomaly(double n,  struct Position* pos);
-void compute_ecliptic_longitude(double g, double L,  struct Position* pos);
-void compute_ecliptic_obliquity(double n,  struct Position* pos);
+void compute_mean_anomaly(struct Position* pos);
+void compute_real_longitude(double g, double L,  struct Position* pos);
+void compute_real_obliquity(double n,  struct Position* pos);
 
 //celestial coords
 void compute_right_ascension(double ecl_obq, double ec_long,  struct Position* pos);

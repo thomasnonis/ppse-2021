@@ -22,16 +22,16 @@ void compute_JD(int year, int month, int day,  int hour, int minute, double seco
 
 void compute_days_since_epoch(double jd, struct Position* pos){
     // it returns the n parameter used in the other calcs, like a fancy way to handle time
-    pos->days_since_epoch = jd - 2451545.0;
+    pos->julian_days_since_epoch = jd - 2451545.0;
 }
 
 void compute_centuries_since_epoch(struct Position* pos){
-    pos->centuries_since_epoch = (pos->days_since_epoch)/36525.0;
+    pos->julian_centuries_since_epoch = (pos->julian_days_since_epoch)/36525.0;
 }
 
 void compute_mean_longitude(double n,  struct Position* pos){
     // L parameter
-    double mnlong = 280.460 + (0.9856474 * n);
+    double mnlong = 280.460 + (0.9856474 * n); //TODO:meglio usare quella della tabella, probabilmente è più precisa
     mnlong = fmod(mnlong,360.0);
     if( mnlong < 0){
         mnlong += 360;
@@ -39,23 +39,28 @@ void compute_mean_longitude(double n,  struct Position* pos){
     pos->mean_longitude = mnlong;
 }
 
-void compute_mean_anomaly(double n,  struct Position* pos){
+void compute_mean_anomaly(struct Position* pos){
     // g parameter
-    double g = 357.52911+pos->centuries_since_epoch*(35999.05029- (0.0001537*pos->centuries_since_epoch));
+    double g = 357.52911+pos->julian_centuries_since_epoch*(35999.05029- (0.0001537*pos->julian_centuries_since_epoch));
+    //g = fmod(g,360.0);
+    //if( g < 0){
+    //    g += 360;
+    //}
     pos->mean_anomaly = g;
 }
 
-void compute_ecliptic_longitude(double g, double L,  struct Position* pos){
-    double ec_long = L + (1.915 * sin(g)) + (0.020 * sin(2*g));
-    // ec_long = fmod(ec_long,360.0);
-    // if( ec_long < 0){
-    //     ec_long += 360;
-    // }
-    pos->ecliptic_longitude = ec_long ;//* DEG_TO_RAD;
+    //TODO:SBAGLIATA, provare a seguire la tabella
+void compute_real_longitude(double mean_longitude, double mean_anomaly,  struct Position* pos){
+    double ec_long = mean_longitude + (1.915 * mean_anomaly) + (0.020 * sin(2*mean_anomaly));
+    ec_long = fmod(ec_long,360.0);
+    if( ec_long < 0){
+        ec_long += 360;
+    }
+    pos->real_longitude = ec_long; //result is in degree
 }
 
-void compute_ecliptic_obliquity(double n,  struct Position* pos){
-    pos->ecliptic_obliquity = 23.439 - (0.0000004 * n) * DEG_TO_RAD;
+void compute_real_obliquity(double julian_days_since_epoch,  struct Position* pos){
+    pos->real_obliquity = 23.439 - (0.0000004 * julian_days_since_epoch) * DEG_TO_RAD; //result is in degree
 }
 
 void compute_right_ascension(double ecl_obq, double ec_long,  struct Position* pos){
@@ -76,11 +81,10 @@ void compute_declination(double ecl_obq, double ec_long,  struct Position* pos){
  * @param hour 
  * @return double 
  */
-void compute_gmst(double whole_days_since_epoch, int whole_hours_since_midnight,  struct Position* pos){
-    double gmst = 6.697375 + (0.0657098242 * (floor(whole_days_since_epoch)+0.5)) + 
+void compute_gmst(double julian_days_since_epoch, int whole_hours_since_midnight,  struct Position* pos){
+    double gmst = 6.697375 + (0.0657098242 * (floor(julian_days_since_epoch)+0.5)) + 
                             (1.00273790935*whole_hours_since_midnight) + 
-                            (0.000026 * floor(pow(pos->centuries_since_epoch,2)));
-    
+                            (0.000026 * floor(pow(pos->julian_centuries_since_epoch,2)));
     double GMST_hours = fmod(floor(gmst),24);
     double GMST_minutes = (gmst - floor(gmst))*60;
     double GMST_seconds = (GMST_minutes - floor(GMST_minutes))*60;
@@ -358,22 +362,22 @@ int main(){
     compute_JD(year,month,day,hour,minute,second,&pos);
     printf("! JD: %f \r\n", pos.jd);
     compute_days_since_epoch(pos.jd, &pos); 
-    printf("! Days since epoch (1.1.2000) %f \r\n", pos.days_since_epoch);
+    printf("! Julian days since epoch (1.1.2000) %f \r\n", pos.julian_days_since_epoch);
     compute_centuries_since_epoch(&pos);
-    printf("! Centuries since epoch (1.1.2000) %.8f \r\n", pos.centuries_since_epoch);
-    compute_mean_longitude(pos.days_since_epoch, &pos);
+    printf("! Julian centuries since epoch (1.1.2000) %.8f \r\n", pos.julian_centuries_since_epoch);
+    compute_mean_longitude(pos.julian_days_since_epoch, &pos);
     printf("! Position Mean Longitude %f \r\n", pos.mean_longitude);
-    compute_mean_anomaly(pos.days_since_epoch, &pos);
+    compute_mean_anomaly(&pos);
     printf("! Position Mean Anomaly %f \r\n", pos.mean_anomaly);
-    compute_ecliptic_longitude(pos.mean_anomaly, pos.mean_longitude, &pos);
-    printf("[1 grado off]Position Ecliptic Longitude %f \r\n", pos.ecliptic_longitude);
-    compute_ecliptic_obliquity(pos.days_since_epoch,&pos);
-    printf("! Position Ecliptic Obliquity %f \r\n", pos.ecliptic_obliquity);
-    compute_right_ascension(pos.ecliptic_obliquity, pos.ecliptic_longitude, &pos);
-    printf("[2 gradi off dovuto da ecliptic] Position Right Ascension %f \r\n", pos.right_ascension);
-    compute_declination(pos.ecliptic_obliquity, pos.ecliptic_longitude, &pos);
+    compute_real_longitude(pos.mean_longitude, pos.mean_anomaly, &pos);
+    printf("[molto off off] Position Real Longitude %f \r\n", pos.real_longitude);
+    compute_real_obliquity(pos.julian_days_since_epoch,&pos);
+    printf("! Position Real Obliquity %f \r\n", pos.real_obliquity);
+    compute_right_ascension(pos.real_obliquity, pos.real_longitude, &pos);
+    printf("[2 gradi off] Position Right Ascension %f \r\n", pos.right_ascension);
+    compute_declination(pos.real_obliquity, pos.real_longitude, &pos);
     printf("Position Declination %f \r\n", pos.declination);
-    compute_gmst(pos.days_since_epoch, hour, &pos);
+    compute_gmst(pos.julian_days_since_epoch, hour, &pos);
     printf("! GMST [Hours] %f \r\n", pos.gmst);
     compute_lmst(pos.gmst, longitude, &pos); //??
     printf("! LMST [Hours] %f \r\n", pos.lmst);
