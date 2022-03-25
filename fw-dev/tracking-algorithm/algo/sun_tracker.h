@@ -39,9 +39,6 @@ void compute_mean_obliquity_ecliptic(struct Position* pos);
 void compute_obliq_corr(struct Position* pos);
 void compute_sun_app_longitude(struct Position* pos);
 void compute_eq_of_time(struct Position* pos);
-void compute_hour_angle_alternative(int hour, double longitude, struct Position * pos);
-void compute_real_obliquity(double julian_days_since_epoch,  struct Position* pos);
-
 
 //celestial coords
 void compute_right_ascension(struct Position* pos);
