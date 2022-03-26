@@ -56,5 +56,5 @@ void compute_lmst(double east_longitude,  struct Position* pos);
 void compute_hour_angle(struct Position* pos);
 void compute_elevation_and_azimuth(double lat,  struct Position* pos);
 
-void compute_complete_position(Place* place)
+void compute_complete_position(Place* place);
 #endif

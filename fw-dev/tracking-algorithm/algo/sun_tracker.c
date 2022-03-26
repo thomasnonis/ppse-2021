@@ -1,5 +1,6 @@
 #include "sun_tracker.h"
 #include <stdio.h>
+
 void compute_JD(int year, int month, int day,  int hour, int minute, double second, struct Position* pos){
     
     // JD = int(365.25*(Y+4716))+int(30.6001*(M+1))+d+b-1524.5
