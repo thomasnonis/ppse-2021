@@ -86,12 +86,6 @@ void compute_eq_of_time(Position* pos){
     pos->eq_of_time = eq;
 }
 
-//new fun
-void compute_hour_angle_alternative(int hour, double longitude, Position * pos){
-    double true_solar_time_min = fmod(hour*1440.0 + pos->eq_of_time+ (4*longitude), 1440.0);//local relative time
-    printf("true solar time in min %f \r\n", true_solar_time_min);
-}
-
 void compute_right_ascension(Position* pos){
     //Note that atan2 args are swapped compared to the excel version
     double right_ascension = RAD_TO_DEG*(atan2((cos(DEG_TO_RAD*pos->obliq_corr))*sin(DEG_TO_RAD*pos->sun_app_long)
@@ -177,23 +171,14 @@ void compute_elevation_and_azimuth(double lat, Position* pos){
     
 }
 
-int main(){
-
+void compute_complete_position(Place* place){
     Position pos = {0};
-    int year = 2000;
-    int month = 8;
-    int day = 19;
-    int hour = 9;   //UTC
-    int minute = 0;
-    double second = 0;
 
-    double latitude = 46.07005;
-    double longitude = 11.11929;
-
-    printf("\r\nDate %i/%i/%i %i-%i-%f UTC \r\n", year, month, day, hour, minute, second);
-    printf("Latitude %f \r\n", latitude);
-    printf("Longitude %f \r\n\r\n", longitude);
-    compute_JD(year,month,day,hour,minute,second,&pos);
+    printf("\r\nDate %i/%i/%i %i-%i-%f UTC \r\n", place->year,
+    place->month, place->day, place->hour, place->minute, place->second);
+    printf("Latitude %f \r\n", place->latitude);
+    printf("Longitude %f \r\n\r\n", place->longitude);
+    compute_JD(place->year,place->month,place->day,place->hour,place->minute,place->second,&pos);
     printf("JD: %f \r\n", pos.jd);
     compute_days_since_epoch(&pos); 
     printf("Julian days since epoch (1.1.2000) %f \r\n", pos.julian_days_since_epoch);
@@ -221,17 +206,40 @@ int main(){
     printf("Position Right Ascension %f \r\n", pos.right_ascension);
     compute_declination(&pos);
     printf("Position Declination %f \r\n", pos.declination);
-    compute_gmst(hour, &pos);
+    compute_gmst(place->hour, &pos);
     printf("GMST [Hours] %f \r\n", pos.gmst);
-    compute_lmst(longitude, &pos);
+    compute_lmst(place->longitude, &pos);
     printf("LMST [Hours] %f \r\n", pos.lmst);
     compute_eq_of_time(&pos);
     compute_hour_angle(&pos);
     printf("Position hour angle %f \r\n", pos.hour_angle);
-    compute_elevation_and_azimuth(latitude, &pos);
+    compute_elevation_and_azimuth(place->latitude, &pos);
+    //TODO: CHECK AZIMUT
     printf("Position elevation %f azimuth %f \r\n", pos.elevation, pos.azimuth);
+}
 
+int main(){
 
+    //year-month-day-hour(utc)-minute-second-latitude-longitude
+    for(int i = 8; i < 19; i++){
+        printf("\r\nHOUR %d \r\n", i);
+        Place place0 = {2030,2,28,i,0,0,55.751244, 37.618423};
+        compute_complete_position(&place0);
+        printf("------------------------\r\n");
+    }
+    
+   
+    // int year = 2030;
+    // int month = 2;
+    // int day = 28;
+    // int hour = 9;   //UTC
+    // int minute = 0;
+    // double second = 0;
+
+    // double latitude = 55.751244;
+    // double longitude = 37.618423;
+
+    
 
     return 0;
 }

@@ -14,6 +14,7 @@
 #define R2H            3.81971863420548805845    // Radians to hours conversion factor
 #define DEG_TO_RAD         PI/180.0                  // Degree to radians
 #define RAD_TO_DEG     180.0/PI
+
 typedef struct Position{
   double jd, julian_days_since_epoch, julian_centuries_since_epoch;
   double mean_longitude, mean_anomaly;
@@ -24,6 +25,11 @@ typedef struct Position{
   double right_ascension, declination;
   double gmst, lmst, eq_of_time, hour_angle, elevation, azimuth, refraction;
 } Position;
+
+typedef struct Place{
+  int year, month, day, hour, minute;
+  double second, latitude, longitude;
+} Place;
 
 void compute_JD(int year, int month, int day,  int hour, int minute, double second, struct Position* pos);
 
@@ -49,4 +55,6 @@ void compute_gmst(int hour,  struct Position* pos);
 void compute_lmst(double east_longitude,  struct Position* pos);
 void compute_hour_angle(struct Position* pos);
 void compute_elevation_and_azimuth(double lat,  struct Position* pos);
+
+void compute_complete_position(Place* place)
 #endif
