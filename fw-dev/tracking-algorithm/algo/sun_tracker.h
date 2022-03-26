@@ -27,7 +27,7 @@ typedef struct Position{
 } Position;
 
 typedef struct Place{
-  int year, month, day, time_zone, hour, minute;
+  int year, month, day, hour, minute;
   double second, latitude, longitude;
 } Place;
 

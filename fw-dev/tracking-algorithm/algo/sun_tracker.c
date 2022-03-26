@@ -149,8 +149,8 @@ void compute_lmst(double east_longitude,  struct Position* pos){
  */
 void compute_hour_angle(Place* place,Position* pos){
 
-    double local_time = (place->hour+place->time_zone)+(place->minute/60)+(place->second/3600);
-    double longv=4*(place->longitude-(15*(place->time_zone)));
+    double local_time = (place->hour+(place->minute/60)+(place->second/3600));
+    double longv=4*(place->longitude);//-(15*(place->time_zone)));
     double offset=(pos->eq_of_time)+longv;  //correction in minutes
     double lsot=local_time+(offset/60);
     lsot=fmod(lsot,24);
@@ -238,8 +238,13 @@ void compute_complete_position(Place* place){
 int main(){
 
     //year-month-day-time_zone-hour(utc)-minute-second-latitude-longitude
-    Place place0 = {2030,2,28,3,10,0,0,55.751244, 37.618423};
-    compute_complete_position(&place0);
+    for(int i = 5; i<25; i++){
+        printf("HOUR %i \r\n", i);
+        Place place0 = {2030,2,28,3,0,0,55.751244, 37.618423};
+        compute_complete_position(&place0);
+        printf("----------\r\n");
+    }
+    
     
     return 0;
 }
