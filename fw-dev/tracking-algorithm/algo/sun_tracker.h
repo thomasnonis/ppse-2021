@@ -12,7 +12,7 @@
 #define MPI            3.14159265358979323846e6  // One Megapi...
 #define R2D            57.2957795130823208768    // Radians to degrees conversion factor
 #define R2H            3.81971863420548805845    // Radians to hours conversion factor
-#define DEG_TO_RAD         PI/180.0                  // Degree to radians
+#define DEG_TO_RAD     PI/180.0                  // Degree to radians
 #define RAD_TO_DEG     180.0/PI
 
 typedef struct Position{
@@ -27,7 +27,7 @@ typedef struct Position{
 } Position;
 
 typedef struct Place{
-  int year, month, day, hour, minute;
+  int year, month, day, time_zone, hour, minute;
   double second, latitude, longitude;
 } Place;
 
@@ -53,7 +53,7 @@ void compute_declination(Position* pos);
 //local coords
 void compute_gmst(int hour,  struct Position* pos);
 void compute_lmst(double east_longitude,  struct Position* pos);
-void compute_hour_angle(struct Position* pos);
+void compute_hour_angle(Place* place, struct Position* pos);
 void compute_elevation_and_azimuth(double lat,  struct Position* pos);
 
 void compute_complete_position(Place* place);

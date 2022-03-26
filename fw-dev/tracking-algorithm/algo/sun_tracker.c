@@ -147,9 +147,23 @@ void compute_lmst(double east_longitude,  struct Position* pos){
  * @param right_ascension 
  * @return double 
  */
-void compute_hour_angle(Position* pos){
-    double ha = pos->lmst * 15 - pos->right_ascension ;
-    pos->hour_angle = ha;
+void compute_hour_angle(Place* place,Position* pos){
+
+    double local_time = (place->hour+place->time_zone)+(place->minute/60)+(place->second/3600);
+    double longv=4*(place->longitude-(15*(place->time_zone)));
+    double offset=(pos->eq_of_time)+longv;  //correction in minutes
+    double lsot=local_time+(offset/60);
+    lsot=fmod(lsot,24);
+    //TODO:could not be useless, maybe we should try with different combinations of longitudes
+    //if(lsot<0){
+    //    lsot+=24;
+    //}
+
+    double hour_angle=15*(lsot-12);
+    hour_angle=fmod(hour_angle,360);
+
+    pos->hour_angle = hour_angle;
+
 }
 
 
@@ -200,31 +214,33 @@ void compute_complete_position(Place* place){
     compute_sun_app_longitude(&pos);
     printf("Sun app longitude %f \r\n", pos.sun_app_long);
     compute_mean_obliquity_ecliptic(&pos);
-    printf("Mean Obliquity ecliptic %f \r\n", pos.mean_obliq_ecliptic);
+    printf("ok Mean Obliquity ecliptic %f \r\n", pos.mean_obliq_ecliptic);
     compute_obliq_corr(&pos);
     printf("Position Obliq correction %f \r\n", pos.obliq_corr);
     compute_right_ascension(&pos);
-    printf("Position Right Ascension %f \r\n", pos.right_ascension);
+    printf("ok Position Right Ascension %f \r\n", pos.right_ascension);
     compute_declination(&pos);
-    printf("Position Declination %f \r\n", pos.declination);
+    printf("ok Position Declination %f \r\n", pos.declination);
     compute_gmst(place->hour, &pos);
-    printf("GMST [Hours] %f \r\n", pos.gmst);
+    printf("ok GMST [Hours] %f \r\n", pos.gmst);
     compute_lmst(place->longitude, &pos);
-    printf("LMST [Hours] %f \r\n", pos.lmst);
+    printf("ok LMST [Hours] %f \r\n", pos.lmst);
     compute_eq_of_time(&pos);
-    compute_hour_angle(&pos);
+    compute_hour_angle(place,&pos);
     printf("Position hour angle %f \r\n", pos.hour_angle);
     compute_elevation_and_azimuth(place->latitude, &pos);
     //TODO: CHECK AZIMUT
     printf("Position elevation %f azimuth %f \r\n", pos.elevation, pos.azimuth);
 }
 
+
+
 int main(){
 
-    //year-month-day-hour(utc)-minute-second-latitude-longitude
-    for(int i = 8; i < 19; i++){
+    //year-month-day-time_zone-hour(utc)-minute-second-latitude-longitude
+    for(int i = 1; i < 25; i++){
         printf("\r\nHOUR %d \r\n", i);
-        Place place0 = {2030,2,28,i,0,0,55.751244, 37.618423};
+        Place place0 = {2030,2,28,3,i,0,0,55.751244, 37.618423};
         compute_complete_position(&place0);
         printf("------------------------\r\n");
     }
