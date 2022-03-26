@@ -238,25 +238,8 @@ void compute_complete_position(Place* place){
 int main(){
 
     //year-month-day-time_zone-hour(utc)-minute-second-latitude-longitude
-    for(int i = 1; i < 25; i++){
-        printf("\r\nHOUR %d \r\n", i);
-        Place place0 = {2030,2,28,3,i,0,0,55.751244, 37.618423};
-        compute_complete_position(&place0);
-        printf("------------------------\r\n");
-    }
+    Place place0 = {2030,2,28,3,10,0,0,55.751244, 37.618423};
+    compute_complete_position(&place0);
     
-   
-    // int year = 2030;
-    // int month = 2;
-    // int day = 28;
-    // int hour = 9;   //UTC
-    // int minute = 0;
-    // double second = 0;
-
-    // double latitude = 55.751244;
-    // double longitude = 37.618423;
-
-    
-
     return 0;
 }
