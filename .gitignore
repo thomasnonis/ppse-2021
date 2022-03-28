@@ -4,3 +4,5 @@
 **/out
 **/*.code-workspace
 build/
+**/pico-examples/
+**/pico-sdk/
