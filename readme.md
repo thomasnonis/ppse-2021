@@ -14,6 +14,10 @@
     gcc sun_tracker.c -lm  
     ./a.out
 
+:zap: Usage with args
+
+    ./out {year} {month} {day} {hour} {minute} {second} {latitude} {longitude}
+
 
 
     

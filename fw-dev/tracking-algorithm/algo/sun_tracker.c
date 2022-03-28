@@ -1,5 +1,6 @@
 #include "sun_tracker.h"
 #include <stdio.h>
+#include <stdlib.h> 
 
 void compute_JD(int year, int month, int day,  int hour, int minute, double second, struct Position* pos){
     
@@ -235,14 +236,21 @@ void compute_complete_position(Place* place){
 
 
 
-int main(){
+int main(int argc, char *argv[]){
 
     //year-month-day-time_zone-hour(utc)-minute-second-latitude-longitude
-    for(int i = 5; i<25; i++){
-        printf("HOUR %i \r\n", i);
-        Place place0 = {2030,2,28,3,0,0,55.751244, 37.618423};
-        compute_complete_position(&place0);
-        printf("----------\r\n");
+    if(argc < 2){
+        for(int i = 5; i<25; i++){
+            printf("HOUR %i \r\n", i);
+            Place place0 = {2030,2,28,i,0,0,55.751244, 37.618423};
+            compute_complete_position(&place0);
+            printf("----------\r\n");
+        }
+    }else if(argc == 9){
+            Place place0 = {atoi(argv[1]),atoi(argv[2]),atoi(argv[3]),atoi(argv[4]),atoi(argv[5]),atof(argv[6]),atof(argv[7]),atof(argv[8])};
+            compute_complete_position(&place0);
+    }else{
+        printf("ERROR: Not enough parameters \r\n");
     }
     
     
