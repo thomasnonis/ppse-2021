@@ -4,3 +4,6 @@
 [submodule "fw-dev/pico-examples"]
 	path = fw-dev/pico-examples
 	url = https://github.com/raspberrypi/pico-examples.git
+[submodule "tinyusb"]
+	path = tinyusb
+	url = https://github.com/hathach/tinyusb.git
