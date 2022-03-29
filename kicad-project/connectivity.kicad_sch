@@ -762,7 +762,7 @@
   )
 
   (no_connect (at 243.84 72.39) (uuid dee73b76-6df2-443b-b435-da97205faa74))
-  (no_connect (at 241.3 72.39) (uuid dee73b76-6df2-443b-b435-da97205faa74))
+  (no_connect (at 241.3 72.39) (uuid dee73b76-6df2-443b-b435-da97205faa75))
 
   (polyline (pts (xy 283.21 13.97) (xy 283.21 82.55))
     (stroke (width 0) (type default) (color 0 0 0 0))

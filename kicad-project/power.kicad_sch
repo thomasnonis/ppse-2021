@@ -1849,7 +1849,7 @@
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid ce049c30-6629-4827-b32b-d3c8b0d57289)
     (property "Reference" "D?" (id 0) (at 117.1575 45.72 0))
-    (property "Value" "" (id 1) (at 117.1575 48.26 0))
+    (property "Value" "RBR1VWM30ATFTR" (id 1) (at 117.1575 48.26 0))
     (property "Footprint" "" (id 2) (at 116.84 52.07 0)
       (effects (font (size 1.27 1.27)) hide)
     )
