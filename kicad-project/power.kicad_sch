@@ -1146,6 +1146,7 @@
     (uuid ecb02f11-5713-4972-a0cd-136adbe958e8)
   )
 
+  (no_connect (at 172.72 33.02) (uuid e4467d45-83a6-4dad-b9f9-5895b07f3a6b))
   (no_connect (at 96.52 101.6) (uuid e50e3954-b7d0-42ee-aba5-33e38568efb8))
 
   (wire (pts (xy 172.72 38.1) (xy 172.72 60.96))
@@ -1360,7 +1361,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 78d336ba-1d45-453f-9418-f4cf06fef625)
   )
-  (text "3V3 Switching" (at 92.075 19.05 0)
+  (text "3V3 Switching" (at 92.71 21.59 0)
     (effects (font (size 3 3) (thickness 0.6) bold) (justify left bottom))
     (uuid 8ce27b59-619a-43e8-be9f-e6ce579af016)
   )
@@ -1377,6 +1378,15 @@
     (at 178.435 64.135 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid eb04b9f5-5cdb-470b-a411-3f5e6bb23e3e)
+  )
+
+  (label "SW" (at 172.72 30.48 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 47eaad50-b821-4b98-b3a1-fd1919754b11)
+  )
+  (label "VBUS" (at 96.52 91.44 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid dad7b593-f2c3-4f99-b4f1-13deaee17850)
   )
 
   (hierarchical_label "USB_D+" (shape bidirectional) (at 96.52 96.52 0)
