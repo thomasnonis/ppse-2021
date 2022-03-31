@@ -784,7 +784,7 @@
       (reference "C?") (unit 1) (value "10u") (footprint "")
     )
     (path "/00000000-0000-0000-0000-0000622d0e2d/00000000-0000-0000-0000-0000622ddf1f"
-      (reference "D?") (unit 1) (value "1.5KExxA") (footprint "Diode_THT:D_DO-201AE_P15.24mm_Horizontal")
+      (reference "D?") (unit 1) (value "SBAJ15A") (footprint "")
     )
     (path "/00000000-0000-0000-0000-0000622d0e2d/1f175461-6c29-481d-88b6-25186cd3f961"
       (reference "D?") (unit 1) (value "SBA1B") (footprint "")
