@@ -364,7 +364,7 @@
     "last_paths": {
       "gencad": "",
       "idf": "",
-      "netlist": "",
+      "netlist": "PPSE_2021.net",
       "specctra_dsn": "",
       "step": "",
       "vrml": ""
