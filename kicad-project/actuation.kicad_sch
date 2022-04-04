@@ -1748,6 +1748,10 @@
     (uuid ff8deb57-aa42-40d7-a0b9-469c9c368a0f)
   )
 
+  (text "Footprint mosfer: SO8 con thermal pad" (at 27.94 26.67 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 0cba1e79-7a97-47cd-a304-8daa4af76562)
+  )
   (text "LED Alive\n" (at 243.84 102.87 0)
     (effects (font (size 3 3) (thickness 0.6) bold) (justify left bottom))
     (uuid 0f6f8f6c-34b7-4f57-a462-c4d831854692)
