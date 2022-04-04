@@ -1187,8 +1187,8 @@
   )
 
   (no_connect (at 251.46 120.65) (uuid b8904cc5-ff52-46ed-9389-8ae310ef1fbe))
-  (no_connect (at 251.46 115.57) (uuid b8904cc5-ff52-46ed-9389-8ae310ef1fbe))
-  (no_connect (at 251.46 118.11) (uuid b8904cc5-ff52-46ed-9389-8ae310ef1fbe))
+  (no_connect (at 251.46 115.57) (uuid b8904cc5-ff52-46ed-9389-8ae310ef1fbf))
+  (no_connect (at 251.46 118.11) (uuid b8904cc5-ff52-46ed-9389-8ae310ef1fc0))
 
   (wire (pts (xy 200.66 29.21) (xy 200.66 36.83))
     (stroke (width 0) (type default) (color 0 0 0 0))
