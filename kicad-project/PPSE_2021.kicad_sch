@@ -904,7 +904,7 @@
       (reference "D4") (unit 1) (value "SMA S1B") (footprint "Diode_SMD:D_SMA")
     )
     (path "/00000000-0000-0000-0000-0000622d0e2d/ce049c30-6629-4827-b32b-d3c8b0d57289"
-      (reference "D5") (unit 1) (value "RBR1VWM30ATFTR") (footprint "Diode_SMD:D_SMA")
+      (reference "D5") (unit 1) (value "RBR1VWM30ATFTR") (footprint "ppse_2021:Package-PMDE")
     )
     (path "/00000000-0000-0000-0000-0000622d0e2d/1f1e4db1-b6f7-4bb7-b549-025bbe1e0a65"
       (reference "D6") (unit 1) (value "PWR_LED") (footprint "LED_SMD:LED_0603_1608Metric")
