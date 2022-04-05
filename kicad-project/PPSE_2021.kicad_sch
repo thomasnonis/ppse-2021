@@ -940,10 +940,10 @@
       (reference "D16") (unit 1) (value "CGRA4007") (footprint "Diode_SMD:D_SMA")
     )
     (path "/00000000-0000-0000-0000-0000622d0e2d/00000000-0000-0000-0000-0000622db47a"
-      (reference "F1") (unit 1) (value "1812L050/60MR") (footprint "")
+      (reference "F1") (unit 1) (value "2016L050MR") (footprint "ppse_2021:2016L Series PPTC")
     )
     (path "/00000000-0000-0000-0000-0000622d0e2d/e15f2906-6147-4e15-bdb7-4bb4e7d98fbb"
-      (reference "F2") (unit 1) (value "Fuse 1.5A") (footprint "")
+      (reference "F2") (unit 1) (value "Fuse 1.5A") (footprint "ppse_2021:Fuse Holder")
     )
     (path "/00000000-0000-0000-0000-0000622d0e2d/000310e8-37c7-4e72-ba27-ab1823c2a457"
       (reference "FB1") (unit 1) (value "FerriteBead") (footprint "Inductor_SMD:L_0603_1608Metric")
@@ -973,10 +973,10 @@
       (reference "J4") (unit 1) (value "12V IN") (footprint "Connector_Molex:Molex_Micro-Fit_3.0_43650-0200_1x02_P3.00mm_Horizontal")
     )
     (path "/00000000-0000-0000-0000-0000622b4158/afc9b3db-2de4-4a75-98f7-54e62ba233a8"
-      (reference "J5") (unit 1) (value "Compass") (footprint "")
+      (reference "J5") (unit 1) (value "Compass") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000622b4158/bfa57ca9-1e1b-44f5-923c-14f7f8ae51a4"
-      (reference "J6") (unit 1) (value "Accelerometer") (footprint "")
+      (reference "J6") (unit 1) (value "Accelerometer") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-0000622b4158/44a1fd85-4885-4fdf-b0ff-91387c3d54c7"
       (reference "J7") (unit 1) (value "Conn_01x04") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical_SMD_Pin1Left")
@@ -989,9 +989,6 @@
     )
     (path "/755090ec-fdfb-40aa-83ce-f20a94352e8e/952eb6d2-2954-4111-a5a8-f0a4d5f90c38"
       (reference "J10") (unit 1) (value "Motor 2") (footprint "Connector_JST:JST_XH_S5B-XH-A_1x05_P2.50mm_Horizontal")
-    )
-    (path "/00000000-0000-0000-0000-0000622d0e2d/2ca118f8-f6dd-4977-b723-05eb3575756b"
-      (reference "L1") (unit 1) (value "2.2u") (footprint "")
     )
     (path "/00000000-0000-0000-0000-0000622b4158/dccb8703-1144-4687-8abe-20541329f504"
       (reference "Q1") (unit 1) (value "3LP01M") (footprint "Package_TO_SOT_SMD:SOT-323_SC-70")
@@ -1154,6 +1151,9 @@
     )
     (path "/755090ec-fdfb-40aa-83ce-f20a94352e8e/05700b4d-5eb3-484c-855b-e22f1f0338b1"
       (reference "R41") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0603_1608Metric")
+    )
+    (path "/00000000-0000-0000-0000-0000622d0e2d/2ca118f8-f6dd-4977-b723-05eb3575756b"
+      (reference "SRP2512-2R2M1") (unit 1) (value "2.2u") (footprint "ppse_2021:Inductor")
     )
     (path "/00000000-0000-0000-0000-00006222e27b/1b315b47-8adf-49de-916b-225f0c5df700"
       (reference "SW1") (unit 1) (value "PRG_SW") (footprint "Button_Switch_SMD:SW_SPST_PTS645")
