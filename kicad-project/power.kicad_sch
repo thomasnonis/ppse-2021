@@ -1806,7 +1806,7 @@
     (uuid 9207196d-bb4d-46b0-8bb9-015d71d876e6)
     (property "Reference" "J3" (id 0) (at 39.5478 84.6582 0))
     (property "Value" "USB_B_Mini" (id 1) (at 39.5478 86.9696 0))
-    (property "Footprint" "Connector_USB:USB_Micro-B_Molex-105133-0001" (id 2) (at 41.91 97.79 0)
+    (property "Footprint" "Connector_USB:USB_Mini-B_Wuerth_65100516121_Horizontal" (id 2) (at 41.91 97.79 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 41.91 97.79 0)
