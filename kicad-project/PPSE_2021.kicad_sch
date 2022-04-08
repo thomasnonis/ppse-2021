@@ -1059,10 +1059,10 @@
       (reference "J4") (unit 1) (value "12V IN") (footprint "Connector_Molex:Molex_Micro-Fit_3.0_43650-0200_1x02_P3.00mm_Horizontal")
     )
     (path "/00000000-0000-0000-0000-0000622b4158/afc9b3db-2de4-4a75-98f7-54e62ba233a8"
-      (reference "J5") (unit 1) (value "Compass") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical")
+      (reference "J5") (unit 1) (value "Compass") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Horizontal")
     )
     (path "/00000000-0000-0000-0000-0000622b4158/bfa57ca9-1e1b-44f5-923c-14f7f8ae51a4"
-      (reference "J6") (unit 1) (value "Accelerometer") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical")
+      (reference "J6") (unit 1) (value "Accelerometer") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Horizontal")
     )
     (path "/00000000-0000-0000-0000-0000622b4158/44a1fd85-4885-4fdf-b0ff-91387c3d54c7"
       (reference "J7") (unit 1) (value "OLED") (footprint "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical")
