@@ -3,7 +3,14 @@ if (TARGET tinyusb_device)
             SALMO.c
             )
 
+add_executable(sun_tracker ../libs/tracking-algorithm/algo/sun_tracker.c)
+
     # pull in common dependencies
+    include_directories(../libs/tracking-algorithm/algo)
+   
+    target_link_libraries(sun_tracker pico_stdlib)
+    link_directories(../libs/tracking-algorithm/algo)
+
     target_link_libraries(SALMO pico_stdlib)
 
     # enable usb output, disable uart output

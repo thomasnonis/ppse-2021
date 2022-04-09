@@ -15,11 +15,13 @@ int main() {
     gpio_init(LED_PIN);
     gpio_set_dir(LED_PIN, GPIO_OUT);
 
+    Place place0 = {2030,2,28,10,0,0,55.751244, 37.618423};
+
     while (true) {
         printf("SALMO!\n");
 
-        // Place place0 = {2030,2,28,10,0,0,55.751244, 37.618423};
-        // compute_complete_position(&place0);
+        
+        compute_complete_position(&place0);
 
         sleep_ms(1000);
         gpio_put(LED_PIN, 1);

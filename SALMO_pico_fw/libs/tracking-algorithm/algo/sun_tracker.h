@@ -1,17 +1,19 @@
 #ifndef __SUN_TRACKER_H
 #define __SUN_TRACKER_H
 
-#include <stdio.h>
+
 #include <math.h>
 
 #define PICO_SOURCE
 
 #ifdef PICO_SOURCE
   #include "pico/stdlib.h"
-  #pragma "printf lib: pico/stdlib.h"
+  #include "pico/stdio.h"
+  #warning "printf lib: pico/stdlib.h"
 #else
     #include <stdlib.h> 
-    #pragma "printf lib: <stdlib.h>"
+    #include <stdio.h>
+    #warning "printf lib: <stdlib.h>"
 #endif
 
 //TODO: add input params to struct pos
