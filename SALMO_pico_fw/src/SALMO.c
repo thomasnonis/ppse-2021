@@ -1,12 +1,17 @@
 /**
- * Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
- *
- * SPDX-License-Identifier: BSD-3-Clause
+ * @file SALMO.c
+ * @author SALMO Society 
+ * @brief  Finding new way to reach MPPT
+ * @version 0.1
+ * @date 2022-04-10
+ * 
+ * @copyright Copyright (c) 2022
+ * 
  */
 
 #include <stdio.h>
 #include "pico/stdlib.h"
-#include "../libs/tracking-algorithm/algo/sun_tracker.h"
+#include "../tracking-algorithm/sun_tracker.h"
 
 int main() {
     stdio_init_all();
@@ -20,7 +25,6 @@ int main() {
     while (true) {
         printf("SALMO!\n");
 
-        
         compute_complete_position(&place0);
 
         sleep_ms(1000);

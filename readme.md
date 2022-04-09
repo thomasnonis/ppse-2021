@@ -1,4 +1,4 @@
-# Building process
+# :rainbow: Building process
     git pull
     git submodule update --init
     cd pico-sdk
@@ -25,6 +25,24 @@ After this process some binaries files will be created. <br>The suitable one is 
 
 Then drag and drop it to `RPI-RP2` mass storage device. If the device is not showed by your computer.
 
+# :briefcase: Adding new drivers or libraries
+If you want to add a new driver or library please keep this tree structure
+```
+📦 SALMO_pico_fw
+ ┣ 📂 build
+ ┣ 📂 src
+ ┣ 📂 tracking-algorithm
+ ┃ ┗ 📂 algorithm docs
+ ┃ ┗ 📜 CMakeLists.txt
+ ┃ ┗ 📜 sun_tracker.c.
+ ┃ ┗ 📜 sun_tracker.h
+ ┣ 📂 your_lib
+ ┃ ┗ 📂 your_lib docs
+ ┃ ┗ 📜 CMakeLists.txt
+ ┃ ┗ 📜 your_lib.c.
+ ┃ ┗ 📜 your_lib.h
+```
+Every ibrary needs some sort of documentation, and cmake file!
 
 # :boom: Compilation routine for the algo
 

@@ -234,7 +234,7 @@ void compute_complete_position(Place* place){
 }
 
 
-
+#ifndef PICO_SOURCE
 int main(int argc, char *argv[]){
 
     //year-month-day-time_zone-hour(utc)-minute-second-latitude-longitude
@@ -252,6 +252,6 @@ int main(int argc, char *argv[]){
         printf("ERROR: Not enough parameters \r\n");
     }
     
-    
     return 0;
 }
+#endif

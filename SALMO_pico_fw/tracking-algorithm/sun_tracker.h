@@ -16,7 +16,6 @@
     #warning "printf lib: <stdlib.h>"
 #endif
 
-//TODO: add input params to struct pos
 // Constants:
 #define PI             3.14159265358979323846    // Pi
 #define TWO_PI         6.28318530717958647693    // 2 pi

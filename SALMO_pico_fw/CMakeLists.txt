@@ -23,4 +23,7 @@ add_compile_options(-Wall
         )
 
 # Hardware-specific examples in subdirectories:
+# declare first library folders and then src folder
+add_subdirectory(tracking-algorithm)
 add_subdirectory(src)
+
