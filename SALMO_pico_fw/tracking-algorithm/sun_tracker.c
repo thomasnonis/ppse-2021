@@ -112,7 +112,7 @@ void compute_gmst(int hour,  struct Position* pos){
     double GMST_hours = fmod(floor(gmst),24);
     double GMST_minutes = (gmst - floor(gmst))*60;
     double GMST_seconds = (GMST_minutes - floor(GMST_minutes))*60;
-    printf("GMST Time: %d:%d:%d\n",(int)GMST_hours,(int)GMST_minutes,(int)GMST_seconds);
+    //printf("GMST Time: %d:%d:%d\n",(int)GMST_hours,(int)GMST_minutes,(int)GMST_seconds);
 
     gmst = fmod(gmst,24.0);
     pos->gmst = gmst; //gmst in hours
@@ -135,7 +135,7 @@ void compute_lmst(double east_longitude,  struct Position* pos){
     double LMST_hours = fmod(floor(lmst),24);
     double LMST_minutes = (lmst - floor(lmst))*60;
     double LMST_seconds = (LMST_minutes - floor(LMST_minutes))*60;
-    printf("LMST Time: %d:%d:%d\n",(int)LMST_hours,(int)LMST_minutes,(int)LMST_seconds);
+    //printf("LMST Time: %d:%d:%d\n",(int)LMST_hours,(int)LMST_minutes,(int)LMST_seconds);
 
     pos->lmst = lmst; //lmst in hours
 }
@@ -186,51 +186,52 @@ void compute_elevation_and_azimuth(double lat, Position* pos){
     
 }
 
-void compute_complete_position(Place* place){
+Position compute_complete_position(Place* place){
     Position pos = {0};
 
     printf("\r\nDate %i/%i/%i %i-%i-%f UTC \r\n", place->year,
     place->month, place->day, place->hour, place->minute, place->second);
-    printf("Latitude %f \r\n", place->latitude);
-    printf("Longitude %f \r\n\r\n", place->longitude);
+    //printf("Latitude %f \r\n", place->latitude);
+    //printf("Longitude %f \r\n\r\n", place->longitude);
     compute_JD(place->year,place->month,place->day,place->hour,place->minute,place->second,&pos);
-    printf("JD: %f \r\n", pos.jd);
+    //printf("JD: %f \r\n", pos.jd);
     compute_days_since_epoch(&pos); 
-    printf("Julian days since epoch (1.1.2000) %f \r\n", pos.julian_days_since_epoch);
+    //printf("Julian days since epoch (1.1.2000) %f \r\n", pos.julian_days_since_epoch);
     compute_centuries_since_epoch(&pos);
-    printf("Julian centuries since epoch (1.1.2000) %.8f \r\n", pos.julian_centuries_since_epoch);
+    //printf("Julian centuries since epoch (1.1.2000) %.8f \r\n", pos.julian_centuries_since_epoch);
     compute_mean_longitude(&pos);
-    printf("Position Mean Longitude %f \r\n", pos.mean_longitude);
+    //printf("Position Mean Longitude %f \r\n", pos.mean_longitude);
     compute_mean_anomaly(&pos);
-    printf("Position Mean Anomaly %f \r\n", pos.mean_anomaly);
+    //printf("Position Mean Anomaly %f \r\n", pos.mean_anomaly);
     compute_eccent_earth_orbit(&pos);
-    printf("Eccent earth orbit %f \r\n", pos.eccent_earth_orbit);
+    //printf("Eccent earth orbit %f \r\n", pos.eccent_earth_orbit);
     compute_sun_eq_center(&pos);
-    printf("Sun eq center %f \r\n", pos.sun_eq_of_center);
+    //printf("Sun eq center %f \r\n", pos.sun_eq_of_center);
     compute_sun_true_longitude(&pos);
-    printf("Sun true longitude %f \r\n", pos.sun_true_longitude);
+    //printf("Sun true longitude %f \r\n", pos.sun_true_longitude);
     compute_sun_true_anomaly(&pos);
-    printf("Sun true anomaly %f \r\n", pos.sun_true_anomaly);
+    //printf("Sun true anomaly %f \r\n", pos.sun_true_anomaly);
     compute_sun_app_longitude(&pos);
-    printf("Sun app longitude %f \r\n", pos.sun_app_long);
+    //printf("Sun app longitude %f \r\n", pos.sun_app_long);
     compute_mean_obliquity_ecliptic(&pos);
-    printf("ok Mean Obliquity ecliptic %f \r\n", pos.mean_obliq_ecliptic);
+    //printf("ok Mean Obliquity ecliptic %f \r\n", pos.mean_obliq_ecliptic);
     compute_obliq_corr(&pos);
-    printf("Position Obliq correction %f \r\n", pos.obliq_corr);
+    //printf("Position Obliq correction %f \r\n", pos.obliq_corr);
     compute_right_ascension(&pos);
-    printf("ok Position Right Ascension %f \r\n", pos.right_ascension);
+    //printf("ok Position Right Ascension %f \r\n", pos.right_ascension);
     compute_declination(&pos);
-    printf("ok Position Declination %f \r\n", pos.declination);
+    //printf("ok Position Declination %f \r\n", pos.declination);
     compute_gmst(place->hour, &pos);
-    printf("ok GMST [Hours] %f \r\n", pos.gmst);
+    //printf("ok GMST [Hours] %f \r\n", pos.gmst);
     compute_lmst(place->longitude, &pos);
-    printf("ok LMST [Hours] %f \r\n", pos.lmst);
+    //printf("ok LMST [Hours] %f \r\n", pos.lmst);
     compute_eq_of_time(&pos);
     compute_hour_angle(place,&pos);
-    printf("Position hour angle %f \r\n", pos.hour_angle);
+    //printf("Position hour angle %f \r\n", pos.hour_angle);
     compute_elevation_and_azimuth(place->latitude, &pos);
     //TODO: CHECK AZIMUT
-    printf("Position elevation %f azimuth %f \r\n", pos.elevation, pos.azimuth);
+    //printf("Position elevation %f azimuth %f \r\n", pos.elevation, pos.azimuth);
+    return pos;
 }
 
 

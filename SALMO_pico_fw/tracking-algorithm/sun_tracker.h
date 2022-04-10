@@ -1,3 +1,14 @@
+/**
+ * @file sun_tracker.h
+ * @author Tommaso Canova, Simone Tollardo, Lisa Santarossa, Thomas Nonis, Gabriele Berretta
+ * @brief 
+ * @version 0.1
+ * @date 2022-04-10
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #ifndef __SUN_TRACKER_H
 #define __SUN_TRACKER_H
 
@@ -66,5 +77,5 @@ void compute_lmst(double east_longitude,  struct Position* pos);
 void compute_hour_angle(Place* place, struct Position* pos);
 void compute_elevation_and_azimuth(double lat,  struct Position* pos);
 
-void compute_complete_position(Place* place);
+Position compute_complete_position(Place* place);
 #endif
