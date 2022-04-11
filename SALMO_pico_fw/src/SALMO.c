@@ -21,17 +21,16 @@ int main() {
     gpio_set_dir(LED_PIN, GPIO_OUT);
 
     Place place0 = {2030,2,28,10,0,0,55.751244, 37.618423};
+    gpio_put(LED_PIN, 1);
 
     while (true) {
-        printf("SALMO!\n");
+        printf("SALMO!\r\n");
 
-        compute_complete_position(&place0);
+        Position p = compute_complete_position(&place0);
+        printf("[PICO] Position elevation %f azimuth %f \r\n", p.elevation, p.azimuth);
+        sleep_ms(2000);
 
-        sleep_ms(1000);
-        gpio_put(LED_PIN, 1);
-        sleep_ms(250);
-        gpio_put(LED_PIN, 0);
-        sleep_ms(250);
+        printf("----\r\n");
     }
     return 0;
 }
