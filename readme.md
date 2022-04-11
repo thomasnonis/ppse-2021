@@ -2,13 +2,13 @@
     git pull
     git submodule update --init
     cd pico-sdk
+    git submodule update --init
 
-Add to your shell profile .bashrc or .zshrc the current directory of pico-sdk folder as env variable
+Add to your shell profile (`~/.bashrc` or `~/.zshrc`) the current directory (pico-sdk folder) as env variable:
     
     export PICO_SDK_PATH=path_to/pico-sdk
 <br>
 
-    git submodule update --init
     cd ..
     cd SALMO_pico_fw
     mkdir build
@@ -17,13 +17,15 @@ Add to your shell profile .bashrc or .zshrc the current directory of pico-sdk fo
     cd src
     make -j4
 
-After this process some binaries files will be created. <br>The suitable one is the `.uf2` file, which is located into `SALMO_pico_fw/build/src`. 
-<br>After this do the following steps:
+After this process some binaries files will be created. <br>The suitable one is the `.uf2` file, which is located into `SALMO_pico_fw/build/src`.<br>
+Now you can start the board in bootloader mode:
 1. Disconnect the board
 1. Hold the `BOOTSEL` button
 1. Connect the device to your computer
 
-Then drag and drop it to `RPI-RP2` mass storage device. If the device is not showed by your computer.
+Then drag and drop the `.uf2` file to `RPI-RP2` mass storage device.
+
+In order to make this process faster, you can simply navigate to `SALMO_pico_fw/src/` and execute `build.sh` or `build_and_flash.sh` to respectively build or build and flash the project. :nail_care:
 
 # :briefcase: Adding new drivers or libraries
 If you want to add a new driver or library please keep this tree structure
@@ -37,8 +39,9 @@ If you want to add a new driver or library please keep this tree structure
  ┃ ┗ 📜 your_lib.c.
  ┃ ┗ 📜 your_lib.h
 ```
-Every ibrary needs some sort of documentation, and cmake file!
+Every library needs some sort of documentation, and of course a cmake file!
 
+OLD :globe_with_meridians: :
 # :boom: Compilation routine for the algo
 
     cd fw-dev
