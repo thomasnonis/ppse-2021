@@ -17,6 +17,7 @@
 #include "../tracking-algorithm/sun_tracker.h"
 #include "../MPU6050/MPU6050.h"
 #include "../MPU6050/MPU6050_I2C.h"
+#include "../HMC5883L/HMC5883L.h"
 
 int main() {
     stdio_init_all();
@@ -25,7 +26,7 @@ int main() {
     gpio_set_function(I2C1_SDA, GPIO_FUNC_I2C);
     gpio_set_function(I2C1_SCL, GPIO_FUNC_I2C);
     
-    /* Verify if are needed
+    /* Verify if are needed, probably they are already in the sensor breakout board
         gpio_pull_up(I2C1_SDA);
         gpio_pull_up(I2C1_SCL);
     */
