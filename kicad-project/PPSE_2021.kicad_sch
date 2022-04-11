@@ -887,6 +887,12 @@
     (path "/00000000-0000-0000-0000-00006222e27b/e7f34585-6872-43c5-95d5-50a4fb33b833"
       (reference "#PWR0111") (unit 1) (value "+3V3") (footprint "")
     )
+    (path "/00000000-0000-0000-0000-0000622b4158/aa3a08f8-afb8-45d7-be34-f991696d3040"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-0000622b4158/bb0d4abd-4d73-47ff-a01f-db78a21ba782"
+      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+    )
     (path "/00000000-0000-0000-0000-0000622b4158/485df1dc-2b48-4d83-a51e-7a2ec0d73d28"
       (reference "BZ1") (unit 1) (value "Buzzer") (footprint "Buzzer_Beeper:Buzzer_12x9.5RM7.6")
     )
@@ -1046,8 +1052,8 @@
     (path "/1a2a9996-0ea5-469b-9d49-4c0cc550e6bf"
       (reference "H4") (unit 1) (value "MountingHole") (footprint "MountingHole:MountingHole_3.2mm_M3")
     )
-    (path "/00000000-0000-0000-0000-00006222e27b/41891432-d8c8-4758-ba6f-14662e2f0010"
-      (reference "J1") (unit 1) (value "Conn_02x04_Counter_Clockwise") (footprint "Connector_PinHeader_2.54mm:PinHeader_2x04_P2.54mm_Vertical")
+    (path "/00000000-0000-0000-0000-00006222e27b/fbcf8f18-273b-4de6-a7fa-1aa52b6a30eb"
+      (reference "J1") (unit 1) (value "Conn_02x03_Counter_Clockwise") (footprint "Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical")
     )
     (path "/00000000-0000-0000-0000-00006222e27b/4920e93e-1403-4b93-b4be-9eb2491c3c8d"
       (reference "J2") (unit 1) (value "Conn_02x08_Counter_Clockwise") (footprint "Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical")
@@ -1188,7 +1194,7 @@
       (reference "R22") (unit 1) (value "R") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/6098b3d1-9678-4793-a3c7-aeb891a5aa46"
-      (reference "R23") (unit 1) (value "R") (footprint "Resistor_SMD:R_0603_1608Metric")
+      (reference "R23") (unit 1) (value "R DNP") (footprint "Resistor_SMD:R_0603_1608Metric")
     )
     (path "/e92ed148-d831-4ee6-93c4-e593d47b2e2f/77974df4-9826-4ef7-b829-5d6faf385f24"
       (reference "R24") (unit 1) (value "R") (footprint "Resistor_SMD:R_0603_1608Metric")
