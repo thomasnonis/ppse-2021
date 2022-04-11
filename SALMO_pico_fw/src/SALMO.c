@@ -12,9 +12,24 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "../tracking-algorithm/sun_tracker.h"
+#include "../MPU6050/MPU6050.h"
+#include "../MPU6050/MPU6050_BSP.h"
+
+//TODO:pin mapping alt functions
 
 int main() {
     stdio_init_all();
+
+    //SET I2C Pins for MPU6050
+    gpio_set_function(PICO_DEFAULT_I2C_SDA_PIN, GPIO_FUNC_I2C);
+    gpio_set_function(PICO_DEFAULT_I2C_SCL_PIN, GPIO_FUNC_I2C);
+    gpio_pull_up(PICO_DEFAULT_I2C_SDA_PIN);
+    gpio_pull_up(PICO_DEFAULT_I2C_SCL_PIN);
+        // Make the I2C pins available to picotool
+    bi_decl(bi_2pins_with_func(PICO_DEFAULT_I2C_SDA_PIN, PICO_DEFAULT_I2C_SCL_PIN, GPIO_FUNC_I2C));
+
+    MPU6050_Initialize();
+    
 
     const uint LED_PIN = PICO_DEFAULT_LED_PIN;
     gpio_init(LED_PIN);

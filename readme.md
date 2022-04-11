@@ -31,11 +31,6 @@ If you want to add a new driver or library please keep this tree structure
 📦 SALMO_pico_fw
  ┣ 📂 build
  ┣ 📂 src
- ┣ 📂 tracking-algorithm
- ┃ ┗ 📂 algorithm docs
- ┃ ┗ 📜 CMakeLists.txt
- ┃ ┗ 📜 sun_tracker.c.
- ┃ ┗ 📜 sun_tracker.h
  ┣ 📂 your_lib
  ┃ ┗ 📂 your_lib docs
  ┃ ┗ 📜 CMakeLists.txt
