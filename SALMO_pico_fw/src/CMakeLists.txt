@@ -1,7 +1,7 @@
 if (TARGET tinyusb_device)
     add_executable(SALMO SALMO.c)
 
-    target_link_libraries(SALMO PRIVATE pico_stdlib sun_tracker MPU6050)
+    target_link_libraries(SALMO PRIVATE pico_stdlib sun_tracker MPU6050 hardware_i2c)
 
     include_directories("../tracking-algorithm")
     # enable usb output, disable uart output
