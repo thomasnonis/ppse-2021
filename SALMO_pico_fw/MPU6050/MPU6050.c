@@ -31,7 +31,7 @@
 /* Includes */
 #include "MPU6050.h"
 #include "MPU6050_defines.h"
-#include "MPU6050_BSP.h"
+#include "MPU6050_I2C.h"
 
 /** @defgroup MPU6050_Library
  * @{
