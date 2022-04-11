@@ -9,9 +9,11 @@
  * 
  */
 
+#include "SALMO.h"
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "../tracking-algorithm/sun_tracker.h"
+
 
 int main() {
     stdio_init_all();
@@ -28,8 +30,7 @@ int main() {
 
         Position p = compute_complete_position(&place0);
         printf("[PICO] Position elevation %f azimuth %f \r\n", p.elevation, p.azimuth);
-        sleep_ms(2000);
-
+        sleep_ms(1000);
         printf("----\r\n");
     }
     return 0;

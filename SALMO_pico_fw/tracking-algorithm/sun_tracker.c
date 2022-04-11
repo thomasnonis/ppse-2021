@@ -1,5 +1,14 @@
 #include "sun_tracker.h"
-#include <stdio.h>
+
+#define PICO_SOURCE
+
+#ifdef PICO_SOURCE
+  #include "pico/stdlib.h"
+  #include <stdio.h>
+#else
+    #include <stdlib.h> 
+    #include <stdio.h>
+#endif
 
 void compute_JD(int year, int month, int day,  int hour, int minute, double second, struct Position* pos){
     
@@ -109,9 +118,9 @@ void compute_gmst(int hour,  struct Position* pos){
     double gmst = 6.697375 + (0.0657098242 * (floor(pos->julian_days_since_epoch)+0.5)) + 
                             (1.00273790935*hour) + 
                             (0.000026 * floor(pow(pos->julian_centuries_since_epoch,2)));
-    double GMST_hours = fmod(floor(gmst),24);
-    double GMST_minutes = (gmst - floor(gmst))*60;
-    double GMST_seconds = (GMST_minutes - floor(GMST_minutes))*60;
+    //double GMST_hours = fmod(floor(gmst),24);
+    //double GMST_minutes = (gmst - floor(gmst))*60;
+    //double GMST_seconds = (GMST_minutes - floor(GMST_minutes))*60;
     //printf("GMST Time: %d:%d:%d\n",(int)GMST_hours,(int)GMST_minutes,(int)GMST_seconds);
 
     gmst = fmod(gmst,24.0);
@@ -132,9 +141,9 @@ void compute_lmst(double east_longitude,  struct Position* pos){
     double lmst = pos->gmst + (east_longitude/15.0);
     lmst = fmod(lmst, 24.0);
 
-    double LMST_hours = fmod(floor(lmst),24);
-    double LMST_minutes = (lmst - floor(lmst))*60;
-    double LMST_seconds = (LMST_minutes - floor(LMST_minutes))*60;
+    //double LMST_hours = fmod(floor(lmst),24);
+    //double LMST_minutes = (lmst - floor(lmst))*60;
+    //double LMST_seconds = (LMST_minutes - floor(LMST_minutes))*60;
     //printf("LMST Time: %d:%d:%d\n",(int)LMST_hours,(int)LMST_minutes,(int)LMST_seconds);
 
     pos->lmst = lmst; //lmst in hours
