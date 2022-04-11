@@ -36,7 +36,7 @@ int main() {
 
     int16_t acc_gyro_data=0;
     //Init i2c port1 with defined baud rate
-    // I2C MPU port is defined inside MPU6050_BSP.h
+    // I2C MPU port is defined inside every .h device library
     i2c_init(I2C_PERIPHERAL, I2C_PORT1_BAUD_RATE);
     MPU6050_Initialize();
 
@@ -49,6 +49,17 @@ int main() {
         printf("MPU6050 connection failed\n");
     }
     MPU6050_GetRawAccelGyro(&acc_gyro_data);
+
+    HMC5883L_initialize();
+    if(HMC5883L_testConnection())
+    {
+        printf("HMC5883L connection success\n");
+    }
+    else
+    {
+        printf("HMC5883L connection failed\n");
+    }
+    
 
     const uint LED_PIN = PICO_DEFAULT_LED_PIN;
     gpio_init(LED_PIN);
