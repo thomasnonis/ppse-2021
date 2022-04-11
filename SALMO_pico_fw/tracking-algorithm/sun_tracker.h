@@ -15,18 +15,6 @@
 
 #include <math.h>
 
-#define PICO_SOURCE
-
-#ifdef PICO_SOURCE
-  #include "pico/stdlib.h"
-  #include "pico/stdio.h"
-  #warning "printf lib: pico/stdlib.h"
-#else
-    #include <stdlib.h> 
-    #include <stdio.h>
-    #warning "printf lib: <stdlib.h>"
-#endif
-
 // Constants:
 #define PI             3.14159265358979323846    // Pi
 #define TWO_PI         6.28318530717958647693    // 2 pi

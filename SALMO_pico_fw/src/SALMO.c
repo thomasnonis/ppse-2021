@@ -9,7 +9,8 @@
  * 
  */
 
-#include "pico/stdio.h"
+#include "SALMO.h"
+#include <stdio.h>
 #include "pico/stdlib.h"
 #include "pico/binary_info.h"
 #include "hardware/i2c.h"
@@ -58,8 +59,7 @@ int main() {
 
         Position p = compute_complete_position(&place0);
         printf("[PICO] Position elevation %f azimuth %f \r\n", p.elevation, p.azimuth);
-        sleep_ms(2000);
-
+        sleep_ms(1000);
         printf("----\r\n");
     }
     return 0;
