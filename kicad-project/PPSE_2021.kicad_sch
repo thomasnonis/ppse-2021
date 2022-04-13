@@ -888,10 +888,10 @@
       (reference "#PWR0111") (unit 1) (value "+3V3") (footprint "")
     )
     (path "/00000000-0000-0000-0000-0000622b4158/aa3a08f8-afb8-45d7-be34-f991696d3040"
-      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+      (reference "#PWR0112") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-0000622b4158/bb0d4abd-4d73-47ff-a01f-db78a21ba782"
-      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+      (reference "#PWR0113") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-0000622b4158/485df1dc-2b48-4d83-a51e-7a2ec0d73d28"
       (reference "BZ1") (unit 1) (value "Buzzer") (footprint "Buzzer_Beeper:Buzzer_12x9.5RM7.6")

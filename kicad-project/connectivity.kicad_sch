@@ -1290,6 +1290,7 @@
     )
   )
 
+
   (junction (at 49.53 105.41) (diameter 0) (color 0 0 0 0)
     (uuid 06953621-c037-4911-9588-e2b6b1c4b13d)
   )
@@ -2314,7 +2315,7 @@
   (symbol (lib_id "power:GND") (at 115.57 72.39 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid aa3a08f8-afb8-45d7-be34-f991696d3040)
-    (property "Reference" "#PWR?" (id 0) (at 115.57 78.74 0)
+    (property "Reference" "#PWR0112" (id 0) (at 115.57 78.74 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 115.57 77.47 90))
@@ -2367,7 +2368,7 @@
   (symbol (lib_id "power:GND") (at 118.11 72.39 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid bb0d4abd-4d73-47ff-a01f-db78a21ba782)
-    (property "Reference" "#PWR?" (id 0) (at 118.11 78.74 0)
+    (property "Reference" "#PWR0113" (id 0) (at 118.11 78.74 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 118.11 77.47 90))
