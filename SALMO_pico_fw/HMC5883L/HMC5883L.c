@@ -45,6 +45,10 @@ static uint8_t mode;
 
 #define I2C_PERIPHERAL (i2c1)
 
+//TODO: hardcode all the shit
+//https://github.com/jrowberg/i2cdevlib/blob/master/STM32/HMC5883/HMC5883L.c
+//https://github.com/jrowberg/i2cdevlib/blob/master/STM32/I2Cdev.c
+
 /** Power on and prepare for general usage.
  * This will prepare the magnetometer with default settings, ready for single-
  * use mode (very low power requirements). Default settings include 8-sample
