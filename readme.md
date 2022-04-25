@@ -1,8 +1,6 @@
 # :rainbow: Building process
     git pull
-    git submodule update --init
-    cd pico-sdk
-    git submodule update --init
+    git submodule update --init --recursive
 
 Add to your shell profile (`~/.bashrc` or `~/.zshrc`) the current directory (pico-sdk folder) as env variable:
     
@@ -25,7 +23,17 @@ Now you can start the board in bootloader mode:
 
 Then drag and drop the `.uf2` file to `RPI-RP2` mass storage device.
 
-In order to make this process faster, you can simply navigate to `SALMO_pico_fw/src/` and execute `build.sh` or `build_and_flash.sh` to respectively build or build and flash the project. :nail_care:
+## Picotool
+If you want to install picotool and easily flash when RP2040 is not in BOOTSEL mode, you need to follow these steps:
+
+    sudo apt install build-essential pkg-config libusb-1.0-0-dev
+    cd picotool
+    mkdir build
+    cd build
+    cmake ..
+    make
+
+Then, you can simply navigate to `SALMO_pico_fw/src/` and execute `build.sh`, `flash.sh` or `build_and_flash.sh` to respectively build, flash or build and flash the project. :nail_care:
 
 # :briefcase: Adding new drivers or libraries
 If you want to add a new driver or library please keep this tree structure
