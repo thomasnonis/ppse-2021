@@ -82,7 +82,7 @@ void HMC5883L_initialize() {
 bool HMC5883L_testConnection() {
     buffer[0]=HMC5883L_RA_ID_A;
     i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 3, false)
+    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 3, false);
     return (buffer[0] == 'H' && buffer[1] == '4' && buffer[2] == '3');
 }
 
@@ -208,10 +208,10 @@ void HMC5883L_setMeasurementBias(uint8_t bias) {
     i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
     i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, false);
     uint8_t mask = ((1 << HMC5883L_CRA_BIAS_LENGTH) - 1) << (HMC5883L_CRA_BIAS_BIT - HMC5883L_CRA_BIAS_LENGTH + 1);
-    rate <<= (HMC5883L_CRA_BIAS_BIT - HMC5883L_CRA_BIAS_LENGTH + 1); // shift data into correct position
-    rate &= mask; // zero all non-important bits in data
+    bias <<= (HMC5883L_CRA_BIAS_BIT - HMC5883L_CRA_BIAS_LENGTH + 1); // shift data into correct position
+    bias &= mask; // zero all non-important bits in data
     buffer[0] &= ~(mask); // zero all important bits in existing byte
-    buffer[0] |= rate; // combine data with existing byte
+    buffer[0] |= bias; // combine data with existing byte
     buffer[1]=buffer[0];
     buffer[0]=HMC5883L_RA_CONFIG_A;
     i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 2, false);

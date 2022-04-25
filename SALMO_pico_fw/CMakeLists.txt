@@ -25,6 +25,7 @@ add_compile_options(-Wall
 # Hardware-specific examples in subdirectories:
 # declare first library folders and then src folder
 add_subdirectory(tracking-algorithm)
+add_subdirectory(SSD1306)
 add_subdirectory(HMC5883L)
 add_subdirectory(MPU6050)
 add_subdirectory(src)

@@ -1,8 +1,8 @@
-#include "ssd1306.h"
 #include "pico/stdlib.h"
 #include "pico/binary_info.h"
 #include "hardware/i2c.h"
 
+#include "ssd1306.h"
 #include "raspberry26x32.h"
 #include "ssd1306_fonts.h"
 
