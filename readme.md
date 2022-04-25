@@ -6,6 +6,7 @@ Add to your shell profile (`~/.bashrc` or `~/.zshrc`) the current directory (pic
     
     export PICO_SDK_PATH=path_to/pico-sdk
 <br>
+
     cd ..
     cd SALMO_pico_fw
     mkdir build
