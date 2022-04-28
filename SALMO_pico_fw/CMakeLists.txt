@@ -26,5 +26,6 @@ add_compile_options(-Wall
 # declare first library folders and then src folder
 add_subdirectory(tracking-algorithm)
 add_subdirectory(MPU6050)
+add_subdirectory(timer)
 add_subdirectory(src)
 
