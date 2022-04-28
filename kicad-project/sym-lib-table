@@ -1,3 +1,0 @@
-(sym_lib_table
-  (lib (name AA_PPSE_2021)(type Legacy)(uri ${KIPRJMOD}/lib/symbols/PPSE_2021.lib)(options "")(descr ""))
-)

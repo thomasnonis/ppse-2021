@@ -1,11 +1,14 @@
-//MPU6050 I2C library for ARM STM32F103xx Microcontrollers - Main header file 
+//MPU6050 I2C library for ARM STM32F103xx, RP2040 Microcontrollers - Main source file
 //Has bit, byte and buffer I2C R/W functions
 // 23/05/2012 by Harinadha Reddy Chintalapalli <harinath.ec@gmail.com>
+// 11/04/2022 by Tollardo Simone, Tommaso Canova, Lisa Santarossa, Gabriele Berretta
 // Changelog:
+//     2022-04-11 - ported to RP2040
 //     2012-05-23 - initial release. Thanks to Jeff Rowberg <jeff@rowberg.net> for his AVR/Arduino
-//                  based development which inspired me & taken as reference to develop this.
+//                  based MPU6050 development which inspired me & taken as reference to develop this.
+
 /* ============================================================================================
- MPU6050 device I2C library code for ARM STM32F103xx is placed under the MIT license
+ MPU6050 device I2C library code for ARM STM32F103xx, RP2040 is placed under the MIT license
  Copyright (c) 2012 Harinadha Reddy Chintalapalli
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
