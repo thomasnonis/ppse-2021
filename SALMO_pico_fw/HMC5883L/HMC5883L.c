@@ -103,7 +103,7 @@ bool isHMC() {
  * a lot of -4096 values (see the datasheet for mor information).
  */
 void HMC5883L_initialize() {
-    slaveAddr = HMC5883L_ADDRESS;
+    slaveAddr = HMC5883L_DEFAULT_ADDRESS;
     // write CONFIG_A register
     buffer[0] = HMC5883L_RA_CONFIG_A;
 

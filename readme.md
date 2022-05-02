@@ -34,6 +34,7 @@ Mac:
 
     xcode-select --install
     brew install libusb
+    brew link --overwrite libusb
     
 and then do:
 
