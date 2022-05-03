@@ -50,9 +50,6 @@ After that, you must give execution permissions to the scripts:
     sudo chmod +x build.sh
     sudo chmod +x flash.sh
     sudo chmod +x build_and_flash.sh
-    sudo chown root:root build.sh
-    sudo chown root:root flash.sh
-    sudo chown root:root build_and_flash.sh
 
 Then, you can simply navigate to `SALMO_pico_fw/src/` and execute `build.sh`, `flash.sh` or `build_and_flash.sh` to respectively build, flash or build and flash the project (NOTE: scripts must be executed as sudo in order to take control of the USB device). :nail_care:
 
