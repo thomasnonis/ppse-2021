@@ -29,5 +29,6 @@ add_subdirectory(SSD1306)
 add_subdirectory(HMC5883L)
 add_subdirectory(MPU6050)
 add_subdirectory(stepper)
+add_subdirectory(timer)
 add_subdirectory(src)
 

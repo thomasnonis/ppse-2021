@@ -43,9 +43,10 @@ THE SOFTWARE.
 #include "hardware/i2c.h"
 #include <stdbool.h>
 
-#define HMC5883L_ADDRESS            0x1E // this device only has one address
+//Device address
 #define HMC5883L_DEFAULT_ADDRESS    0x1E
 
+//Register map
 #define HMC5883L_RA_CONFIG_A        0x00
 #define HMC5883L_RA_CONFIG_B        0x01
 #define HMC5883L_RA_MODE            0x02
@@ -60,6 +61,9 @@ THE SOFTWARE.
 #define HMC5883L_RA_ID_B            0x0B
 #define HMC5883L_RA_ID_C            0x0C
 
+//Configuration register A:
+// CRA7 | CRA6 | CRA5 | CRA4 | CRA3 | CRA2 | CRA1 | CRA0
+// rsv. |sample aver. |     output rate    | meas. config. 
 #define HMC5883L_CRA_AVERAGE_BIT    6
 #define HMC5883L_CRA_AVERAGE_LENGTH 2
 #define HMC5883L_CRA_RATE_BIT       4
@@ -84,6 +88,7 @@ THE SOFTWARE.
 #define HMC5883L_BIAS_POSITIVE      0x01
 #define HMC5883L_BIAS_NEGATIVE      0x02
 
+//Configuration register B:
 #define HMC5883L_CRB_GAIN_BIT       7
 #define HMC5883L_CRB_GAIN_LENGTH    3
 
@@ -96,6 +101,7 @@ THE SOFTWARE.
 #define HMC5883L_GAIN_330           0x06
 #define HMC5883L_GAIN_220           0x07
 
+//Mode register:
 #define HMC5883L_MODEREG_BIT        1
 #define HMC5883L_MODEREG_LENGTH     2
 
@@ -106,8 +112,14 @@ THE SOFTWARE.
 #define HMC5883L_STATUS_LOCK_BIT    1
 #define HMC5883L_STATUS_READY_BIT   0
 
+//ID registers
+uint8_t HMC5883L_getIDA();
+uint8_t HMC5883L_getIDB();
+uint8_t HMC5883L_getIDC();
+
 void HMC5883L_initialize();
-bool HMC5883L_testConnection();
+//True if device ID is HMC5883L ID
+bool isHMC();
 
 // CONFIG_A register
 uint8_t HMC5883L_getSampleAveraging();
@@ -134,11 +146,5 @@ int16_t HMC5883L_getHeadingZ();
 // STATUS register
 bool HMC5883L_getLockStatus();
 bool HMC5883L_getReadyStatus();
-
-// ID_* registers
-uint8_t HMC5883L_getIDA();
-uint8_t HMC5883L_getIDB();
-uint8_t HMC5883L_getIDC();
-
 
 #endif /* _HMC5883L_H_ */

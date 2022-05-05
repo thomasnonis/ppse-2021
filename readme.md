@@ -4,10 +4,10 @@
 
 Add to your shell profile (`~/.bashrc` or `~/.zshrc`) the current directory (pico-sdk folder) as env variable:
     
-    export PICO_SDK_PATH=path_to/pico-sdk
-<br>
+`export PICO_SDK_PATH=<path_to>/pico-sdk`
 
-    cd ..
+and then:
+
     cd SALMO_pico_fw
     mkdir build
     cd build 
@@ -26,14 +26,32 @@ Then drag and drop the `.uf2` file to `RPI-RP2` mass storage device.
 ## Picotool
 If you want to install picotool and easily flash when RP2040 is not in BOOTSEL mode, you need to follow these steps:
 
+Linux:
+
     sudo apt install build-essential pkg-config libusb-1.0-0-dev
+    
+Mac:
+
+    xcode-select --install
+    brew install libusb
+    brew link --overwrite libusb
+    
+and then do:
+
     cd picotool
     mkdir build
     cd build
     cmake ..
     make
 
-Then, you can simply navigate to `SALMO_pico_fw/src/` and execute `build.sh`, `flash.sh` or `build_and_flash.sh` to respectively build, flash or build and flash the project. :nail_care:
+After that, you must give execution permissions to the scripts:
+
+    cd ../../SALMO_pico_fw/src
+    sudo chmod +x build.sh
+    sudo chmod +x flash.sh
+    sudo chmod +x build_and_flash.sh
+
+Then, you can simply navigate to `SALMO_pico_fw/src/` and execute `build.sh`, `flash.sh` or `build_and_flash.sh` to respectively build, flash or build and flash the project (NOTE: scripts must be executed as sudo in order to take control of the USB device). :nail_care:
 
 # :briefcase: Adding new drivers or libraries
 If you want to add a new driver or library please keep this tree structure
@@ -49,8 +67,7 @@ If you want to add a new driver or library please keep this tree structure
 ```
 Every library needs some sort of documentation, and of course a cmake file!
 
-OLD :globe_with_meridians: :
-# :boom: Compilation routine for the algo
+# OLD :globe_with_meridians: : :boom: Compilation routine for the algo
 
     cd fw-dev
     cd tracking-algotithm

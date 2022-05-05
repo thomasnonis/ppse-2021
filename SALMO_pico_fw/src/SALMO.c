@@ -17,11 +17,29 @@
 #include "../tracking-algorithm/sun_tracker.h"
 #include "../MPU6050/MPU6050.h"
 #include "../MPU6050/MPU6050_I2C.h"
+#include "../timer/pico_timer.h"
+
+bool update_position;
+struct repeating_timer update_position_timer;
+
+/**
+ * @brief Set update position flag every t.delay_us
+ * @param t Pointer to the timer structure
+ */
+bool update_position_callback(struct repeating_timer *t) {
+    printf("Time: %lld\n", time_us_64());
+    update_position = true;
+    return update_position;
+}
+void init_timer(int time_ms){
+    add_repeating_timer_ms(time_ms, update_position_callback, NULL, &update_position_timer);
+}
 #include "../HMC5883L/HMC5883L.h"
 
 int main() {
     stdio_init_all();
-
+    update_position = false;
+    #ifdef I2C_PERIPHERAL_MOUNTED
     //SET I2C Pins for MPU6050
     gpio_set_function(I2C1_SDA, GPIO_FUNC_I2C);
     gpio_set_function(I2C1_SCL, GPIO_FUNC_I2C);
@@ -65,16 +83,34 @@ int main() {
     gpio_init(LED_PIN);
     gpio_set_dir(LED_PIN, GPIO_OUT);
 
+    #endif
+    //initialize_pico_timer(2000);
+
+    init_timer(2000);
     Place place0 = {2030,2,28,10,0,0,55.751244, 37.618423};
-    gpio_put(LED_PIN, 1);
+    Position p = compute_complete_position(&place0);
+    //gpio_put(LED_PIN, 1);
 
+
+    // prof preferisce modalita timer libero, get_ms > delay
+    // AA55 -> comb 
     while (true) {
-        printf("SALMO!\r\n");
-
-        Position p = compute_complete_position(&place0);
-        printf("[PICO] Position elevation %f azimuth %f \r\n", p.elevation, p.azimuth);
-        sleep_ms(1000);
-        printf("----\r\n");
+        
+        if(update_position){
+            p = compute_complete_position(&place0);
+            printf("[PICO] Position elevation %f azimuth %f \r\n", p.elevation, p.azimuth);
+            if(place0.hour+1>23){
+                place0.hour=0;
+                place0.day++;
+            }
+            else{
+                place0.hour++;
+            };
+            update_position = false;
+        }
+        sleep_ms(200);
+        
+        //printf("\r\n");
     }
     return 0;
 }
