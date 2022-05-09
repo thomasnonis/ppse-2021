@@ -24,35 +24,23 @@
 
 #pragma once
 
-struct PicoStepperConf {
+typedef struct {
   int pin1;
   int pin2;
   int pin3;
   int pin4;
   int total_steps;
   long initial_speed;
-};
-
-class PicoStepper {
- public:
-  PicoStepper (PicoStepperConf conf);
-
-  void setSpeed(long speed);
-
-  void step(int total_steps);
-
- private:
-  void stepMotor(int step);
-
   int dir;
   unsigned long delay;
-  int total_steps;
   int current_step;
-
-  int pin1;
-  int pin2;
-  int pin3;
-  int pin4;
-
   unsigned long last_step_us_time;
-};
+}PicoStepper;
+
+void PicoStepperInit(PicoStepper* stepper);
+
+void setSpeed(PicoStepper* stepper, long speed);
+
+void step(PicoStepper* stepper, int total_steps);
+
+void stepMotor(PicoStepper* stepper, int step);
