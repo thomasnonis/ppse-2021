@@ -17,6 +17,7 @@
 #include "../tracking-algorithm/sun_tracker.h"
 #include "../MPU6050/MPU6050.h"
 #include "../MPU6050/MPU6050_I2C.h"
+#include "../HMC5883L/HMC5883L.h"
 #include "../timer/pico_timer.h"
 
 bool update_position;
@@ -34,7 +35,6 @@ bool update_position_callback(struct repeating_timer *t) {
 void init_timer(int time_ms){
     add_repeating_timer_ms(time_ms, update_position_callback, NULL, &update_position_timer);
 }
-#include "../HMC5883L/HMC5883L.h"
 
 int main() {
     stdio_init_all();
