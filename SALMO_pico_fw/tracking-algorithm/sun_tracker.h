@@ -40,6 +40,7 @@ typedef struct Place{
   double second, latitude, longitude;
 } Place;
 
+void print_place(Place *p);
 void compute_JD(int year, int month, int day,  int hour, int minute, double second, struct Position* pos);
 
 //eliptic coords

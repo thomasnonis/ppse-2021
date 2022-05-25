@@ -10,6 +10,11 @@
     #include <stdio.h>
 #endif
 
+void print_place(Place *p){
+    printf("Place date [YYYY MM DD - HH MM SS]: %d %d %d - %d %d %d\r\n Latitude: %f Longitude %f \r\n", 
+    p->year, p->month, p->day, p->hour, p->minute, p->second, p->latitude, p->longitude);
+}
+
 void compute_JD(int year, int month, int day,  int hour, int minute, double second, struct Position* pos){
     
     // JD = int(365.25*(Y+4716))+int(30.6001*(M+1))+d+b-1524.5
@@ -198,8 +203,8 @@ void compute_elevation_and_azimuth(double lat, Position* pos){
 Position compute_complete_position(Place* place){
     Position pos = {0};
 
-    printf("\r\nDate %i/%i/%i %i-%i-%f UTC \r\n", place->year,
-    place->month, place->day, place->hour, place->minute, place->second);
+    //printf("\r\nDate %i/%i/%i %i-%i-%f UTC \r\n", place->year,
+    //place->month, place->day, place->hour, place->minute, place->second);
     //printf("Latitude %f \r\n", place->latitude);
     //printf("Longitude %f \r\n\r\n", place->longitude);
     compute_JD(place->year,place->month,place->day,place->hour,place->minute,place->second,&pos);
