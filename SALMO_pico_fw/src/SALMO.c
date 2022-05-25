@@ -25,7 +25,10 @@
 bool update_position;
 struct repeating_timer update_position_timer;
 /* GPS handle */
-lwgps_t hgps; 
+lwgps_t hgps;
+
+#define TEST_HMC
+#define I2C_ENABLE
 
 /* Dummy gps data */
 const char
@@ -88,23 +91,26 @@ void init_timer(int time_ms){
 int main() {
     stdio_init_all();
     update_position = false;
-    #ifdef I2C_PERIPHERAL_MOUNTED
-    //SET I2C Pins for MPU6050
+
+    #ifdef I2C_ENABLE
+    //SET I2C Pins
     gpio_set_function(I2C1_SDA, GPIO_FUNC_I2C);
     gpio_set_function(I2C1_SCL, GPIO_FUNC_I2C);
-    
+    // Make the I2C pins available to picotool
+    bi_decl(bi_2pins_with_func(I2C1_SDA, I2C1_SCL, GPIO_FUNC_I2C));
+    i2c_init(I2C_PERIPHERAL, I2C_PORT1_BAUD_RATE);
+    #endif
+
+    #ifdef MPU_MOUNTED
+
     /* Verify if are needed, probably they are already in the sensor breakout board
         gpio_pull_up(I2C1_SDA);
         gpio_pull_up(I2C1_SCL);
     */
 
-    // Make the I2C pins available to picotool
-    bi_decl(bi_2pins_with_func(I2C1_SDA, I2C1_SCL, GPIO_FUNC_I2C));
-
     int16_t acc_gyro_data=0;
     //Init i2c port1 with defined baud rate
     // I2C MPU port is defined inside every .h device library
-    i2c_init(I2C_PERIPHERAL, I2C_PORT1_BAUD_RATE);
     MPU6050_Initialize();
 
     if(MPU6050_TestConnection())
@@ -117,8 +123,12 @@ int main() {
     }
     MPU6050_GetRawAccelGyro(&acc_gyro_data);
 
+    #endif
+
+    #ifdef TEST_HMC
+
     HMC5883L_initialize();
-    if(HMC5883L_testConnection())
+    if(isHMC())
     {
         printf("HMC5883L connection success\n");
     }
@@ -126,13 +136,16 @@ int main() {
     {
         printf("HMC5883L connection failed\n");
     }
+    int16_t x;
+    int16_t y;
+    int16_t z;
+    while(1){
+        HMC5883L_getHeading(&x,&y,&z);
+        printf("x=%d y=%d z=%d\n",x,y,z);
+    }
     
-
-    const uint LED_PIN = PICO_DEFAULT_LED_PIN;
-    gpio_init(LED_PIN);
-    gpio_set_dir(LED_PIN, GPIO_OUT);
-
     #endif
+    
     //initialize_pico_timer(2000);
 
     /* Init GPS */
