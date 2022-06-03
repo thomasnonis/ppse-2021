@@ -44,6 +44,9 @@ bool read_gps;
 struct repeating_timer update_position_timer;
 struct repeating_timer gps_read_timer;
 
+// #define TEST_HMC
+// #define I2C_ENABLE
+
 //  GPS INTERRUPT CONFIG
 #ifdef INTERRUPTS_ARE_WORKING
 static int chars_rxed = 0;
@@ -55,7 +58,7 @@ Place gps_parsed_place;
 
 /**
  * @brief GPS read timer callback
- * 
+ *
  * @param t gps timer
  */
 bool gps_read_callback(struct repeating_timer *t)
@@ -77,7 +80,7 @@ bool update_position_callback(struct repeating_timer *t)
 
 /**
  * @brief Initialize the timer for position update
- * 
+ *
  * @param time_ms Timer delay in milliseconds
  */
 void init_position_timer(int time_ms)
@@ -87,7 +90,7 @@ void init_position_timer(int time_ms)
 
 /**
  * @brief Initialize the timer for gps update
- * 
+ *
  * @param time_ms Timer delay in milliseconds
  */
 void init_gps_timer(int time_ms)
@@ -181,8 +184,8 @@ int main()
     /* Initialization */
 
     // stdio_init_all(); equals to usb and uart init
-    stdio_usb_init(); //initialize usb cdc 
-    stdio_uart_init(); //initialize uart0 with 0 baud rate
+    stdio_usb_init();  // initialize usb cdc
+    stdio_uart_init(); // initialize uart0 with 0 baud rate
 
     // GPS UART initialization
     uart_init(GPS_UART_ID, BAUD_RATE);
@@ -191,34 +194,36 @@ int main()
     uart_set_hw_flow(GPS_UART_ID, false, false);
     uart_set_format(GPS_UART_ID, DATA_BITS, STOP_BITS, PARITY);
     uart_set_fifo_enabled(GPS_UART_ID, false);
-    #ifdef INTERRUPTS_ARE_WORKING
+#ifdef INTERRUPTS_ARE_WORKING
     irq_set_exclusive_handler(UART1_IRQ, on_uart_rx);
     irq_set_enabled(UART1_IRQ, true);
     uart_set_irq_enables(GPS_UART_ID, false, false);
-    #endif
+#endif
     gpio_init(GPS_EN);
     gpio_set_dir(GPS_EN, GPIO_OUT);
     gpio_put(GPS_EN, 0); // with zero it's enabled
 
     update_position = false;
 
-#ifdef I2C_PERIPHERAL_MOUNTED
-    // SET I2C Pins for MPU6050
+#ifdef I2C_ENABLE
+    // SET I2C Pins
     gpio_set_function(I2C1_SDA, GPIO_FUNC_I2C);
     gpio_set_function(I2C1_SCL, GPIO_FUNC_I2C);
+    // Make the I2C pins available to picotool
+    bi_decl(bi_2pins_with_func(I2C1_SDA, I2C1_SCL, GPIO_FUNC_I2C));
+    i2c_init(I2C_PERIPHERAL, I2C_PORT1_BAUD_RATE);
+#endif
+
+#ifdef MPU_MOUNTED
 
     /* Verify if are needed, probably they are already in the sensor breakout board
         gpio_pull_up(I2C1_SDA);
         gpio_pull_up(I2C1_SCL);
     */
 
-    // Make the I2C pins available to picotool
-    bi_decl(bi_2pins_with_func(I2C1_SDA, I2C1_SCL, GPIO_FUNC_I2C));
-
     int16_t acc_gyro_data = 0;
     // Init i2c port1 with defined baud rate
     //  I2C MPU port is defined inside every .h device library
-    i2c_init(I2C_PERIPHERAL, I2C_PORT1_BAUD_RATE);
     MPU6050_Initialize();
 
     if (MPU6050_TestConnection())
@@ -231,8 +236,12 @@ int main()
     }
     MPU6050_GetRawAccelGyro(&acc_gyro_data);
 
+#endif
+
+#ifdef TEST_HMC
+
     HMC5883L_initialize();
-    if (HMC5883L_testConnection())
+    if (isHMC())
     {
         printf("HMC5883L connection success\n");
     }
@@ -245,17 +254,26 @@ int main()
     gpio_init(LED_PIN);
     gpio_set_dir(LED_PIN, GPIO_OUT);
 
+    int16_t x;
+    int16_t y;
+    int16_t z;
+    while (1)
+    {
+        HMC5883L_getHeading(&x, &y, &z);
+        printf("x=%d y=%d z=%d\n", x, y, z);
+    }
+
 #endif
 
     /* Timers initialization */
     init_position_timer(4000);
     init_gps_timer(4000);
 
-    #ifdef GPS_SIMULATIOR
+#ifdef GPS_SIMULATIOR
     // Sample place and its respective conversion into sun position
     Place manual_place = {2030, 2, 28, 10, 0, 0, 55.751244, 37.618423};
     Position manual_position = compute_complete_position(&manual_place);
-    #endif
+#endif
 
     Position sun_position;
 
@@ -285,10 +303,10 @@ int main()
             printf("--------->GPS PARSING\r\n");
             read_gps = false;
             for (int i = 0; i < GPS_MAX_SENTENCES; i++)
-            { 
-                #ifdef DEBUG_GPS_PARSER
+            {
+#ifdef DEBUG_GPS_PARSER
                 printf("PARSED LINE%d | %s\r\n", i, gps_raw_sentences[i]);
-                #endif
+#endif
                 nmea_parse(gps_raw_sentences[i], &gps_parsed_place);
             }
             print_place(&gps_parsed_place);
