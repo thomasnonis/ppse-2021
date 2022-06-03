@@ -36,8 +36,8 @@ typedef struct Position{
 } Position;
 
 typedef struct Place{
-  int year, month, day, hour, minute;
-  double second, latitude, longitude;
+  int year, month, day, hour, minute, second; //originally second was double
+  double latitude, longitude;
 } Place;
 
 void print_place(Place *p);

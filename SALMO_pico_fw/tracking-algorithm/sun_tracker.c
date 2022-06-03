@@ -11,7 +11,7 @@
 #endif
 
 void print_place(Place *p){
-    printf("Place date [YYYY MM DD - HH MM SS]: %d %d %d - %d %d %d\r\n Latitude: %f Longitude %f \r\n", 
+    printf("Place date [YYYY-MM-DD HH-MM-SS]: [%d-%d-%d %d-%d-%d]\r\nLatitude: %f Longitude %f \r\n", 
     p->year, p->month, p->day, p->hour, p->minute, p->second, p->latitude, p->longitude);
 }
 

@@ -1,7 +1,7 @@
 if (TARGET tinyusb_device)
     add_executable(SALMO SALMO.c)
 
-    target_link_libraries(SALMO PRIVATE pico_stdlib sun_tracker stepper MPU6050 hardware_i2c pico_timer HMC5883L SSD1306 lwgps)
+    target_link_libraries(SALMO PRIVATE pico_stdlib sun_tracker stepper MPU6050 hardware_i2c hardware_uart pico_timer HMC5883L SSD1306 lwgps)
 
     include_directories("../tracking-algorithm")
     include_directories("../timer")
@@ -13,7 +13,7 @@ if (TARGET tinyusb_device)
     
     # enable usb output, disable uart output
     pico_enable_stdio_usb(SALMO 1)
-    pico_enable_stdio_uart(SALMO 0)
+    pico_enable_stdio_uart(SALMO 1)
 
     # create map/bin/hex/uf2 file etc.
     pico_add_extra_outputs(SALMO)

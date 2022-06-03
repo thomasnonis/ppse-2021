@@ -51,6 +51,10 @@ After that, you must give execution permissions to the scripts:
     sudo chmod +x flash.sh
     sudo chmod +x build_and_flash.sh
 
+If something on MacOS doesn't work use
+
+    sudo chown -R {username}:{workgroup} ppse-2021
+
 Then, you can simply navigate to `SALMO_pico_fw/src/` and execute `build.sh`, `flash.sh` or `build_and_flash.sh` to respectively build, flash or build and flash the project. :nail_care:
 
 # :briefcase: Adding new drivers or libraries

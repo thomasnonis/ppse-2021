@@ -1,12 +1,12 @@
 /**
  * @file SALMO.h
- * @author SALMO Society 
+ * @author SALMO Society
  * @brief Salmo configuration file
  * @version 0.1
  * @date 2022-04-11
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
 #define BUZZ_EN 0
@@ -31,7 +31,7 @@
 #define I2C1_SCL 19
 #define CMP_DRDY 20
 #define ACC_INT 21
-#define GPS_EN 22
+#define GPS_EN 22 // When GPS is enabled, the GPS_EN pin is pulled low
 #define GPS_TP 23
 #define UART1_TX 24
 #define UART1_RX 25
@@ -40,19 +40,4 @@
 #define EXT_ADC0 28
 #define EXT_ADC1 29
 
-#define I2C_PORT1_BAUD_RATE 400*1000
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#define I2C_PORT1_BAUD_RATE 400 * 1000
