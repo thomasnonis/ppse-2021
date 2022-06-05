@@ -277,9 +277,6 @@ int main()
 
     Position sun_position;
 
-    Place este = {2022, 6, 5, 10, 0, 0, 45.2276, 11.6566};
-    Position este_position = compute_complete_position(&este);
-
     while (true)
     {
         if (read_gps)
@@ -320,7 +317,6 @@ int main()
         {
             hello_salmo();
             printf("-------\r\n");
-            printf("[ESTE] Position elevation %f azimuth %f \r\n\r\n", este_position.elevation, este_position.azimuth);
 
 #ifdef GPS_SIMULATOR
             print_place(&manual_place);
