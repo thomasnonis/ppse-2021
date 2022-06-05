@@ -132,7 +132,7 @@ void nmea_parse(const char *msg, Place *parsed_place)
 #endif
         parsed_place->hour = frame_gga.time.hours;
         parsed_place->minute = frame_gga.time.minutes;
-        parsed_place->second = frame_gga.time.seconds;
+        parsed_place->second = (double) frame_gga.time.seconds;
         parsed_place->latitude = minmea_tocoord(&frame_gga.latitude);
         parsed_place->longitude = minmea_tocoord(&frame_gga.longitude);
         break;
@@ -277,6 +277,9 @@ int main()
 
     Position sun_position;
 
+    Place este = {2022, 6, 5, 10, 0, 0, 45.2276, 11.6566};
+    Position este_position = compute_complete_position(&este);
+
     while (true)
     {
         if (read_gps)
@@ -317,6 +320,7 @@ int main()
         {
             hello_salmo();
             printf("-------\r\n");
+            printf("[ESTE] Position elevation %f azimuth %f \r\n\r\n", este_position.elevation, este_position.azimuth);
 
 #ifdef GPS_SIMULATOR
             print_place(&manual_place);
