@@ -271,12 +271,25 @@ int main()
 
 #ifdef GPS_SIMULATIOR
     // Sample place and its respective conversion into sun position
-    Place manual_place = {2030, 2, 28, 10, 0, 0, 55.751244, 37.618423};
+    Place manual_place = {2030, 2, 28, 10, 10, 10, 55.751244, 37.618423};
     Position manual_position = compute_complete_position(&manual_place);
 #endif
 
     Position sun_position;
 
+#define FAMOUS_CITIES_SIMULATION
+#ifdef FAMOUS_CITIES_SIMULATION
+    Place rome = {2022, 6, 5, 10, 0, 20, 41.9027835, 12.4963655};
+    Position rome_position = compute_complete_position(&rome);
+
+    // TODO: check why minutes are not mapped correctly
+    Place berlin = {2022, 6, 5, 12, 40, 00, 52.520008, 13.404954};
+    Position berlin_position = compute_complete_position(&berlin);
+
+    Place rio = {2022, 6, 5, 18, 00, 00, -22.908333, -43.196388};
+    Position rio_position = compute_complete_position(&rio);
+
+#endif
     while (true)
     {
         if (read_gps)
@@ -317,6 +330,19 @@ int main()
         {
             hello_salmo();
             printf("-------\r\n");
+            #ifdef FAMOUS_CITIES_SIMULATION
+                printf("[ROME] ");
+                print_place(&rome);
+                printf("[ROME] Position elevation %f azimuth %f \r\n\r\n", rome_position.elevation, rome_position.azimuth);
+
+                printf("[BERLIN] ");
+                print_place(&berlin);
+                printf("[BERLIN] Position elevation %f azimuth %f \r\n\r\n", berlin_position.elevation, berlin_position.azimuth);
+
+                printf("[RIO] ");
+                print_place(&rio);
+                printf("[RIO] Position elevation %f azimuth %f \r\n\r\n", rio_position.elevation, rio_position.azimuth);
+            #endif
 
 #ifdef GPS_SIMULATOR
             print_place(&manual_place);

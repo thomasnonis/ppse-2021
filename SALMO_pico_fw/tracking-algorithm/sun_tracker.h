@@ -24,6 +24,10 @@
 #define DEG_TO_RAD     PI/180.0                  // Degree to radians
 #define RAD_TO_DEG     180.0/PI
 
+/**
+ * @brief Complete struct where mid calcs of the sun tracker algorithm are stored
+ * 
+ */
 typedef struct Position{
   double jd, julian_days_since_epoch, julian_centuries_since_epoch;
   double mean_longitude, mean_anomaly;
@@ -35,6 +39,13 @@ typedef struct Position{
   double gmst, lmst, eq_of_time, hour_angle, elevation, azimuth, refraction;
 } Position;
 
+/**
+ * @brief Structur needed to store the Place information obtained by the gps
+ * Note that the hour is in UTC time, so if the local time is 14:00:00 and you're are in UTC+2 zone,
+ * the UTC time will be considered as 12:00:00.
+ * Most of GPS provide datetime in utc
+ * 
+ */
 typedef struct Place{
   int year, month, day, hour, minute;
   double second, latitude, longitude;
