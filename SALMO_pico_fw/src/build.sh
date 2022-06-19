@@ -2,10 +2,11 @@
 
 if [ "$1" == "all" ];
 then
-	echo "Removing build folder..."
+	echo "Emptying build folder..."
 	rm -r ../build
 	mkdir ../build
 fi
+mkdir ../build
 cd ../build
 cmake ..
 cd src
