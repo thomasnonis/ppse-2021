@@ -17,6 +17,7 @@
 #include "hardware/i2c.h"
 #include "hardware/uart.h"
 #include "hardware/irq.h"
+#include "hardware/gpio.h"
 #include "../tracking-algorithm/sun_tracker.h"
 #include "../MPU6050/MPU6050.h"
 #include "../timer/pico_timer.h"
@@ -54,6 +55,37 @@ char nmea_buffer[83];
 
 // GLOBAL VARS
 Place gps_parsed_place;
+
+/**
+ * @brief compute compass headings in radians
+ * @return compass heading in radians
+ */ 
+ */
+float compute_compass_radians(){
+    int16_t HMCx;
+    int16_t HMCy;
+    int16_t HMCz;
+    HMC5883L_getHeading(&HMCx, &HMCy, &HMCz);
+    float compass_radians = atan2(HMCy, HMCx);
+    if(compass_radians < 0){
+        compass_radians += 2*M_PI;
+    }
+    return compass_radians;
+}
+
+/**
+ * @brief gpio irq callback
+ *
+ * @param gpio gpio number
+ * @param events irq event
+ */
+void gpio_irq_callback(uint gpio, uint32_t events) {
+    if(gpio==NOT_HOME_SW){
+        printf("Home button pressed\n");
+        compute_compass_radians();
+        //TODO: move motors for X steps to get to compass headings=0
+    }
+}
 
 /**
  * @brief GPS read timer callback
@@ -249,18 +281,7 @@ int main()
         printf("HMC5883L connection failed\n");
     }
 
-    const uint LED_PIN = PICO_DEFAULT_LED_PIN;
-    gpio_init(LED_PIN);
-    gpio_set_dir(LED_PIN, GPIO_OUT);
-
-    int16_t x;
-    int16_t y;
-    int16_t z;
-    while (1)
-    {
-        HMC5883L_getHeading(&x, &y, &z);
-        printf("x=%d y=%d z=%d\n", x, y, z);
-    }
+    compute_compass_radians();
 
 #endif
 
@@ -367,5 +388,9 @@ int main()
         }
         sleep_ms(200);
     }
+
+    //gpio irq handler - NOTE: Currently the GPIO parameter is ignored, and this callback will be called for any enabled GPIO IRQ on any pin.
+    gpio_set_irq_enabled_with_callback(1, GPIO_IRQ_EDGE_RISE, true, &NORD_btn_callback);
+    
     return 0;
 }
