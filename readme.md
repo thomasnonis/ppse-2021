@@ -1,4 +1,5 @@
 # :rainbow: Building process
+    sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential
     git pull
     git submodule update --init --recursive
 
