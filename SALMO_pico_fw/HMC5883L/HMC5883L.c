@@ -40,7 +40,7 @@ THE SOFTWARE.
 #include "HMC5883L.h"
 #include "HMC5883L_I2C.h"
 
-static uint8_t slaveAddr;
+static uint8_t slaveAddr = HMC5883L_DEFAULT_ADDRESS;
 static uint8_t buffer[6];
 static uint8_t mode;
 
@@ -50,33 +50,21 @@ static uint8_t mode;
  * @return ID_A byte (should be 01001000, ASCII value 'H')
  */
 uint8_t HMC5883L_getIDA() {
-
-    buffer[0] = HMC5883L_RA_ID_A;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, false);
-
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_ID_A, 1);
     return buffer[0];
 }
 /** Get identification byte B
  * @return ID_A byte (should be 00110100, ASCII value '4')
  */
 uint8_t HMC5883L_getIDB() {
-
-    buffer[0] = HMC5883L_RA_ID_B;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, false);
-
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_ID_B, 1);
     return buffer[0];
 }
 /** Get identification byte C
  * @return ID_A byte (should be 00110011, ASCII value '3')
  */
 uint8_t HMC5883L_getIDC() {
-    
-    buffer[0] = HMC5883L_RA_ID_C;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, false);
-
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_ID_C, 1);
     return buffer[0];
 }
 
@@ -85,9 +73,7 @@ uint8_t HMC5883L_getIDC() {
  * @return True if connection is valid, false otherwise
  */
 bool isHMC() {
-    buffer[0]=HMC5883L_RA_ID_A;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 3, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_ID_A, 3);
     return (buffer[0] == 'H' && buffer[1] == '4' && buffer[2] == '3');
 }
 
@@ -102,18 +88,15 @@ bool isHMC() {
  * a lot of -4096 values (see the datasheet for mor information).
  */
 void HMC5883L_initialize() {
-    slaveAddr = HMC5883L_DEFAULT_ADDRESS;
-    // write CONFIG_A register
-    buffer[0] = HMC5883L_RA_CONFIG_A;
-
     // value0 << (value0_bit_in_reg - value0_lengh +1) | value1 << (value1_bit_in_reg - value1_lengh +1) ...
     // set config register to 0x01110000 (see datasheet)
-    buffer[1]=((HMC5883L_AVERAGING_8 << (HMC5883L_CRA_AVERAGE_BIT - HMC5883L_CRA_AVERAGE_LENGTH + 1)) |
+    buffer[0]=((HMC5883L_AVERAGING_8 << (HMC5883L_CRA_AVERAGE_BIT - HMC5883L_CRA_AVERAGE_LENGTH + 1)) |
         (HMC5883L_RATE_15     << (HMC5883L_CRA_RATE_BIT - HMC5883L_CRA_RATE_LENGTH + 1)) |
         (HMC5883L_BIAS_NORMAL << (HMC5883L_CRA_BIAS_BIT - HMC5883L_CRA_BIAS_LENGTH + 1)));
 
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 2, false); 
-
+    // write CONFIG_A register
+    HMC5883L_I2C_ByteWrite(slaveAddr, buffer, HMC5883L_RA_CONFIG_A);
+    
     // write CONFIG_B register
     HMC5883L_setGain(HMC5883L_GAIN_1090);
 
@@ -131,9 +114,7 @@ void HMC5883L_initialize() {
  * @see HMC5883L_CRA_AVERAGE_LENGTH
  */
 uint8_t HMC5883L_getSampleAveraging() {
-    buffer[0] = HMC5883L_RA_CONFIG_A;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_CONFIG_A, 1);
     //extract bits 6 and 7 from configuration register A
     uint8_t mask=((1 << HMC5883L_CRA_AVERAGE_LENGTH) - 1) << (HMC5883L_CRA_AVERAGE_BIT - HMC5883L_CRA_AVERAGE_LENGTH + 1);  //AKA 0x01100000 average bits in reg A
     buffer[0] &=mask;   //apply mask to get value of average bits
@@ -147,18 +128,13 @@ uint8_t HMC5883L_getSampleAveraging() {
  * @see HMC5883L_CRA_AVERAGE_LENGTH
  */
 void HMC5883L_setSampleAveraging(uint8_t averaging) {
-    buffer[0] = HMC5883L_RA_CONFIG_A;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_CONFIG_A, 1);
     uint8_t mask = ((1 << HMC5883L_CRA_AVERAGE_LENGTH) - 1) << (HMC5883L_CRA_AVERAGE_BIT - HMC5883L_CRA_AVERAGE_LENGTH + 1);
     averaging <<= (HMC5883L_CRA_AVERAGE_BIT - HMC5883L_CRA_AVERAGE_LENGTH + 1); // shift data into correct position
     averaging &= mask; // zero all non-important bits in data
     buffer[0] &= ~(mask); // zero all important bits in existing byte
     buffer[0] |= averaging; // combine data with existing byte
-    
-    buffer[1]=buffer[0];
-    buffer[0]=HMC5883L_RA_CONFIG_A;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 2, false);
+    HMC5883L_I2C_ByteWrite(slaveAddr, buffer, HMC5883L_RA_CONFIG_A);
 }
 /** Get data output rate value.
  * The Table below shows all selectable output rates in continuous measurement
@@ -184,9 +160,7 @@ void HMC5883L_setSampleAveraging(uint8_t averaging) {
  * @see HMC5883L_CRA_RATE_LENGTH
  */
 uint8_t HMC5883L_getDataRate() {
-    buffer[0] = HMC5883L_RA_CONFIG_A;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_CONFIG_A, 1);
     //extract bits 6 and 7 from configuration register
     uint8_t mask=((1 << HMC5883L_CRA_RATE_LENGTH) - 1) << (HMC5883L_CRA_RATE_BIT - HMC5883L_CRA_RATE_LENGTH + 1);  //AKA 0x00011100
     buffer[0] &=mask;   //apply mask
@@ -202,17 +176,13 @@ uint8_t HMC5883L_getDataRate() {
  * @see HMC5883L_CRA_RATE_LENGTH
  */
 void HMC5883L_setDataRate(uint8_t rate) {
-    buffer[0] = HMC5883L_RA_CONFIG_A;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_CONFIG_A, 1);
     uint8_t mask = ((1 << HMC5883L_CRA_RATE_LENGTH) - 1) << (HMC5883L_CRA_RATE_BIT - HMC5883L_CRA_RATE_LENGTH + 1);
     rate <<= (HMC5883L_CRA_RATE_BIT - HMC5883L_CRA_RATE_LENGTH + 1); // shift data into correct position
     rate &= mask; // zero all non-important bits in data
     buffer[0] &= ~(mask); // zero all important bits in existing byte
     buffer[0] |= rate; // combine data with existing byte
-    buffer[1]=buffer[0];
-    buffer[0]=HMC5883L_RA_CONFIG_A;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 2, false);
+    HMC5883L_I2C_ByteWrite(slaveAddr, buffer, HMC5883L_RA_CONFIG_A);
 }
 /** Get measurement bias value.
  * @return Current bias value (0-2 for normal/positive/negative respectively)
@@ -222,9 +192,7 @@ void HMC5883L_setDataRate(uint8_t rate) {
  * @see HMC5883L_CRA_BIAS_LENGTH
  */
 uint8_t HMC5883L_getMeasurementBias() {
-    buffer[0] = HMC5883L_RA_CONFIG_A;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_CONFIG_A, 1);
     //extract bits 6 and 7 from configuration register
     uint8_t mask=((1 << HMC5883L_CRA_BIAS_LENGTH) - 1) << (HMC5883L_CRA_BIAS_BIT - HMC5883L_CRA_BIAS_LENGTH + 1);  //AKA 0x00000011
     buffer[0] &=mask;   //apply mask
@@ -239,17 +207,13 @@ uint8_t HMC5883L_getMeasurementBias() {
  * @see HMC5883L_CRA_BIAS_LENGTH
  */
 void HMC5883L_setMeasurementBias(uint8_t bias) {
-    buffer[0] = HMC5883L_RA_CONFIG_A;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_CONFIG_A, 1);
     uint8_t mask = ((1 << HMC5883L_CRA_BIAS_LENGTH) - 1) << (HMC5883L_CRA_BIAS_BIT - HMC5883L_CRA_BIAS_LENGTH + 1);
     bias <<= (HMC5883L_CRA_BIAS_BIT - HMC5883L_CRA_BIAS_LENGTH + 1); // shift data into correct position
     bias &= mask; // zero all non-important bits in data
     buffer[0] &= ~(mask); // zero all important bits in existing byte
     buffer[0] |= bias; // combine data with existing byte
-    buffer[1]=buffer[0];
-    buffer[0]=HMC5883L_RA_CONFIG_A;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 2, false);
+    HMC5883L_I2C_ByteWrite(slaveAddr, buffer, HMC5883L_RA_CONFIG_A);
 }
 
 // CONFIG_B register
@@ -278,9 +242,7 @@ void HMC5883L_setMeasurementBias(uint8_t bias) {
  * @see HMC5883L_CRB_GAIN_LENGTH
  */
 uint8_t HMC5883L_getGain() {
-    buffer[0] = HMC5883L_RA_CONFIG_B;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_CONFIG_B, 1);
     //extract bits 6 and 7 from configuration register
     uint8_t mask=((1 << HMC5883L_CRB_GAIN_LENGTH) - 1) << (HMC5883L_CRB_GAIN_BIT - HMC5883L_CRB_GAIN_LENGTH + 1);  //AKA 0x00000011
     buffer[0] &=mask;   //apply mask
@@ -297,9 +259,8 @@ uint8_t HMC5883L_getGain() {
 void HMC5883L_setGain(uint8_t gain) {
     //Since in register B bits 0,1,2,3,4 needs to be cleared we can simply send the
     //value of the bits 5,6,7 in a byte with others set to 0
-    buffer[0]=HMC5883L_RA_CONFIG_B;
-    buffer[1]=gain << (HMC5883L_CRB_GAIN_BIT - HMC5883L_CRB_GAIN_LENGTH + 1);
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 2, false);
+    buffer[0]=gain << (HMC5883L_CRB_GAIN_BIT - HMC5883L_CRB_GAIN_LENGTH + 1);
+    HMC5883L_I2C_ByteWrite(slaveAddr, buffer, HMC5883L_RA_CONFIG_B);
 }
 
 // MODE register
@@ -327,9 +288,7 @@ void HMC5883L_setGain(uint8_t gain) {
  * @see HMC5883L_MODEREG_LENGTH
  */
 uint8_t HMC5883L_getMode() {
-    buffer[0] = HMC5883L_RA_MODE;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_CONFIG_A, 1);
     //extract bits 6 and 7 from configuration register
     uint8_t mask=((1 << HMC5883L_MODEREG_LENGTH) - 1) << (HMC5883L_MODEREG_BIT - HMC5883L_MODEREG_LENGTH + 1);  //AKA 0x00000011
     buffer[0] &=mask;   //apply mask
@@ -349,9 +308,8 @@ uint8_t HMC5883L_getMode() {
 void HMC5883L_setMode(uint8_t newMode) {
     //Since in register B bits 7,6,5,4,3,2 needs to be cleared we can simply send the
     //value of the bits 0,1 in a byte with others set to 0
-    buffer[0]=HMC5883L_RA_MODE;
-    buffer[1]=newMode << (HMC5883L_MODEREG_BIT - HMC5883L_MODEREG_LENGTH + 1);
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 2, false);
+    buffer[0]=newMode << (HMC5883L_MODEREG_BIT - HMC5883L_MODEREG_LENGTH + 1);
+    HMC5883L_I2C_ByteWrite(slaveAddr, buffer, HMC5883L_RA_MODE);
     mode = newMode; // track to tell if we have to clear bit 7 after a read
 }
 
@@ -369,15 +327,12 @@ void HMC5883L_setMode(uint8_t newMode) {
  * @see HMC5883L_RA_DATAX_H
  */
 void HMC5883L_getHeading(int16_t *x, int16_t *y, int16_t *z) {
-    buffer[0] = HMC5883L_RA_DATAX_H;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 6, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_DATAX_H, 6);
 
-    uint8_t tmp[2];
-    tmp[0]= HMC5883L_RA_MODE;
-    tmp[1]=HMC5883L_MODE_SINGLE << (HMC5883L_MODEREG_BIT - HMC5883L_MODEREG_LENGTH + 1);
+    uint8_t tmp;
+    tmp=HMC5883L_MODE_SINGLE << (HMC5883L_MODEREG_BIT - HMC5883L_MODEREG_LENGTH + 1);
     if (mode == HMC5883L_MODE_SINGLE){
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, tmp, 2, false);
+    HMC5883L_I2C_ByteWrite(slaveAddr, &tmp, HMC5883L_RA_MODE);
     }
     *x = (((int16_t)buffer[0]) << 8) | buffer[1];
     *y = (((int16_t)buffer[4]) << 8) | buffer[5];
@@ -390,15 +345,12 @@ void HMC5883L_getHeading(int16_t *x, int16_t *y, int16_t *z) {
 int16_t HMC5883L_getHeadingX() {
     // each axis read requires that ALL axis registers be read, even if only
     // one is used; this was not done ineffiently in the code by accident
-    buffer[0] = HMC5883L_RA_DATAX_H;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 6, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_DATAX_H, 6);
 
-    uint8_t tmp[2];
-    tmp[0]= HMC5883L_RA_MODE;
-    tmp[1]= HMC5883L_MODE_SINGLE << (HMC5883L_MODEREG_BIT - HMC5883L_MODEREG_LENGTH + 1);
+    uint8_t tmp;
+    tmp=HMC5883L_MODE_SINGLE << (HMC5883L_MODEREG_BIT - HMC5883L_MODEREG_LENGTH + 1);
     if (mode == HMC5883L_MODE_SINGLE){
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, tmp, 2, false);
+    HMC5883L_I2C_ByteWrite(slaveAddr, &tmp, HMC5883L_RA_MODE);
     }
     return (((int16_t)buffer[0]) << 8) | buffer[1];
 }
@@ -409,15 +361,12 @@ int16_t HMC5883L_getHeadingX() {
 int16_t HMC5883L_getHeadingY() {
     // each axis read requires that ALL axis registers be read, even if only
     // one is used; this was not done ineffiently in the code by accident
-    buffer[0] = HMC5883L_RA_DATAX_H;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 6, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_DATAX_H, 6);
 
-    uint8_t tmp[2];
-    tmp[0]= HMC5883L_RA_MODE;
-    tmp[1]= HMC5883L_MODE_SINGLE << (HMC5883L_MODEREG_BIT - HMC5883L_MODEREG_LENGTH + 1);
+    uint8_t tmp;
+    tmp=HMC5883L_MODE_SINGLE << (HMC5883L_MODEREG_BIT - HMC5883L_MODEREG_LENGTH + 1);
     if (mode == HMC5883L_MODE_SINGLE){
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, tmp, 2, false);
+    HMC5883L_I2C_ByteWrite(slaveAddr, &tmp, HMC5883L_RA_MODE);
     }
     return (((int16_t)buffer[4]) << 8) | buffer[5];
 }
@@ -428,15 +377,12 @@ int16_t HMC5883L_getHeadingY() {
 int16_t HMC5883L_getHeadingZ() {
     // each axis read requires that ALL axis registers be read, even if only
     // one is used; this was not done ineffiently in the code by accident
-    buffer[0] = HMC5883L_RA_DATAX_H;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 6, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_DATAX_H, 6);
 
-    uint8_t tmp[2];
-    tmp[0]= HMC5883L_RA_MODE;
-    tmp[1]= HMC5883L_MODE_SINGLE << (HMC5883L_MODEREG_BIT - HMC5883L_MODEREG_LENGTH + 1);
+    uint8_t tmp;
+    tmp=HMC5883L_MODE_SINGLE << (HMC5883L_MODEREG_BIT - HMC5883L_MODEREG_LENGTH + 1);
     if (mode == HMC5883L_MODE_SINGLE){
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, tmp, 2, false);
+    HMC5883L_I2C_ByteWrite(slaveAddr, &tmp, HMC5883L_RA_MODE);
     }
     return (((int16_t)buffer[2]) << 8) | buffer[3];
 }
@@ -455,10 +401,7 @@ int16_t HMC5883L_getHeadingZ() {
  * @see HMC5883L_STATUS_LOCK_BIT
  */
 bool HMC5883L_getLockStatus() {
-
-    buffer[0] = HMC5883L_RA_STATUS;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_STATUS, 1);
 
 	buffer[0] = (buffer[0] >> HMC5883L_STATUS_LOCK_BIT) & 0x01; //shift and AND to get bool value
 
@@ -475,10 +418,7 @@ bool HMC5883L_getLockStatus() {
  * @see HMC5883L_STATUS_READY_BIT
  */
 bool HMC5883L_getReadyStatus() {
-    
-    buffer[0] = HMC5883L_RA_STATUS;
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, buffer, 1, false);
+    HMC5883L_I2C_BufferRead(slaveAddr, buffer, HMC5883L_RA_STATUS, 1);
 
 	buffer[0] = (buffer[0] >> HMC5883L_STATUS_READY_BIT) & 0x01; //shift and AND to get bool value
 
