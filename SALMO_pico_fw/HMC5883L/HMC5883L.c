@@ -38,12 +38,11 @@ THE SOFTWARE.
 */
 
 #include "HMC5883L.h"
+#include "HMC5883L_I2C.h"
 
 static uint8_t slaveAddr;
 static uint8_t buffer[6];
 static uint8_t mode;
-
-#define I2C_PERIPHERAL (i2c1)
 
 // ID_* registers
 

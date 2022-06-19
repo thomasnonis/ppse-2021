@@ -19,7 +19,6 @@
 #include "hardware/irq.h"
 #include "../tracking-algorithm/sun_tracker.h"
 #include "../MPU6050/MPU6050.h"
-#include "../MPU6050/MPU6050_I2C.h"
 #include "../timer/pico_timer.h"
 #include "../nmea-parser/minmea.h"
 #include "../HMC5883L/HMC5883L.h"
@@ -212,14 +211,14 @@ int main()
     // Make the I2C pins available to picotool
     bi_decl(bi_2pins_with_func(I2C1_SDA, I2C1_SCL, GPIO_FUNC_I2C));
     i2c_init(I2C_PERIPHERAL, I2C_PORT1_BAUD_RATE);
-#endif
-
-#ifdef MPU_MOUNTED
 
     /* Verify if are needed, probably they are already in the sensor breakout board
         gpio_pull_up(I2C1_SDA);
         gpio_pull_up(I2C1_SCL);
     */
+#endif
+
+#ifdef MPU_MOUNTED
 
     int16_t acc_gyro_data = 0;
     // Init i2c port1 with defined baud rate
