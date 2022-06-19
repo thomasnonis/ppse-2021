@@ -3,13 +3,25 @@
 
 #include "MPU6050_I2C.h"
 
+#include <stdio.h>
+#include "pico/stdlib.h"
+
 void MPU6050_I2C_ByteWrite(uint8_t slaveAddr, uint8_t* pBuffer, uint8_t writeAddr){
-    i2c_write_blocking(I2C_PERIPHERAL,slaveAddr, pBuffer, 1, false);
+    int ret=0;
+    ret=i2c_write_timeout_us(I2C_PERIPHERAL,slaveAddr, pBuffer, 1, false, 1000); //1ms timeout max
+    if(ret==PICO_ERROR_GENERIC||ret==PICO_ERROR_TIMEOUT){
+        printf("MPU6050_I2C_ByteWrite: device not present or timeout reached\n");
+    }
 };
 void MPU6050_I2C_BufferRead(uint8_t slaveAddr,uint8_t* pBuffer, uint8_t readAddr, uint16_t NumByteToRead){
+    int ret=0;
+
     // before read the protocol needs to send the register address to the slave (see i2c protocol)
-    i2c_write_blocking(I2C_PERIPHERAL, slaveAddr, &readAddr, 1, true);
-    i2c_read_blocking(I2C_PERIPHERAL, slaveAddr, pBuffer, NumByteToRead, false);
+    ret=i2c_write_timeout_us(I2C_PERIPHERAL, slaveAddr, &readAddr, 1, true, 1000); //1ms timeout max
+    if(ret==PICO_ERROR_GENERIC||ret==PICO_ERROR_TIMEOUT){
+        printf("MPU6050_I2C_BufferRead: device not present or timeout reached\n");
+    }
+    ret=i2c_read_timeout_us(I2C_PERIPHERAL, slaveAddr, pBuffer, NumByteToRead, false, 1000); //1ms timeout max
 };
 
 #endif
