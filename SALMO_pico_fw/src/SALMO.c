@@ -57,11 +57,10 @@ char nmea_buffer[83];
 Place gps_parsed_place;
 
 /**
- * @brief compute compass headings in radians
- * @return compass heading in radians
- */ 
+ * @brief compute compass headings in degree
+ * @return compass heading in degree
  */
-float compute_compass_radians(){
+float compute_compass_degree(){
     int16_t HMCx;
     int16_t HMCy;
     int16_t HMCz;
@@ -70,7 +69,7 @@ float compute_compass_radians(){
     if(compass_radians < 0){
         compass_radians += 2*M_PI;
     }
-    return compass_radians;
+    return compass_radians*180/M_PI;
 }
 
 /**
@@ -82,7 +81,7 @@ float compute_compass_radians(){
 void gpio_irq_callback(uint gpio, uint32_t events) {
     if(gpio==NOT_HOME_SW){
         printf("Home button pressed\n");
-        compute_compass_radians();
+        printf("Compass: %.3f'", compute_compass_degree());
         //TODO: move motors for X steps to get to compass headings=0
     }
 }
@@ -281,7 +280,7 @@ int main()
         printf("HMC5883L connection failed\n");
     }
 
-    compute_compass_radians();
+    compute_compass_degree();
 
 #endif
 
@@ -390,7 +389,7 @@ int main()
     }
 
     //gpio irq handler - NOTE: Currently the GPIO parameter is ignored, and this callback will be called for any enabled GPIO IRQ on any pin.
-    gpio_set_irq_enabled_with_callback(1, GPIO_IRQ_EDGE_RISE, true, &NORD_btn_callback);
+    gpio_set_irq_enabled_with_callback(1, GPIO_IRQ_EDGE_RISE, true, &gpio_irq_callback);
     
     return 0;
 }
