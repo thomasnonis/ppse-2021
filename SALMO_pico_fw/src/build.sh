@@ -1,7 +1,11 @@
 #! /bin/bash
 
-rm -r ../build
-mkdir ../build
+if [ "$1" == "all" ];
+then
+	echo "Removing build folder..."
+	rm -r ../build
+	mkdir ../build
+fi
 cd ../build
 cmake ..
 cd src
