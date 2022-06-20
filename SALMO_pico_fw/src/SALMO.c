@@ -44,9 +44,6 @@ bool read_gps;
 struct repeating_timer update_position_timer;
 struct repeating_timer gps_read_timer;
 
-// #define TEST_HMC
-// #define I2C_ENABLE
-
 //  GPS INTERRUPT CONFIG
 #ifdef INTERRUPTS_ARE_WORKING
 static int chars_rxed = 0;
@@ -55,6 +52,8 @@ char nmea_buffer[83];
 
 // GLOBAL VARS
 Place gps_parsed_place;
+PicoStepper stepper1={};
+PicoStepper stepper2={};
 
 /**
  * @brief compute compass headings in degree
@@ -65,11 +64,42 @@ float compute_compass_degree(){
     int16_t HMCy;
     int16_t HMCz;
     HMC5883L_getHeading(&HMCx, &HMCy, &HMCz);
-    float compass_radians = atan2(HMCy, HMCx);
-    if(compass_radians < 0){
-        compass_radians += 2*M_PI;
-    }
+
+    //Assuming Z axis is pointing up, Y axis is pointing straight out of the panel and X axis is pointing to the right
+    float compass_radians = atan2(HMCx, HMCy);  //note: atan2(y,x) = tan^-1 (arg1/arg2) and auto matches the quadrant
     return compass_radians*180/M_PI;
+}
+
+/**
+ * @brief compute accelerometer headings in degree
+ * @return accelerometer heading in degree
+ */
+float compute_acc_degree(){
+    int16_t AccGyro[6];
+    int16_t AccX;
+    int16_t AccY;
+    int16_t AccZ;
+
+    void MPU6050_GetRawAccelGyro(AccGyro);
+    AccX = AccGyro[0];
+    AccY = AccGyro[1];
+    AccZ = AccGyro[2];
+
+    // assuming Z axis is pointing up when the panel is flat
+    float tilt_radians = atan2(sqrt(pow(AccX, 2) + pow(AccY, 2)), AccZ);
+    return tilt_radians*180/M_PI;
+}
+
+/**
+ * @brief calculate steps to move given the current heading and the desired heading
+ * @param current_heading current heading in degree
+ * @param desired_heading desired heading in degree
+ * @return steps to move
+ */
+int calculate_steps(float current_angle, float desired_angle){
+    float angle_per_step = 360/STEPS_PER_REV;
+    float steps_to_move = (desired_angle - current_angle)/angle_per_step;
+    return round(steps_to_move);
 }
 
 /**
@@ -81,8 +111,13 @@ float compute_compass_degree(){
 void gpio_irq_callback(uint gpio, uint32_t events) {
     if(gpio==NOT_HOME_SW){
         printf("Home button pressed\n");
-        printf("Compass: %.3f'", compute_compass_degree());
-        //TODO: move motors for X steps to get to compass headings=0
+        printf("Compass: %.3f', Gyro: %.3f', rotating towards NORD at 45' tilt", compute_compass_degree(), compute_acc_degree());
+        //yaw (stepper1) for X steps to get to compass headings=0°
+        setSpeed(stepper1, 100);
+        stepMotor(stepper1, calculate_steps(compute_compass_degree(), 0));
+        //ypitch (stepper2) for X steps to get to acc headings=45°
+        setSpeed(stepper2, 100);
+        stepMotor(stepper2, calculate_steps(compute_acc_degree(), 45));
     }
 }
 
@@ -235,7 +270,12 @@ int main()
 
     update_position = false;
 
-#ifdef I2C_ENABLE
+
+    // Stepper motors initialization
+    PicoStepperInit(&stepper1, M1_W11, M1_W12, M1_W21, M1_W22, STEPS_PER_REV, INITIAL_SPEED);   //stepper1 = yaw
+    PicoStepperInit(&stepper2, M2_W11, M2_W12, M2_W21, M2_W22, STEPS_PER_REV, INITIAL_SPEED);   //stepper2 = pitch
+
+
     // SET I2C Pins
     gpio_set_function(I2C1_SDA, GPIO_FUNC_I2C);
     gpio_set_function(I2C1_SCL, GPIO_FUNC_I2C);
@@ -247,13 +287,11 @@ int main()
         gpio_pull_up(I2C1_SDA);
         gpio_pull_up(I2C1_SCL);
     */
-#endif
 
-#ifdef MPU_MOUNTED
 
     int16_t acc_gyro_data = 0;
     // Init i2c port1 with defined baud rate
-    //  I2C MPU port is defined inside every .h device library
+    // I2C MPU port is defined inside every .h device library
     MPU6050_Initialize();
 
     if (MPU6050_TestConnection())
@@ -266,10 +304,6 @@ int main()
     }
     MPU6050_GetRawAccelGyro(&acc_gyro_data);
 
-#endif
-
-#ifdef TEST_HMC
-
     HMC5883L_initialize();
     if (isHMC())
     {
@@ -279,10 +313,8 @@ int main()
     {
         printf("HMC5883L connection failed\n");
     }
-
     compute_compass_degree();
 
-#endif
 
     /* Timers initialization */
     init_position_timer(4000);

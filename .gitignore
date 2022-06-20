@@ -3,4 +3,5 @@
 **/.DS_Store
 **/out
 **/*.code-workspace
-build/
+*.docx
+**/build

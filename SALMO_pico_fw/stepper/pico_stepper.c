@@ -29,9 +29,9 @@
 #include "pico_stepper.h"
 
 
-void picoStepperInit(PicoStepper* stepper, int pin1, int pin2, int pin3, int pin4) {
-  stepper->total_steps = 200;
-  stepper->initial_speed = 50;
+void picoStepperInit(PicoStepper* stepper, int pin1, int pin2, int pin3, int pin4, int total_steps, long initial_speed) {
+  stepper->total_steps = total_steps;
+  stepper->initial_speed = initial_speed;
   stepper->dir = 0;
   stepper->delay = 60L * 1000L * 1000L / stepper->total_steps / stepper->initial_speed;
   stepper->current_step = 0;

@@ -1,7 +1,7 @@
 //MPU6050 I2C library for ARM STM32F103xx, RP2040 Microcontrollers - Main source file
 //Has bit, byte and buffer I2C R/W functions
 // 23/05/2012 by Harinadha Reddy Chintalapalli <harinath.ec@gmail.com>
-// 11/04/2022 by Tollardo Simone, Tommaso Canova, Lisa Santarossa, Gabriele Berretta
+// 11/04/2022 by Tollardo Simone, Tommaso Canova, Lisa Santarossa, Gabriele Berretta, Thomas Nonis
 // Changelog:
 //     2022-04-11 - ported to RP2040
 //     2012-05-23 - initial release. Thanks to Jeff Rowberg <jeff@rowberg.net> for his AVR/Arduino
@@ -10,6 +10,7 @@
 /* ============================================================================================
  MPU6050 device I2C library code for ARM STM32F103xx, RP2040 is placed under the MIT license
  Copyright (c) 2012 Harinadha Reddy Chintalapalli
+ Copyright (c) 2022 Tollardo Simone, Tommaso Canova, Lisa Santarossa, Gabriele Berretta, Thomas Nonis
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -227,10 +228,10 @@ void MPU6050_GetRawAccelGyro(int16_t* AccelGyro)
     /* Get acceleration */
     for (int i = 0; i < 3; i++)
         AccelGyro[i] = ((int16_t) ((uint16_t) tmpBuffer[2 * i] << 8) + tmpBuffer[2 * i + 1]);
+    // Skip pos 3 for temperature data
     /* Get Angular rate */
     for (int i = 4; i < 7; i++)
         AccelGyro[i - 1] = ((int16_t) ((uint16_t) tmpBuffer[2 * i] << 8) + tmpBuffer[2 * i + 1]);
-
 }
 
 /** Write multiple bits in an 8-bit device register.
