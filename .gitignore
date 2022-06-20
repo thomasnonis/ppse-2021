@@ -3,5 +3,5 @@
 **/.DS_Store
 **/out
 **/*.code-workspace
-*.docx
+**/*.docx
 **/build
