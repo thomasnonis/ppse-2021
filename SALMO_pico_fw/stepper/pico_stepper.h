@@ -37,7 +37,7 @@ typedef struct {
   unsigned long last_step_us_time;
 }PicoStepper;
 
-void PicoStepperInit(PicoStepper* stepper, int pin1, int pin2, int pin3, int pin4, int total_steps, long initial_speed);
+void picoStepperInit(PicoStepper* stepper, int pin1, int pin2, int pin3, int pin4, int total_steps, long initial_speed);
 
 void setSpeed(PicoStepper* stepper, long speed);
 

@@ -23,6 +23,7 @@
 #include "../timer/pico_timer.h"
 #include "../nmea-parser/minmea.h"
 #include "../HMC5883L/HMC5883L.h"
+#include "../stepper/pico_stepper.h"
 
 // UART CONFIG
 #define GPS_UART_ID uart1
@@ -52,8 +53,8 @@ char nmea_buffer[83];
 
 // GLOBAL VARS
 Place gps_parsed_place;
-PicoStepper stepper1={};
-PicoStepper stepper2={};
+PicoStepper stepper1={0};
+PicoStepper stepper2={0};
 
 /**
  * @brief compute compass headings in degree
@@ -80,7 +81,7 @@ float compute_acc_degree(){
     int16_t AccY;
     int16_t AccZ;
 
-    void MPU6050_GetRawAccelGyro(AccGyro);
+    MPU6050_GetRawAccelGyro(AccGyro);
     AccX = AccGyro[0];
     AccY = AccGyro[1];
     AccZ = AccGyro[2];
@@ -113,11 +114,11 @@ void gpio_irq_callback(uint gpio, uint32_t events) {
         printf("Home button pressed\n");
         printf("Compass: %.3f', Gyro: %.3f', rotating towards NORD at 45' tilt", compute_compass_degree(), compute_acc_degree());
         //yaw (stepper1) for X steps to get to compass headings=0°
-        setSpeed(stepper1, 100);
-        stepMotor(stepper1, calculate_steps(compute_compass_degree(), 0));
+        setSpeed(&stepper1, 100);
+        stepMotor(&stepper1, calculate_steps(compute_compass_degree(), 0));
         //ypitch (stepper2) for X steps to get to acc headings=45°
-        setSpeed(stepper2, 100);
-        stepMotor(stepper2, calculate_steps(compute_acc_degree(), 45));
+        setSpeed(&stepper2, 100);
+        stepMotor(&stepper2, calculate_steps(compute_acc_degree(), 45));
     }
 }
 
@@ -272,8 +273,8 @@ int main()
 
 
     // Stepper motors initialization
-    PicoStepperInit(&stepper1, M1_W11, M1_W12, M1_W21, M1_W22, STEPS_PER_REV, INITIAL_SPEED);   //stepper1 = yaw
-    PicoStepperInit(&stepper2, M2_W11, M2_W12, M2_W21, M2_W22, STEPS_PER_REV, INITIAL_SPEED);   //stepper2 = pitch
+    picoStepperInit(&stepper1, M1_W11, M1_W12, M1_W21, M1_W22, STEPS_PER_REV, INITIAL_SPEED);   //stepper1 = yaw
+    picoStepperInit(&stepper2, M2_W11, M2_W12, M2_W21, M2_W22, STEPS_PER_REV, INITIAL_SPEED);   //stepper2 = pitch
 
 
     // SET I2C Pins

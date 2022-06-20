@@ -40,6 +40,7 @@
 #define EXT_ADC0 28
 #define EXT_ADC1 29
 
+#define I2C_PERIPHERAL (i2c1)
 #define I2C_PORT1_BAUD_RATE 400 * 1000
 
 #define STEPS_PER_REV 200
