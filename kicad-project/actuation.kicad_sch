@@ -6,6 +6,8 @@
 
   (title_block
     (title "Actuation")
+    (date "2022-04-13")
+    (rev "1.0")
   )
 
   (lib_symbols

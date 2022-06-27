@@ -6,6 +6,8 @@
 
   (title_block
     (title "Power")
+    (date "2022-04-13")
+    (rev "1.0")
   )
 
   (lib_symbols
@@ -1050,7 +1052,6 @@
       )
     )
   )
-
 
   (junction (at 69.85 30.48) (diameter 0) (color 0 0 0 0)
     (uuid 049aff13-63eb-4a6d-b219-7b8f3dcc9527)

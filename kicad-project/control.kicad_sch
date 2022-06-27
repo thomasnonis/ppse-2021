@@ -6,6 +6,8 @@
 
   (title_block
     (title "Control")
+    (date "2022-04-13")
+    (rev "1.0")
     (company "Thomas Nonis")
   )
 
@@ -978,7 +980,6 @@
       )
     )
   )
-
 
   (junction (at 35.56 121.92) (diameter 0) (color 0 0 0 0)
     (uuid 5c49fd7a-27b9-492e-8c57-22d9e843b4a3)
