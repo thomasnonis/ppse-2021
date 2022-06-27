@@ -12,11 +12,13 @@
 #include "SALMO.h"
 #include <stdio.h>
 #include <string.h>
+#include <inttypes.h>
 #include "pico/stdlib.h"
 #include "pico/binary_info.h"
 #include "hardware/i2c.h"
 #include "hardware/uart.h"
 #include "hardware/irq.h"
+#include "hardware/pwm.h"
 #include "hardware/gpio.h"
 #include "../tracking-algorithm/sun_tracker.h"
 #include "../MPU6050/MPU6050.h"
@@ -42,8 +44,14 @@ int gps_lines = 0;
 // TIMER CONFIG
 bool update_position;
 bool read_gps;
+bool update_motor_position;
 struct repeating_timer update_position_timer;
 struct repeating_timer gps_read_timer;
+struct repeating_timer update_motor_position_timer;
+
+// Shitty vars
+bool tracking_enable_pressed = false;
+bool go_home_enable_pressed = false;
 
 //  GPS INTERRUPT CONFIG
 #ifdef INTERRUPTS_ARE_WORKING
@@ -53,33 +61,35 @@ char nmea_buffer[83];
 
 // GLOBAL VARS
 Place gps_parsed_place;
-PicoStepper stepper1={0};
-PicoStepper stepper2={0};
+PicoStepper stepper1 = {0};
+PicoStepper stepper2 = {0};
 
 /**
  * @brief compute compass headings in degree
  * @return compass heading in degree
  */
-float compute_compass_degree(){
-    int16_t HMCx;
-    int16_t HMCy;
-    int16_t HMCz;
+float compute_compass_degree()
+{
+    int16_t HMCx = 0;
+    int16_t HMCy = 0;
+    int16_t HMCz = 0;
     HMC5883L_getHeading(&HMCx, &HMCy, &HMCz);
 
-    //Assuming Z axis is pointing up, Y axis is pointing straight out of the panel and X axis is pointing to the right
-    float compass_radians = atan2(HMCx, HMCy);  //note: atan2(y,x) = tan^-1 (arg1/arg2) and auto matches the quadrant
-    return compass_radians*180/M_PI;
+    // Assuming Z axis is pointing up, Y axis is pointing straight out of the panel and X axis is pointing to the right
+    float compass_radians = atan2(HMCx, HMCy); // note: atan2(y,x) = tan^-1 (arg1/arg2) and auto matches the quadrant
+    return compass_radians * 180 / M_PI;
 }
 
 /**
  * @brief compute accelerometer headings in degree
  * @return accelerometer heading in degree
  */
-float compute_acc_degree(){
+float compute_acc_degree()
+{
     int16_t AccGyro[6];
-    int16_t AccX;
-    int16_t AccY;
-    int16_t AccZ;
+    int16_t AccX = 0;
+    int16_t AccY = 0;
+    int16_t AccZ = 0;
 
     MPU6050_GetRawAccelGyro(AccGyro);
     AccX = AccGyro[0];
@@ -88,7 +98,7 @@ float compute_acc_degree(){
 
     // assuming Z axis is pointing up when the panel is flat
     float tilt_radians = atan2(sqrt(pow(AccX, 2) + pow(AccY, 2)), AccZ);
-    return tilt_radians*180/M_PI;
+    return tilt_radians * 180 / M_PI;
 }
 
 /**
@@ -97,9 +107,10 @@ float compute_acc_degree(){
  * @param desired_heading desired heading in degree
  * @return steps to move
  */
-int calculate_steps(float current_angle, float desired_angle){
-    float angle_per_step = 360/STEPS_PER_REV;
-    float steps_to_move = (desired_angle - current_angle)/angle_per_step;
+int calculate_steps(float current_angle, float desired_angle)
+{
+    float angle_per_step = 360 / STEPS_PER_REV;
+    float steps_to_move = (desired_angle - current_angle) / angle_per_step;
     return round(steps_to_move);
 }
 
@@ -109,19 +120,54 @@ int calculate_steps(float current_angle, float desired_angle){
  * @param gpio gpio number
  * @param events irq event
  */
-void gpio_irq_callback(uint gpio, uint32_t events) {
-    if(gpio==NOT_HOME_SW){
+void gpio_irq_callback(uint gpio, uint32_t events)
+{
+    printf("GPIO TRIGGERED\r\n");
+    if (gpio == NOT_HOME_SW)
+    {
         printf("Home button pressed\n");
-        printf("Compass: %.3f', Gyro: %.3f', rotating towards NORD at 45' tilt", compute_compass_degree(), compute_acc_degree());
-        //yaw (stepper1) for X steps to get to compass headings=0°
-        setSpeed(&stepper1, 100);
-        stepMotor(&stepper1, calculate_steps(compute_compass_degree(), 0));
-        //ypitch (stepper2) for X steps to get to acc headings=45°
-        setSpeed(&stepper2, 100);
-        stepMotor(&stepper2, calculate_steps(compute_acc_degree(), 45));
+        go_home_enable_pressed = !go_home_enable_pressed;
+    }
+    else if (gpio == NOT_EN_SW)
+    {
+        printf("Tracking enable pressed \r\n");
+        tracking_enable_pressed = !tracking_enable_pressed;
     }
 }
 
+/**
+ * @brief Move motor to home position
+ *
+ */
+void go_home()
+{
+    printf("Compass: %.3f', Gyro: %.3f', rotating towards NORD at 45' tilt\n", compute_compass_degree(), compute_acc_degree());
+    // yaw (stepper1) for X steps to get to compass headings=0°
+    setSpeed(&stepper1, 100);
+    printf("MOTOR 1 STEPS: %d, MOTOR 2 STEPS %d \r\n", calculate_steps(compute_compass_degree(), 0), calculate_steps(compute_acc_degree(), 45));
+    step(&stepper1, calculate_steps(compute_compass_degree(), 0));
+    // ypitch (stepper2) for X steps to get to acc headings=45°
+    setSpeed(&stepper2, 100);
+    step(&stepper2, calculate_steps(compute_acc_degree(), 45));
+}
+
+/**
+ * @brief Move motors until they will be alligned to the sun position
+ *
+ */
+void move_motor_to_the_sun(Position *pos)
+{
+    // Sun elevation must meet accelerometer
+    int elevation_step = calculate_steps(compute_acc_degree(), pos->elevation);
+    // Sun azimuth must meet compass
+    int azimuth_step = calculate_steps(compute_compass_degree(), pos->azimuth);
+
+    printf("Tracking on! \r\nElevation step to do: %d, Azimuth step to do: %d\r\n", elevation_step, azimuth_step);
+    setSpeed(&stepper1, 100);
+    setSpeed(&stepper2, 100);
+    step(&stepper1, azimuth_step);
+    step(&stepper2, elevation_step);
+}
 /**
  * @brief GPS read timer callback
  *
@@ -139,9 +185,20 @@ bool gps_read_callback(struct repeating_timer *t)
  */
 bool update_position_callback(struct repeating_timer *t)
 {
-    printf("Time: %lld\n", time_us_64());
+    // printf("Update motor position tim elapsed -> Time: %lld\n", time_us_64());
     update_position = true;
     return update_position;
+}
+
+/**
+ * @brief Set update position flag every t.delay_us
+ * @param t Pointer to the timer structure
+ */
+bool update_motor_position_callback(struct repeating_timer *t)
+{
+    // printf("Update motor position tim elapsed -> Time: %lld\n", time_us_64());
+    update_motor_position = true;
+    return update_motor_position;
 }
 
 /**
@@ -152,6 +209,16 @@ bool update_position_callback(struct repeating_timer *t)
 void init_position_timer(int time_ms)
 {
     add_repeating_timer_ms(time_ms, update_position_callback, NULL, &update_position_timer);
+}
+
+/**
+ * @brief Initialize the timer for gps update
+ *
+ * @param time_ms Timer delay in milliseconds
+ */
+void init_motor_timer(int time_ms)
+{
+    add_repeating_timer_ms(time_ms, update_motor_position_callback, NULL, &update_motor_position_timer);
 }
 
 /**
@@ -198,7 +265,7 @@ void nmea_parse(const char *msg, Place *parsed_place)
 #endif
         parsed_place->hour = frame_gga.time.hours;
         parsed_place->minute = frame_gga.time.minutes;
-        parsed_place->second = (double) frame_gga.time.seconds;
+        parsed_place->second = (double)frame_gga.time.seconds;
         parsed_place->latitude = minmea_tocoord(&frame_gga.latitude);
         parsed_place->longitude = minmea_tocoord(&frame_gga.longitude);
         break;
@@ -238,18 +305,19 @@ void on_uart_rx()
 void hello_salmo()
 {
     printf(
+        "\r\n"
         "███████  █████  ██      ███    ███  ██████  \r\n"
         "██      ██   ██ ██      ████  ████ ██    ██ \r\n"
         "███████ ███████ ██      ██ ████ ██ ██    ██ \r\n"
         "     ██ ██   ██ ██      ██  ██  ██ ██    ██ \r\n"
-        "███████ ██   ██ ███████ ██      ██  ██████  \r\n");
+        "███████ ██   ██ ███████ ██      ██  ██████  \r\n\r\n");
 }
 
 int main()
 {
     /* Initialization */
 
-    // stdio_init_all(); equals to usb and uart init
+    // stdio_init_all();  // equals to usb and uart init
     stdio_usb_init();  // initialize usb cdc
     stdio_uart_init(); // initialize uart0 with 0 baud rate
 
@@ -265,17 +333,37 @@ int main()
     irq_set_enabled(UART1_IRQ, true);
     uart_set_irq_enables(GPS_UART_ID, false, false);
 #endif
+
+    // SET GPS ENABLE PIN
     gpio_init(GPS_EN);
     gpio_set_dir(GPS_EN, GPIO_OUT);
     gpio_put(GPS_EN, 0); // with zero it's enabled
 
     update_position = false;
 
+    // SET PWM PIN
+    gpio_set_function(BUZZ_EN, GPIO_FUNC_PWM);
+    // uint pwm_channel = pwm_gpio_to_slice_num(BUZZ_EN);
+    // pwm_set_enabled(pwm_channel, true);
+    // pwm_set_wrap(pwm_channel, 500);
+    // pwm_set_chan_level(pwm_channel, PWM_CHAN_A, 250);
 
     // Stepper motors initialization
-    picoStepperInit(&stepper1, M1_W11, M1_W12, M1_W21, M1_W22, STEPS_PER_REV, INITIAL_SPEED);   //stepper1 = yaw
-    picoStepperInit(&stepper2, M2_W11, M2_W12, M2_W21, M2_W22, STEPS_PER_REV, INITIAL_SPEED);   //stepper2 = pitch
+    picoStepperInit(&stepper1, M1_W11, M1_W12, M1_W21, M1_W22, STEPS_PER_REV, INITIAL_SPEED); // stepper1 = yaw
+    picoStepperInit(&stepper2, M2_W11, M2_W12, M2_W21, M2_W22, STEPS_PER_REV, INITIAL_SPEED); // stepper2 = pitch
 
+    // SET HOME AND GPS_ENABLE SWITCH
+    gpio_init(NOT_HOME_SW);
+    gpio_init(NOT_EN_SW);
+    gpio_set_dir(NOT_HOME_SW, GPIO_IN);
+    gpio_set_dir(NOT_EN_SW, GPIO_IN);
+    gpio_set_input_enabled(NOT_HOME_SW, true);
+    gpio_set_input_enabled(NOT_EN_SW, true);
+    gpio_pull_up(NOT_HOME_SW);
+    gpio_pull_up(NOT_EN_SW);
+    // gpio irq handler - NOTE: Currently the GPIO parameter is ignored, and this callback will be called for any enabled GPIO IRQ on any pin.
+    gpio_set_irq_enabled_with_callback(NOT_HOME_SW, GPIO_IRQ_EDGE_RISE, true, &gpio_irq_callback);
+    gpio_set_irq_enabled_with_callback(NOT_EN_SW, GPIO_IRQ_EDGE_RISE, true, &gpio_irq_callback);
 
     // SET I2C Pins
     gpio_set_function(I2C1_SDA, GPIO_FUNC_I2C);
@@ -289,10 +377,13 @@ int main()
         gpio_pull_up(I2C1_SCL);
     */
 
-
     int16_t acc_gyro_data = 0;
     // Init i2c port1 with defined baud rate
     // I2C MPU port is defined inside every .h device library
+    sleep_ms(1000);
+    hello_salmo();
+    sleep_ms(1000);
+    printf("Peripherals initialization...\r\n");
     MPU6050_Initialize();
 
     if (MPU6050_TestConnection())
@@ -316,10 +407,10 @@ int main()
     }
     compute_compass_degree();
 
-
     /* Timers initialization */
     init_position_timer(4000);
     init_gps_timer(4000);
+    init_motor_timer(10000);
 
 #ifdef GPS_SIMULATIOR
     // Sample place and its respective conversion into sun position
@@ -329,7 +420,7 @@ int main()
 
     Position sun_position;
 
-#define FAMOUS_CITIES_SIMULATION
+// #define FAMOUS_CITIES_SIMULATION
 #ifdef FAMOUS_CITIES_SIMULATION
     Place rome = {2022, 6, 5, 10, 0, 20, 41.9027835, 12.4963655};
     Position rome_position = compute_complete_position(&rome);
@@ -340,10 +431,26 @@ int main()
 
     Place rio = {2022, 6, 5, 18, 00, 00, -22.908333, -43.196388};
     Position rio_position = compute_complete_position(&rio);
-
 #endif
+
     while (true)
     {
+        if (go_home_enable_pressed)
+        {
+            go_home();
+            go_home_enable_pressed = false;
+            tracking_enable_pressed = false;
+        }
+
+        if (tracking_enable_pressed)
+        {
+            // muovi motore
+            if (update_motor_position)
+            {
+                move_motor_to_the_sun(&sun_position);
+                update_motor_position = false;
+            }
+        }
         if (read_gps)
         {
             gps_lines = 0;
@@ -380,21 +487,19 @@ int main()
 
         if (update_position)
         {
-            hello_salmo();
-            printf("-------\r\n");
-            #ifdef FAMOUS_CITIES_SIMULATION
-                printf("[ROME] ");
-                print_place(&rome);
-                printf("[ROME] Position elevation %f azimuth %f \r\n\r\n", rome_position.elevation, rome_position.azimuth);
+#ifdef FAMOUS_CITIES_SIMULATION
+            printf("[ROME] ");
+            print_place(&rome);
+            printf("[ROME] Position elevation %f azimuth %f \r\n\r\n", rome_position.elevation, rome_position.azimuth);
 
-                printf("[BERLIN] ");
-                print_place(&berlin);
-                printf("[BERLIN] Position elevation %f azimuth %f \r\n\r\n", berlin_position.elevation, berlin_position.azimuth);
+            printf("[BERLIN] ");
+            print_place(&berlin);
+            printf("[BERLIN] Position elevation %f azimuth %f \r\n\r\n", berlin_position.elevation, berlin_position.azimuth);
 
-                printf("[RIO] ");
-                print_place(&rio);
-                printf("[RIO] Position elevation %f azimuth %f \r\n\r\n", rio_position.elevation, rio_position.azimuth);
-            #endif
+            printf("[RIO] ");
+            print_place(&rio);
+            printf("[RIO] Position elevation %f azimuth %f \r\n\r\n", rio_position.elevation, rio_position.azimuth);
+#endif
 
 #ifdef GPS_SIMULATOR
             print_place(&manual_place);
@@ -417,12 +522,11 @@ int main()
             printf("Moving motors............damn so heavy\r\n");
             update_position = false;
             printf("-------\r\n");
+
+            printf("Go home on: %s, Tracking on: %s \r\n", go_home_enable_pressed ? "true" : "false", tracking_enable_pressed ? "true" : "false");
         }
         sleep_ms(200);
     }
 
-    //gpio irq handler - NOTE: Currently the GPIO parameter is ignored, and this callback will be called for any enabled GPIO IRQ on any pin.
-    gpio_set_irq_enabled_with_callback(1, GPIO_IRQ_EDGE_RISE, true, &gpio_irq_callback);
-    
     return 0;
 }

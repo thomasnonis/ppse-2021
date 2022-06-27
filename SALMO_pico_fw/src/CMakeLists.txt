@@ -1,7 +1,7 @@
 if (TARGET tinyusb_device)
     add_executable(SALMO SALMO.c)
 
-    target_link_libraries(SALMO PRIVATE pico_stdlib sun_tracker stepper MPU6050 hardware_i2c hardware_uart pico_timer HMC5883L SSD1306 lwgps)
+    target_link_libraries(SALMO PRIVATE pico_stdlib sun_tracker stepper MPU6050 hardware_i2c hardware_uart  hardware_pwm pico_timer HMC5883L SSD1306 lwgps)
 
     include_directories("../tracking-algorithm")
     include_directories("../timer")

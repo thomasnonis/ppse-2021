@@ -1,6 +1,6 @@
 /*
  * pico_stepper.cpp - Stepper library for Raspberry Pi Pico - Version 0.1
- * 
+ *
  * Copyright (C) Lisa Santarossa, Tommaso Canova, Thomas Nonis, Gabriele Berretta, Simone Tollardo; Salmo Society TM
  * Copyright (C) Beshr Kayali
  *
@@ -28,8 +28,8 @@
 #include "pico/time.h"
 #include "pico_stepper.h"
 
-
-void picoStepperInit(PicoStepper* stepper, int pin1, int pin2, int pin3, int pin4, int total_steps, long initial_speed) {
+void picoStepperInit(PicoStepper *stepper, int pin1, int pin2, int pin3, int pin4, int total_steps, long initial_speed)
+{
   stepper->total_steps = total_steps;
   stepper->initial_speed = initial_speed;
   stepper->dir = 0;
@@ -48,35 +48,53 @@ void picoStepperInit(PicoStepper* stepper, int pin1, int pin2, int pin3, int pin
   gpio_set_dir(stepper->pin2, GPIO_OUT);
   gpio_set_dir(stepper->pin3, GPIO_OUT);
   gpio_set_dir(stepper->pin4, GPIO_OUT);
+  // Turn off pins to reduce power consumption
+  gpio_put(stepper->pin1, 0);
+  gpio_put(stepper->pin2, 0);
+  gpio_put(stepper->pin3, 0);
+  gpio_put(stepper->pin4, 0);
 }
 
-void setSpeed(PicoStepper* stepper, long speed) {
+void setSpeed(PicoStepper *stepper, long speed)
+{
   stepper->delay = 60L * 1000L * 1000L / stepper->total_steps / speed;
 }
 
-void step(PicoStepper* stepper, int steps_to_move) {
-  int steps_left = abs(steps_to_move);
+void step(PicoStepper *stepper, int steps_to_move)
+{
+  int steps_left = steps_to_move >= 0 ? steps_to_move : steps_to_move * -1; // abs value check
+  // abs(steps_to_move);
 
-  if (steps_to_move > 0) {
+  if (steps_to_move > 0)
+  {
     stepper->dir = 1;
-  } else {
+  }
+  else
+  {
     stepper->dir = 0;
   }
 
-  while (steps_left > 0) {
+  while (steps_left > 0)
+  {
     uint64_t now = to_us_since_boot(get_absolute_time());
 
-    if (now - stepper->last_step_us_time >= stepper->delay) {
+    if (now - stepper->last_step_us_time >= stepper->delay)
+    {
       stepper->last_step_us_time = now;
 
-      if (stepper->dir == 1) {
+      if (stepper->dir == 1)
+      {
         stepper->current_step++;
 
-        if (stepper->current_step == stepper->total_steps) {
+        if (stepper->current_step == stepper->total_steps)
+        {
           stepper->current_step = 0;
         }
-      } else {
-        if (stepper->current_step == 0) {
+      }
+      else
+      {
+        if (stepper->current_step == 0)
+        {
           stepper->current_step = stepper->total_steps;
         }
 
@@ -87,32 +105,40 @@ void step(PicoStepper* stepper, int steps_to_move) {
       steps_left--;
     }
   }
+
+  // Turn off pins to reduce power consumption
+  gpio_put(stepper->pin1, 0);
+  gpio_put(stepper->pin2, 0);
+  gpio_put(stepper->pin3, 0);
+  gpio_put(stepper->pin4, 0);
 }
 
-void stepMotor(PicoStepper* stepper, int step) {
-  switch (step) {
-  case 0:  // 1000
+void stepMotor(PicoStepper *stepper, int step)
+{
+  switch (step)
+  {
+  case 0: // 1000
     gpio_put(stepper->pin1, 1);
     gpio_put(stepper->pin2, 0);
     gpio_put(stepper->pin3, 0);
     gpio_put(stepper->pin4, 0);
     break;
 
-  case 1:  // 0100
+  case 1: // 0100
     gpio_put(stepper->pin1, 0);
     gpio_put(stepper->pin2, 1);
     gpio_put(stepper->pin3, 0);
     gpio_put(stepper->pin4, 0);
     break;
 
-  case 2:  // 0010
+  case 2: // 0010
     gpio_put(stepper->pin1, 0);
     gpio_put(stepper->pin2, 0);
     gpio_put(stepper->pin3, 1);
     gpio_put(stepper->pin4, 0);
     break;
 
-  case 3:  // 0001
+  case 3: // 0001
     gpio_put(stepper->pin1, 0);
     gpio_put(stepper->pin2, 0);
     gpio_put(stepper->pin3, 0);
@@ -120,4 +146,3 @@ void stepMotor(PicoStepper* stepper, int step) {
     break;
   }
 }
-
