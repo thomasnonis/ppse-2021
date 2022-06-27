@@ -30,12 +30,25 @@ All files must have no spaces and should be lowercase.
 :heavy_check_mark: name-of-file.ext 
 
 # :rainbow: Building process
+
+Debian:
+
     sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential
     git pull
     git submodule update --init --recursive
 
+Fedora:
+
+    sudo dnf install cmake
+    sudo dnf group install "C Development Tools and Libraries" "Development Tools"
+    sudo dnf install gcc-arm-linux-gnu \
+    arm-none-eabi-gcc-cs-c++ \
+    arm-none-eabi-gcc-cs \
+    arm-none-eabi-binutils \
+    arm-none-eabi-newlib
+
 Add to your shell profile (`~/.bashrc` or `~/.zshrc`) the current directory (pico-sdk folder) as env variable:
-    
+ 
 `export PICO_SDK_PATH=<path_to>/pico-sdk`
 
 and then:
