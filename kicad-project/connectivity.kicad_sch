@@ -5,7 +5,9 @@
   (paper "A4")
 
   (title_block
-    (company "Connectivity")
+    (title "Peripherals")
+    (date "2022-04-13")
+    (rev "1.0")
   )
 
   (lib_symbols
@@ -1289,7 +1291,6 @@
       )
     )
   )
-
 
   (junction (at 49.53 105.41) (diameter 0) (color 0 0 0 0)
     (uuid 06953621-c037-4911-9588-e2b6b1c4b13d)

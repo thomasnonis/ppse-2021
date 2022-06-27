@@ -6,6 +6,8 @@
 
   (title_block
     (title "Sensing")
+    (date "2022-04-13")
+    (rev "1.0")
   )
 
   (lib_symbols
@@ -314,7 +316,6 @@
       )
     )
   )
-
 
   (junction (at 114.3 52.07) (diameter 0) (color 0 0 0 0)
     (uuid 423da046-71d0-4eb2-9681-6941570c54a6)
