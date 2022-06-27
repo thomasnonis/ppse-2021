@@ -1,6 +1,3 @@
-[submodule "fw-dev/pico-sdk"]
-	path = fw-dev/pico-sdk
-	url = https://github.com/raspberrypi/pico-sdk.git
-[submodule "fw-dev/pico-examples"]
-	path = fw-dev/pico-examples
-	url = https://github.com/raspberrypi/pico-examples.git
+[submodule "picotool"]
+	path = picotool
+	url = https://github.com/raspberrypi/picotool.git

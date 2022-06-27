@@ -1,1 +1,7 @@
-*.docx
+**/.vscode
+**/*.out
+**/.DS_Store
+**/out
+**/*.code-workspace
+Relazione.docx
+**/build

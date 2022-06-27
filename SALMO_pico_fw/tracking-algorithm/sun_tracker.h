@@ -1,0 +1,81 @@
+/**
+ * @file sun_tracker.h
+ * @author Tommaso Canova, Simone Tollardo, Lisa Santarossa, Thomas Nonis, Gabriele Berretta
+ * @brief 
+ * @version 0.1
+ * @date 2022-04-10
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
+#ifndef __SUN_TRACKER_H
+#define __SUN_TRACKER_H
+
+
+#include <math.h>
+
+// Constants:
+#define PI             3.14159265358979323846    // Pi
+#define TWO_PI         6.28318530717958647693    // 2 pi
+#define MPI            3.14159265358979323846e6  // One Megapi...
+#define R2D            57.2957795130823208768    // Radians to degrees conversion factor
+#define R2H            3.81971863420548805845    // Radians to hours conversion factor
+#define DEG_TO_RAD     PI/180.0                  // Degree to radians
+#define RAD_TO_DEG     180.0/PI
+
+/**
+ * @brief Complete struct where mid calcs of the sun tracker algorithm are stored
+ * 
+ */
+typedef struct Position{
+  double jd, julian_days_since_epoch, julian_centuries_since_epoch;
+  double mean_longitude, mean_anomaly;
+  double eccent_earth_orbit, sun_eq_of_center;
+  double sun_true_longitude, sun_true_anomaly;
+  double sun_rad_vector, sun_app_long;
+  double obliq_corr, mean_obliq_ecliptic;
+  double right_ascension, declination;
+  double gmst, lmst, eq_of_time, hour_angle, elevation, azimuth, refraction;
+} Position;
+
+/**
+ * @brief Structur needed to store the Place information obtained by the gps
+ * Note that the hour is in UTC time, so if the local time is 14:00:00 and you're are in UTC+2 zone,
+ * the UTC time will be considered as 12:00:00.
+ * Most of GPS provide datetime in utc
+ * 
+ */
+typedef struct Place{
+  int year, month, day, hour, minute;
+  double second, latitude, longitude;
+} Place;
+
+void print_place(Place *p);
+void compute_JD(int year, int month, int day,  int hour, int minute, double second, struct Position* pos);
+
+//eliptic coords
+void compute_days_since_epoch(struct Position* pos);
+void compute_mean_longitude(struct Position* pos);
+void compute_mean_anomaly(struct Position* pos);
+void compute_eccent_earth_orbit(struct Position* pos);
+void compute_sun_eq_center(struct Position* pos);
+void compute_sun_true_longitude(struct Position* pos);
+void compute_sun_true_anomaly(struct Position* pos);
+void compute_mean_obliquity_ecliptic(struct Position* pos);
+void compute_obliq_corr(struct Position* pos);
+void compute_sun_app_longitude(struct Position* pos);
+void compute_eq_of_time(struct Position* pos);
+
+//celestial coords
+void compute_right_ascension(struct Position* pos);
+void compute_declination(Position* pos);
+
+//local coords
+void compute_gmst(int hour,  struct Position* pos);
+void compute_lmst(double east_longitude,  struct Position* pos);
+void compute_hour_angle(Place* place, struct Position* pos);
+void compute_elevation_and_azimuth(double lat,  struct Position* pos);
+
+Position compute_complete_position(Place* place);
+#endif
