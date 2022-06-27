@@ -122,7 +122,3 @@ Every library needs some sort of documentation, and of course a cmake file!
 :zap: Usage with args
 
     ./out {year} {month} {day} {hour} {minute} {second} {latitude} {longitude}
-
-
-
-    
