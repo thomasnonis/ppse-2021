@@ -34,8 +34,6 @@ All files must have no spaces and should be lowercase.
 Debian:
 
     sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential
-    git pull
-    git submodule update --init --recursive
 
 Fedora:
 
@@ -47,11 +45,16 @@ Fedora:
     arm-none-eabi-binutils \
     arm-none-eabi-newlib
 
-Add to your shell profile (`~/.bashrc` or `~/.zshrc`) the current directory (pico-sdk folder) as env variable:
+then:
+
+    git pull
+    git submodule update --init --recursive
+
+now add to your shell profile (`~/.bashrc` or `~/.zshrc`) the current directory (pico-sdk folder) as env variable:
  
 `export PICO_SDK_PATH=<path_to>/pico-sdk`
 
-and then:
+Finally, in order to compile:
 
     cd SALMO_pico_fw
     mkdir build
