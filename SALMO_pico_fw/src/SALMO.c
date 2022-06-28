@@ -48,6 +48,9 @@ bool update_motor_position;
 struct repeating_timer update_position_timer;
 struct repeating_timer gps_read_timer;
 struct repeating_timer update_motor_position_timer;
+#define UPDATE_SUN_POSITION_TIMER_PERIOD_MS 4000
+#define GPS_READ_TIMER_PERIOD_MS 4000
+#define UPDATE_MOTOR_POSITION_TIMER_PERIOD_MS 10000
 
 // Shitty vars
 bool tracking_enable_pressed = false;
@@ -408,9 +411,9 @@ int main()
     compute_compass_degree();
 
     /* Timers initialization */
-    init_position_timer(4000);
-    init_gps_timer(4000);
-    init_motor_timer(10000);
+    init_position_timer(UPDATE_SUN_POSITION_TIMER_PERIOD_MS);
+    init_gps_timer(GPS_READ_TIMER_PERIOD_MS);
+    init_motor_timer(UPDATE_MOTOR_POSITION_TIMER_PERIOD_MS);
 
 #ifdef GPS_SIMULATIOR
     // Sample place and its respective conversion into sun position
