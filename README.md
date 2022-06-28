@@ -71,16 +71,21 @@ Then drag and drop the `.uf2` file to `RPI-RP2` mass storage device.
 ## Picotool
 If you want to install picotool and easily flash when RP2040 is not in BOOTSEL mode, you need to follow these steps:
 
-Linux:
+Debian:
 
     sudo apt install build-essential pkg-config libusb-1.0-0-dev
-    
+
+Fedora:
+
+    sudo dnf install libusb-devel libusb libusb1-devel systemd-devel
+    sudo reboot
+
 Mac:
 
     xcode-select --install
     brew install libusb
     brew link --overwrite libusb
-    
+
 and then do:
 
     cd picotool
