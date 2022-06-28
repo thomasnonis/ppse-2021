@@ -30,12 +30,25 @@ All files must have no spaces and should be lowercase.
 :heavy_check_mark: name-of-file.ext 
 
 # :rainbow: Building process
+
+Debian:
+
     sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential
     git pull
     git submodule update --init --recursive
 
+Fedora:
+
+    sudo dnf install cmake
+    sudo dnf group install "C Development Tools and Libraries" "Development Tools"
+    sudo dnf install gcc-arm-linux-gnu \
+    arm-none-eabi-gcc-cs-c++ \
+    arm-none-eabi-gcc-cs \
+    arm-none-eabi-binutils \
+    arm-none-eabi-newlib
+
 Add to your shell profile (`~/.bashrc` or `~/.zshrc`) the current directory (pico-sdk folder) as env variable:
-    
+ 
 `export PICO_SDK_PATH=<path_to>/pico-sdk`
 
 and then:
@@ -58,16 +71,21 @@ Then drag and drop the `.uf2` file to `RPI-RP2` mass storage device.
 ## Picotool
 If you want to install picotool and easily flash when RP2040 is not in BOOTSEL mode, you need to follow these steps:
 
-Linux:
+Debian:
 
     sudo apt install build-essential pkg-config libusb-1.0-0-dev
-    
+
+Fedora:
+
+    sudo dnf install libusb-devel libusb libusb1-devel systemd-devel
+    sudo reboot
+
 Mac:
 
     xcode-select --install
     brew install libusb
     brew link --overwrite libusb
-    
+
 and then do:
 
     cd picotool
@@ -140,7 +158,3 @@ A[Peripherals initialization] -->B(Infinite loop)
 :zap: Usage with args
 
     ./out {year} {month} {day} {hour} {minute} {second} {latitude} {longitude}
-
-
-
-    
