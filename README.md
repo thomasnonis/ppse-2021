@@ -114,11 +114,13 @@ Then, you can simply navigate to `SALMO_pico_fw/src/` and execute `build.sh`, `f
 If you want to add a new driver or library please keep this tree structure
 ```
 📦 SALMO_pico_fw
+ ┣📜 CMakeLists.txt (Project cmake file)
  ┣ 📂 build
  ┣ 📂 src
+ ┗ 📜 CMakeLists.txt (SALMO.C cmake file)
  ┣ 📂 your_lib
  ┃ ┗ 📂 your_lib docs
- ┃ ┗ 📜 CMakeLists.txt
+ ┃ ┗ 📜 CMakeLists.txt (lib cmake file)
  ┃ ┗ 📜 your_lib.c.
  ┃ ┗ 📜 your_lib.h
 ```
