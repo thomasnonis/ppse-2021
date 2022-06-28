@@ -103,6 +103,24 @@ If you want to add a new driver or library please keep this tree structure
 ```
 Every library needs some sort of documentation, and of course a cmake file!
 
+# Firmware flow chart
+```mermaid
+graph TB
+A[Peripherals initialization] -->B(Infinite loop)
+    B --> C{Is go home btn pressed?}
+    C -->|Yes| D(Go home) --> E
+    C -->|No| E{Is tracking enable btn pressed?}
+	E -->|Yes| E1(Enable or disable tracking mode) --> F
+	F{Is update_motor_position_timer elapsed <br>and tracking mode on?}
+	F -->|Yes| G(Update motor position) --> H
+	F -->|No| H{Is gps timer elapsed?}
+	E -->|No| H
+	H -->|Yes| I(Read and parse GPS output) --> L
+	H -->|No| L{Is update sun position timer elapsed?}
+	L -->|Yes| M(Run algorithm to compute sun position based on GPS data) --> B
+	L -->|No| B
+
+```
 # OLD :globe_with_meridians: : :boom: Compilation routine for the algo
 
     cd fw-dev
