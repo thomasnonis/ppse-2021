@@ -35,9 +35,6 @@
 #ifndef _MPU6050_H_
 #define _MPU6050_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /* Includes */
 #include <stdbool.h>

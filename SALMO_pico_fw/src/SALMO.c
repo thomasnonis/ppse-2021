@@ -22,17 +22,12 @@
 #include "hardware/gpio.h"
 #include "../tracking-algorithm/sun_tracker.h"
 #include "../MPU6050/MPU6050.h"
+#include "../HMC5883L/HMC5883L.h"
+#include "../PAM7Q/PAM7Q.h"
 #include "../timer/pico_timer.h"
 #include "../nmea-parser/minmea.h"
-#include "../HMC5883L/HMC5883L.h"
 #include "../stepper/pico_stepper.h"
 
-// UART CONFIG
-#define GPS_UART_ID uart1
-#define BAUD_RATE 9600
-#define DATA_BITS 8
-#define STOP_BITS 1
-#define PARITY UART_PARITY_NONE
 
 // GPS CONFIG
 #define DEBUG_GPS_PARSER
@@ -52,15 +47,9 @@ struct repeating_timer update_motor_position_timer;
 #define GPS_READ_TIMER_PERIOD_MS 4000
 #define UPDATE_MOTOR_POSITION_TIMER_PERIOD_MS 10000
 
-// Shitty vars
+// SALMO Functions state
 bool tracking_enable_pressed = false;
 bool go_home_enable_pressed = false;
-
-//  GPS INTERRUPT CONFIG
-#ifdef INTERRUPTS_ARE_WORKING
-static int chars_rxed = 0;
-char nmea_buffer[83];
-#endif
 
 // GLOBAL VARS
 Place gps_parsed_place;
@@ -278,33 +267,6 @@ void nmea_parse(const char *msg, Place *parsed_place)
     }
 }
 
-#ifdef INTERRUPTS_ARE_WORKING
-// RX interrupt handler
-void on_uart_rx()
-{
-    if (chars_rxed > 82)
-    {
-        // printf(nmea_buffer);
-        memset(nmea_buffer, 0, sizeof(nmea_buffer)); // empty the string
-    }
-    while (uart_is_readable(GPS_UART_ID))
-    {
-        // printf("HELLO\r\n");
-        uint8_t ch = uart_getc(GPS_UART_ID);
-
-        nmea_buffer[chars_rxed] = ch;
-
-        // // Can we send it back?
-        // if (uart_is_writable(GPS_UART_ID)) {
-        //     // Change it slightly first!
-        //     ch++;
-        //     uart_putc(GPS_UART_ID, ch);
-        // }
-        chars_rxed++;
-    }
-}
-#endif
-
 void hello_salmo()
 {
     printf(
@@ -323,14 +285,8 @@ int main()
     // stdio_init_all();  // equals to usb and uart init
     stdio_usb_init();  // initialize usb cdc
     stdio_uart_init(); // initialize uart0 with 0 baud rate
+    PAM7Q_init(UART1_TX, UART1_RX);
 
-    // GPS UART initialization
-    uart_init(GPS_UART_ID, BAUD_RATE);
-    gpio_set_function(UART1_TX, GPIO_FUNC_UART);
-    gpio_set_function(UART1_RX, GPIO_FUNC_UART);
-    uart_set_hw_flow(GPS_UART_ID, false, false);
-    uart_set_format(GPS_UART_ID, DATA_BITS, STOP_BITS, PARITY);
-    uart_set_fifo_enabled(GPS_UART_ID, false);
 #ifdef INTERRUPTS_ARE_WORKING
     irq_set_exclusive_handler(UART1_IRQ, on_uart_rx);
     irq_set_enabled(UART1_IRQ, true);
