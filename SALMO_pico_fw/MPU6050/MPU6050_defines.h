@@ -1,5 +1,5 @@
-#ifndef BSP_MPU6050_DEFINES_H_
-#define BSP_MPU6050_DEFINES_H_
+#ifndef _MPU6050_DEFINES_H_
+#define _MPU6050_DEFINES_H_
 
 #define MPU6050_ADDRESS_AD0_LOW     0x68 // address pin low (GND), default for InvenSense evaluation board
 #define MPU6050_ADDRESS_AD0_HIGH    0x69 // address pin high (VCC)
@@ -354,4 +354,4 @@
 #define MPU6050_DMP_MEMORY_BANK_SIZE    256
 #define MPU6050_DMP_MEMORY_CHUNK_SIZE   16
 
-#endif /* BSP_MPU6050_DEFINES_H_ */
+#endif /* _MPU6050_DEFINES_H_ */
