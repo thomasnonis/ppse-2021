@@ -38,6 +38,7 @@ THE SOFTWARE.
 */
 
 #include "HMC5883L.h"
+#include "HMC5883L_defines.h"
 #include "HMC5883L_I2C.h"
 
 static uint8_t slaveAddr = HMC5883L_DEFAULT_ADDRESS;
