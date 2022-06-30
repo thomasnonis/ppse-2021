@@ -5,8 +5,9 @@
  * @param uart_TX_pin
  * @param UART_RX_pin
  */
-void PAM7Q_init(uint8_t txpin, uint8_t rxpin){
-    // GPS UART initialization
+void PAM7Q_init(uint8_t txpin, uint8_t rxpin)
+{
+    /* GPS UART initialization */
     uart_init(GPS_UART_ID, BAUD_RATE);
     gpio_set_function(txpin, GPIO_FUNC_UART);
     gpio_set_function(rxpin, GPIO_FUNC_UART);
