@@ -48,7 +48,7 @@ struct repeating_timer gps_read_timer;
 struct repeating_timer update_motors_position_timer;
 #define UPDATE_SUN_POSITION_TIMER_PERIOD_MS 4000
 #define GPS_READ_TIMER_PERIOD_MS 4000
-#define UPDATE_MOTORS_POSITION_TIMER_PERIOD_MS 10000
+#define UPDATE_MOTORS_POSITION_TIMER_PERIOD_MS 9900 //100ms are for sleep between buzzer on and off
 
 // SALMO Functions state
 bool tracking_enable_pressed = false;
@@ -69,7 +69,7 @@ void init_position_timer(int time_ms);
 void init_motors_timer(int time_ms);
 void init_gps_timer(int time_ms);
 void gpio_irq_callback(uint gpio, uint32_t events);
-void beep_on(uint8_t freq, uint8_t duty_perc);
+void beep_on(uint16_t freq, uint8_t duty_perc);
 void beep_off();
 void tone(uint8_t freq, unsigned long duration_ms);
 void startup_tone();
@@ -236,17 +236,23 @@ int main()
     {
         /* Go home button relative behaviour */
         if (go_home_enable_pressed)
-        {
+        {   
+            beep_on(2000,50);
+            sleep_ms(100);
+            beep_off();
             go_home(&stepper1, &stepper2);
             go_home_enable_pressed = false;
             tracking_enable_pressed = false;
         }
         /* Tracking button relative behaviour */
         if (tracking_enable_pressed)
-        {
+        {   
             /* When relative timer elapses the motors are powered */
             if (update_motors_position)
-            {
+            {   
+                beep_on(2000,50);
+                sleep_ms(100);
+                beep_off();
                 move_motors_to_the_sun(&sun_position, &stepper1, &stepper2);
                 update_motors_position = false;
             }
@@ -508,7 +514,7 @@ void nmea_parse(const char *msg, Place *parsed_place)
     }
 }
 
-void beep_on(uint8_t freq, uint8_t duty_perc){
+void beep_on(uint16_t freq, uint8_t duty_perc){
     // Buzzer PWM settings
     // ES: We want a frequency of 2KHz (500us period) and a duty cycle of 50%
     // System clock is running at 125Mhz (8ns period)
