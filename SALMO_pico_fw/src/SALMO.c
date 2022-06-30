@@ -27,6 +27,10 @@
 #include "../timer/pico_timer.h"
 #include "../nmea-parser/minmea.h"
 #include "../stepper/pico_stepper.h"
+#include "pitches.h"
+
+// Buzzer PWM config
+#define SYSCLOCK 125000000
 
 // GPS CONFIG
 #define DEBUG_GPS_PARSER
@@ -65,6 +69,11 @@ void init_position_timer(int time_ms);
 void init_motors_timer(int time_ms);
 void init_gps_timer(int time_ms);
 void gpio_irq_callback(uint gpio, uint32_t events);
+void beep_on(uint8_t freq, uint8_t duty_perc);
+void beep_off();
+void tone(uint8_t freq, unsigned long duration_ms);
+void startup_tone();
+
 
 void hello_salmo()
 {
@@ -157,15 +166,6 @@ int main()
 
     update_position = false;
 
-    // SET PWM PIN
-    gpio_set_function(BUZZ_EN, GPIO_FUNC_PWM);
-#ifdef BUZZER_MOUNTED
-    uint pwm_channel = pwm_gpio_to_slice_num(BUZZ_EN);
-    pwm_set_enabled(pwm_channel, true);
-    pwm_set_wrap(pwm_channel, 500);
-    pwm_set_chan_level(pwm_channel, PWM_CHAN_A, 250);
-#endif
-
     /* Stepper motors initialization  */
     picoStepperInit(&stepper1, M1_W11, M1_W12, M1_W21, M1_W22, STEPS_PER_REV, INITIAL_SPEED); // stepper1 = yaw
     picoStepperInit(&stepper2, M2_W11, M2_W12, M2_W21, M2_W22, STEPS_PER_REV, INITIAL_SPEED); // stepper2 = pitch
@@ -201,7 +201,7 @@ int main()
     /* Startup message with relative delay */
     sleep_ms(2000);
     hello_salmo();
-    sleep_ms(1000);
+    startup_tone();
     printf("Peripherals initialization...\r\n");
 
     /* MPU6050 Initialization */
@@ -505,5 +505,58 @@ void nmea_parse(const char *msg, Place *parsed_place)
 
     default:
         break;
+    }
+}
+
+void beep_on(uint8_t freq, uint8_t duty_perc){
+    // Buzzer PWM settings
+    // ES: We want a frequency of 2KHz (500us period) and a duty cycle of 50%
+    // System clock is running at 125Mhz (8ns period)
+    // In order to output a 2KHz square wave we should count from 0 to 500us/8ns=62500
+    // When counter reach 62500 we change the state of the pin
+    gpio_set_function(BUZZ_EN, GPIO_FUNC_PWM);
+    pwm_set_wrap(0, SYSCLOCK/freq);
+    pwm_set_chan_level(0, PWM_CHAN_A, (SYSCLOCK/freq) * duty_perc);
+    pwm_set_enabled(0, true);
+}
+
+void beep_off(){
+    pwm_set_enabled(0, false);
+}
+
+void tone(uint8_t freq, unsigned long duration_ms){
+    beep_on(freq, 50);
+    sleep_ms(duration_ms);
+    beep_off();
+}
+
+void startup_tone(){
+    int noteDuration        = 0;
+    int pauseBetweenNotes   = 0;
+
+    int melody[] = {
+        NOTE_FS5, NOTE_FS5, NOTE_D5, NOTE_B4, NOTE_B4, NOTE_E5, 
+        NOTE_E5, NOTE_E5, NOTE_GS5, NOTE_GS5, NOTE_GS5, NOTE_B5, 
+        NOTE_A5, NOTE_A5, NOTE_A5, NOTE_E5, NOTE_D5, NOTE_FS5, 
+        NOTE_FS5, NOTE_FS5, NOTE_E5, NOTE_E5, NOTE_FS5, NOTE_E5
+    };
+
+    // note durations: 4 = quarter note, 8 = eighth note, etc.:
+    int noteDurations[] = {
+        8, 8, 8, 4, 4, 4, 
+        4, 5, 8, 8, 8, 8, 
+        8, 8, 8, 4, 4, 4, 
+        4, 5, 8, 8, 8, 8
+    };
+
+    for (int i = 0; i < sizeof(melody)/sizeof(int); i++) {
+        // to calculate the note duration, take one second divided by the note type.
+        //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+        noteDuration = 1000 / noteDurations[i];
+        tone(melody[i], noteDuration);
+        // to distinguish the notes, set a minimum time between them.
+        // the note's duration + 30% seems to work well:
+        pauseBetweenNotes = noteDuration * 0.2;
+        sleep_ms(pauseBetweenNotes);
     }
 }
