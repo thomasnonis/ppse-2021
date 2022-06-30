@@ -22,50 +22,369 @@
 #include "hardware/gpio.h"
 #include "../tracking-algorithm/sun_tracker.h"
 #include "../MPU6050/MPU6050.h"
+#include "../HMC5883L/HMC5883L.h"
+#include "../PAM7Q/PAM7Q.h"
 #include "../timer/pico_timer.h"
 #include "../nmea-parser/minmea.h"
-#include "../HMC5883L/HMC5883L.h"
 #include "../stepper/pico_stepper.h"
+#include "pitches.h"
 
-// UART CONFIG
-#define GPS_UART_ID uart1
-#define BAUD_RATE 9600
-#define DATA_BITS 8
-#define STOP_BITS 1
-#define PARITY UART_PARITY_NONE
+// Buzzer PWM config
+#define SYSCLOCK 125000000
 
 // GPS CONFIG
 #define DEBUG_GPS_PARSER
 #define GPS_MAX_SENTENCES 12
 #define GPS_MAX_SENTENCE_LENGTH 100
 char gps_raw_sentences[GPS_MAX_SENTENCES][GPS_MAX_SENTENCE_LENGTH];
-int gps_lines = 0;
+int gps_read_lines = 0;
 
 // TIMER CONFIG
 bool update_position;
 bool read_gps;
-bool update_motor_position;
+bool update_motors_position;
 struct repeating_timer update_position_timer;
 struct repeating_timer gps_read_timer;
-struct repeating_timer update_motor_position_timer;
+struct repeating_timer update_motors_position_timer;
 #define UPDATE_SUN_POSITION_TIMER_PERIOD_MS 4000
 #define GPS_READ_TIMER_PERIOD_MS 4000
-#define UPDATE_MOTOR_POSITION_TIMER_PERIOD_MS 10000
+#define UPDATE_MOTORS_POSITION_TIMER_PERIOD_MS 9900 //100ms are for sleep between buzzer on and off
 
-// Shitty vars
+// SALMO Functions state
 bool tracking_enable_pressed = false;
 bool go_home_enable_pressed = false;
-
-//  GPS INTERRUPT CONFIG
-#ifdef INTERRUPTS_ARE_WORKING
-static int chars_rxed = 0;
-char nmea_buffer[83];
-#endif
 
 // GLOBAL VARS
 Place gps_parsed_place;
 PicoStepper stepper1 = {0};
 PicoStepper stepper2 = {0};
+
+float compute_compass_degree();
+float compute_acc_degree();
+int calculate_steps(float current_angle, float desired_angle);
+void go_home(PicoStepper *stepper1, PicoStepper *stepper2);
+void move_motors_to_the_sun(Position *pos, PicoStepper *stepper1, PicoStepper *stepper2);
+void nmea_parse(const char *msg, Place *parsed_place);
+void init_position_timer(int time_ms);
+void init_motors_timer(int time_ms);
+void init_gps_timer(int time_ms);
+void gpio_irq_callback(uint gpio, uint32_t events);
+void beep_on(uint16_t freq, uint8_t duty_perc);
+void beep_off();
+void tone(uint8_t freq, unsigned long duration_ms);
+void startup_tone();
+
+
+void hello_salmo()
+{
+    printf(
+        "\r\n"
+        "███████  █████  ██      ███    ███  ██████  \r\n"
+        "██      ██   ██ ██      ████  ████ ██    ██ \r\n"
+        "███████ ███████ ██      ██ ████ ██ ██    ██ \r\n"
+        "     ██ ██   ██ ██      ██  ██  ██ ██    ██ \r\n"
+        "███████ ██   ██ ███████ ██      ██  ██████  \r\n\r\n");
+}
+
+/**
+ * @brief GPS read timer callback
+ *
+ * @param t gps timer
+ */
+bool gps_read_callback(struct repeating_timer *t)
+{
+    read_gps = true;
+    return read_gps;
+}
+
+/**
+ * @brief Set update position flag every t.delay_us
+ * @param t Pointer to the timer structure
+ */
+bool update_position_callback(struct repeating_timer *t)
+{
+    // printf("Update motor position tim elapsed -> Time: %lld\n", time_us_64());
+    update_position = true;
+    return update_position;
+}
+
+/**
+ * @brief Set update position flag every t.delay_us
+ * @param t Pointer to the timer structure
+ */
+bool update_motors_position_callback(struct repeating_timer *t)
+{
+    // printf("Update motor position tim elapsed -> Time: %lld\n", time_us_64());
+    update_motors_position = true;
+    return update_motors_position;
+}
+
+int main()
+{
+
+    /* Used variables */
+    int16_t acc_gyro_data = 0;
+    Position sun_position;
+    char gps_rx_buffer[100];
+
+#ifdef GPS_SIMULATIOR
+    // Sample place and its respective conversion into sun position
+    Place manual_place = {2030, 2, 28, 10, 10, 10, 55.751244, 37.618423};
+    Position manual_position = compute_complete_position(&manual_place);
+#endif
+
+// #define FAMOUS_CITIES_SIMULATION
+#ifdef FAMOUS_CITIES_SIMULATION
+    Place rome = {2022, 6, 5, 10, 0, 20, 41.9027835, 12.4963655};
+    Position rome_position = compute_complete_position(&rome);
+
+    // TODO: check why minutes are not mapped correctly
+    Place berlin = {2022, 6, 5, 12, 40, 00, 52.520008, 13.404954};
+    Position berlin_position = compute_complete_position(&berlin);
+
+    Place rio = {2022, 6, 5, 18, 00, 00, -22.908333, -43.196388};
+    Position rio_position = compute_complete_position(&rio);
+#endif
+
+    /* Initialization of peripherals*/
+
+    // stdio_init_all();  // equals to usb and uart init
+    stdio_usb_init();  // initialize usb cdc
+    stdio_uart_init(); // initialize uart0 with 0 baud rate
+    PAM7Q_init(UART1_TX, UART1_RX);
+
+#ifdef INTERRUPTS_ARE_WORKING
+    irq_set_exclusive_handler(UART1_IRQ, on_uart_rx);
+    irq_set_enabled(UART1_IRQ, true);
+    uart_set_irq_enables(GPS_UART_ID, false, false);
+#endif
+
+    /* SET GPS ENABLE PIN */
+    gpio_init(GPS_EN);
+    gpio_set_dir(GPS_EN, GPIO_OUT);
+    gpio_put(GPS_EN, 0); // with zero it's enabled
+
+    update_position = false;
+
+    /* Stepper motors initialization  */
+    picoStepperInit(&stepper1, M1_W11, M1_W12, M1_W21, M1_W22, STEPS_PER_REV, INITIAL_SPEED); // stepper1 = yaw
+    picoStepperInit(&stepper2, M2_W11, M2_W12, M2_W21, M2_W22, STEPS_PER_REV, INITIAL_SPEED); // stepper2 = pitch
+
+    /* SET HOME AND GPS_ENABLE SWITCH  */
+    gpio_init(NOT_HOME_SW);
+    gpio_init(NOT_EN_SW);
+    gpio_set_dir(NOT_HOME_SW, GPIO_IN);
+    gpio_set_dir(NOT_EN_SW, GPIO_IN);
+    gpio_set_input_enabled(NOT_HOME_SW, true);
+    gpio_set_input_enabled(NOT_EN_SW, true);
+    gpio_pull_up(NOT_HOME_SW);
+    gpio_pull_up(NOT_EN_SW);
+    // gpio irq handler - NOTE: Currently the GPIO parameter is ignored, and this callback will be called for any enabled GPIO IRQ on any pin.
+    gpio_set_irq_enabled_with_callback(NOT_HOME_SW, GPIO_IRQ_EDGE_RISE, true, &gpio_irq_callback);
+    gpio_set_irq_enabled_with_callback(NOT_EN_SW, GPIO_IRQ_EDGE_RISE, true, &gpio_irq_callback);
+
+    /* SET I2C Pins */
+    gpio_set_function(I2C1_SDA, GPIO_FUNC_I2C);
+    gpio_set_function(I2C1_SCL, GPIO_FUNC_I2C);
+    // Make the I2C pins available to picotool
+    bi_decl(bi_2pins_with_func(I2C1_SDA, I2C1_SCL, GPIO_FUNC_I2C));
+    i2c_init(I2C_PERIPHERAL, I2C_PORT1_BAUD_RATE);
+
+    /* Verify if are needed, probably they are already in the sensor breakout board
+        gpio_pull_up(I2C1_SDA);
+        gpio_pull_up(I2C1_SCL);
+    */
+
+    // Init i2c port1 with defined baud rate
+    // I2C MPU port is defined inside every .h device library
+
+    /* Startup message with relative delay */
+    sleep_ms(2000);
+    hello_salmo();
+    startup_tone();
+    printf("Peripherals initialization...\r\n");
+
+    /* MPU6050 Initialization */
+    MPU6050_Initialize();
+    if (MPU6050_TestConnection())
+    {
+        printf("MPU6050 connection success\n");
+    }
+    else
+    {
+        printf("MPU6050 connection failed\n");
+    }
+    MPU6050_GetRawAccelGyro(&acc_gyro_data);
+
+    HMC5883L_initialize();
+    if (isHMC())
+    {
+        printf("HMC5883L connection success\n");
+    }
+    else
+    {
+        printf("HMC5883L connection failed\n");
+    }
+    compute_compass_degree();
+
+    /* Timers initialization */
+    init_position_timer(UPDATE_SUN_POSITION_TIMER_PERIOD_MS);
+    init_gps_timer(GPS_READ_TIMER_PERIOD_MS);
+    init_motors_timer(UPDATE_MOTORS_POSITION_TIMER_PERIOD_MS);
+
+    while (true)
+    {
+        /* Go home button relative behaviour */
+        if (go_home_enable_pressed)
+        {   
+            beep_on(2000,50);
+            sleep_ms(100);
+            beep_off();
+            go_home(&stepper1, &stepper2);
+            go_home_enable_pressed = false;
+            tracking_enable_pressed = false;
+        }
+        /* Tracking button relative behaviour */
+        if (tracking_enable_pressed)
+        {   
+            /* When relative timer elapses the motors are powered */
+            if (update_motors_position)
+            {   
+                beep_on(2000,50);
+                sleep_ms(100);
+                beep_off();
+                move_motors_to_the_sun(&sun_position, &stepper1, &stepper2);
+                update_motors_position = false;
+            }
+        }
+        if (read_gps)
+        {
+            gps_read_lines = 0;
+            memset(gps_rx_buffer, 0, sizeof(gps_rx_buffer));
+            while (gps_read_lines < GPS_MAX_SENTENCES)
+            {
+                while (uart_is_readable(GPS_UART_ID))
+                {
+                    char ch = uart_getc(GPS_UART_ID);
+                    strncat(gps_rx_buffer, &ch, 1);
+                    if (ch == '\n')
+                    {
+                        strncat(gps_rx_buffer, '\0', 1);
+                        strcpy(gps_raw_sentences[gps_read_lines], gps_rx_buffer);
+                        memset(gps_rx_buffer, 0, sizeof(gps_rx_buffer));
+                        gps_read_lines++;
+                    }
+                }
+            }
+            printf("--------->GPS PARSING\r\n");
+            read_gps = false;
+            for (int i = 0; i < GPS_MAX_SENTENCES; i++)
+            {
+#ifdef DEBUG_GPS_PARSER
+                printf("PARSED LINE%d | %s\r\n", i, gps_raw_sentences[i]);
+#endif
+                nmea_parse(gps_raw_sentences[i], &gps_parsed_place);
+            }
+            print_place(&gps_parsed_place);
+            printf("<---------END OF GPS PARSING\r\n");
+        }
+
+        if (update_position)
+        {
+#ifdef FAMOUS_CITIES_SIMULATION
+            /* Simulate sun position of some famous cities with fixed position and hour*/
+            printf("[ROME] ");
+            print_place(&rome);
+            printf("[ROME] Position elevation %f azimuth %f \r\n\r\n", rome_position.elevation, rome_position.azimuth);
+
+            printf("[BERLIN] ");
+            print_place(&berlin);
+            printf("[BERLIN] Position elevation %f azimuth %f \r\n\r\n", berlin_position.elevation, berlin_position.azimuth);
+
+            printf("[RIO] ");
+            print_place(&rio);
+            printf("[RIO] Position elevation %f azimuth %f \r\n\r\n", rio_position.elevation, rio_position.azimuth);
+#endif
+
+#ifdef GPS_SIMULATOR
+            /* Simulate sun position based on a manual position hardcoded which canges over time*/
+            print_place(&manual_place);
+            manual_position = compute_complete_position(&manual_place);
+            printf("[MANUAL] Position elevation %f azimuth %f \r\n\r\n", manual_position.elevation, manual_position.azimuth);
+            if (manual_place.hour + 1 > 23)
+            {
+                manual_place.hour = 0;
+                manual_place.day++;
+            }
+            else
+            {
+                manual_place.hour++;
+            };
+#endif
+
+            /* Compute sun position */
+            sun_position = compute_complete_position(&gps_parsed_place);
+            printf("Sun elevation %f azimuth %f \r\n\r\n", sun_position.elevation, sun_position.azimuth);
+            update_position = false;
+            printf("Go home active?: %s, Tracking active?: %s \r\n", go_home_enable_pressed ? "true" : "false", tracking_enable_pressed ? "true" : "false");
+            printf("-------\r\n");
+        }
+        sleep_ms(200);
+    }
+
+    return 0;
+}
+
+/**
+ * @brief gpio irq callback
+ *
+ * @param gpio gpio number
+ * @param events irq event
+ */
+void gpio_irq_callback(uint gpio, uint32_t events)
+{
+    printf("GPIO TRIGGERED\r\n");
+    if (gpio == NOT_HOME_SW)
+    {
+        printf("Home button pressed\n");
+        go_home_enable_pressed = !go_home_enable_pressed;
+    }
+    else if (gpio == NOT_EN_SW)
+    {
+        printf("Tracking enable pressed \r\n");
+        tracking_enable_pressed = !tracking_enable_pressed;
+    }
+}
+
+/**
+ * @brief Initialize the timer for position update
+ *
+ * @param time_ms Timer delay in milliseconds
+ */
+void init_position_timer(int time_ms)
+{
+    add_repeating_timer_ms(time_ms, update_position_callback, NULL, &update_position_timer);
+}
+
+/**
+ * @brief Initialize the timer for gps update
+ *
+ * @param time_ms Timer delay in milliseconds
+ */
+void init_motors_timer(int time_ms)
+{
+    add_repeating_timer_ms(time_ms, update_motors_position_callback, NULL, &update_motors_position_timer);
+}
+
+/**
+ * @brief Initialize the timer for gps update
+ *
+ * @param time_ms Timer delay in milliseconds
+ */
+void init_gps_timer(int time_ms)
+{
+    add_repeating_timer_ms(time_ms, gps_read_callback, NULL, &gps_read_timer);
+}
 
 /**
  * @brief compute compass headings in degree
@@ -118,47 +437,26 @@ int calculate_steps(float current_angle, float desired_angle)
 }
 
 /**
- * @brief gpio irq callback
- *
- * @param gpio gpio number
- * @param events irq event
- */
-void gpio_irq_callback(uint gpio, uint32_t events)
-{
-    printf("GPIO TRIGGERED\r\n");
-    if (gpio == NOT_HOME_SW)
-    {
-        printf("Home button pressed\n");
-        go_home_enable_pressed = !go_home_enable_pressed;
-    }
-    else if (gpio == NOT_EN_SW)
-    {
-        printf("Tracking enable pressed \r\n");
-        tracking_enable_pressed = !tracking_enable_pressed;
-    }
-}
-
-/**
- * @brief Move motor to home position
+ * @brief Move motors to home position
  *
  */
-void go_home()
+void go_home(PicoStepper *stepper1, PicoStepper *stepper2)
 {
     printf("Compass: %.3f', Gyro: %.3f', rotating towards NORD at 45' tilt\n", compute_compass_degree(), compute_acc_degree());
     // yaw (stepper1) for X steps to get to compass headings=0°
-    setSpeed(&stepper1, 100);
+    setSpeed(stepper1, 100);
     printf("MOTOR 1 STEPS: %d, MOTOR 2 STEPS %d \r\n", calculate_steps(compute_compass_degree(), 0), calculate_steps(compute_acc_degree(), 45));
-    step(&stepper1, calculate_steps(compute_compass_degree(), 0));
+    step(stepper1, calculate_steps(compute_compass_degree(), 0));
     // ypitch (stepper2) for X steps to get to acc headings=45°
-    setSpeed(&stepper2, 100);
-    step(&stepper2, calculate_steps(compute_acc_degree(), 45));
+    setSpeed(stepper2, 100);
+    step(stepper2, calculate_steps(compute_acc_degree(), 45));
 }
 
 /**
  * @brief Move motors until they will be alligned to the sun position
  *
  */
-void move_motor_to_the_sun(Position *pos)
+void move_motors_to_the_sun(Position *pos, PicoStepper *stepper1, PicoStepper *stepper2)
 {
     // Sun elevation must meet accelerometer
     int elevation_step = calculate_steps(compute_acc_degree(), pos->elevation);
@@ -166,72 +464,10 @@ void move_motor_to_the_sun(Position *pos)
     int azimuth_step = calculate_steps(compute_compass_degree(), pos->azimuth);
 
     printf("Tracking on! \r\nElevation step to do: %d, Azimuth step to do: %d\r\n", elevation_step, azimuth_step);
-    setSpeed(&stepper1, 100);
-    setSpeed(&stepper2, 100);
-    step(&stepper1, azimuth_step);
-    step(&stepper2, elevation_step);
-}
-/**
- * @brief GPS read timer callback
- *
- * @param t gps timer
- */
-bool gps_read_callback(struct repeating_timer *t)
-{
-    read_gps = true;
-    return read_gps;
-}
-
-/**
- * @brief Set update position flag every t.delay_us
- * @param t Pointer to the timer structure
- */
-bool update_position_callback(struct repeating_timer *t)
-{
-    // printf("Update motor position tim elapsed -> Time: %lld\n", time_us_64());
-    update_position = true;
-    return update_position;
-}
-
-/**
- * @brief Set update position flag every t.delay_us
- * @param t Pointer to the timer structure
- */
-bool update_motor_position_callback(struct repeating_timer *t)
-{
-    // printf("Update motor position tim elapsed -> Time: %lld\n", time_us_64());
-    update_motor_position = true;
-    return update_motor_position;
-}
-
-/**
- * @brief Initialize the timer for position update
- *
- * @param time_ms Timer delay in milliseconds
- */
-void init_position_timer(int time_ms)
-{
-    add_repeating_timer_ms(time_ms, update_position_callback, NULL, &update_position_timer);
-}
-
-/**
- * @brief Initialize the timer for gps update
- *
- * @param time_ms Timer delay in milliseconds
- */
-void init_motor_timer(int time_ms)
-{
-    add_repeating_timer_ms(time_ms, update_motor_position_callback, NULL, &update_motor_position_timer);
-}
-
-/**
- * @brief Initialize the timer for gps update
- *
- * @param time_ms Timer delay in milliseconds
- */
-void init_gps_timer(int time_ms)
-{
-    add_repeating_timer_ms(time_ms, gps_read_callback, NULL, &gps_read_timer);
+    setSpeed(stepper1, 100);
+    setSpeed(stepper2, 100);
+    step(stepper1, azimuth_step);
+    step(stepper2, elevation_step);
 }
 
 /**
@@ -278,258 +514,55 @@ void nmea_parse(const char *msg, Place *parsed_place)
     }
 }
 
-#ifdef INTERRUPTS_ARE_WORKING
-// RX interrupt handler
-void on_uart_rx()
-{
-    if (chars_rxed > 82)
-    {
-        // printf(nmea_buffer);
-        memset(nmea_buffer, 0, sizeof(nmea_buffer)); // empty the string
-    }
-    while (uart_is_readable(GPS_UART_ID))
-    {
-        // printf("HELLO\r\n");
-        uint8_t ch = uart_getc(GPS_UART_ID);
-
-        nmea_buffer[chars_rxed] = ch;
-
-        // // Can we send it back?
-        // if (uart_is_writable(GPS_UART_ID)) {
-        //     // Change it slightly first!
-        //     ch++;
-        //     uart_putc(GPS_UART_ID, ch);
-        // }
-        chars_rxed++;
-    }
-}
-#endif
-
-void hello_salmo()
-{
-    printf(
-        "\r\n"
-        "███████  █████  ██      ███    ███  ██████  \r\n"
-        "██      ██   ██ ██      ████  ████ ██    ██ \r\n"
-        "███████ ███████ ██      ██ ████ ██ ██    ██ \r\n"
-        "     ██ ██   ██ ██      ██  ██  ██ ██    ██ \r\n"
-        "███████ ██   ██ ███████ ██      ██  ██████  \r\n\r\n");
-}
-
-int main()
-{
-    /* Initialization */
-
-    // stdio_init_all();  // equals to usb and uart init
-    stdio_usb_init();  // initialize usb cdc
-    stdio_uart_init(); // initialize uart0 with 0 baud rate
-
-    // GPS UART initialization
-    uart_init(GPS_UART_ID, BAUD_RATE);
-    gpio_set_function(UART1_TX, GPIO_FUNC_UART);
-    gpio_set_function(UART1_RX, GPIO_FUNC_UART);
-    uart_set_hw_flow(GPS_UART_ID, false, false);
-    uart_set_format(GPS_UART_ID, DATA_BITS, STOP_BITS, PARITY);
-    uart_set_fifo_enabled(GPS_UART_ID, false);
-#ifdef INTERRUPTS_ARE_WORKING
-    irq_set_exclusive_handler(UART1_IRQ, on_uart_rx);
-    irq_set_enabled(UART1_IRQ, true);
-    uart_set_irq_enables(GPS_UART_ID, false, false);
-#endif
-
-    // SET GPS ENABLE PIN
-    gpio_init(GPS_EN);
-    gpio_set_dir(GPS_EN, GPIO_OUT);
-    gpio_put(GPS_EN, 0); // with zero it's enabled
-
-    update_position = false;
-
-    // SET PWM PIN
+void beep_on(uint16_t freq, uint8_t duty_perc){
+    // Buzzer PWM settings
+    // ES: We want a frequency of 2KHz (500us period) and a duty cycle of 50%
+    // System clock is running at 125Mhz (8ns period)
+    // In order to output a 2KHz square wave we should count from 0 to 500us/8ns=62500
+    // When counter reach 62500 we change the state of the pin
     gpio_set_function(BUZZ_EN, GPIO_FUNC_PWM);
-    // uint pwm_channel = pwm_gpio_to_slice_num(BUZZ_EN);
-    // pwm_set_enabled(pwm_channel, true);
-    // pwm_set_wrap(pwm_channel, 500);
-    // pwm_set_chan_level(pwm_channel, PWM_CHAN_A, 250);
+    pwm_set_wrap(0, SYSCLOCK/freq);
+    pwm_set_chan_level(0, PWM_CHAN_A, (SYSCLOCK/freq) * duty_perc);
+    pwm_set_enabled(0, true);
+}
 
-    // Stepper motors initialization
-    picoStepperInit(&stepper1, M1_W11, M1_W12, M1_W21, M1_W22, STEPS_PER_REV, INITIAL_SPEED); // stepper1 = yaw
-    picoStepperInit(&stepper2, M2_W11, M2_W12, M2_W21, M2_W22, STEPS_PER_REV, INITIAL_SPEED); // stepper2 = pitch
+void beep_off(){
+    pwm_set_enabled(0, false);
+}
 
-    // SET HOME AND GPS_ENABLE SWITCH
-    gpio_init(NOT_HOME_SW);
-    gpio_init(NOT_EN_SW);
-    gpio_set_dir(NOT_HOME_SW, GPIO_IN);
-    gpio_set_dir(NOT_EN_SW, GPIO_IN);
-    gpio_set_input_enabled(NOT_HOME_SW, true);
-    gpio_set_input_enabled(NOT_EN_SW, true);
-    gpio_pull_up(NOT_HOME_SW);
-    gpio_pull_up(NOT_EN_SW);
-    // gpio irq handler - NOTE: Currently the GPIO parameter is ignored, and this callback will be called for any enabled GPIO IRQ on any pin.
-    gpio_set_irq_enabled_with_callback(NOT_HOME_SW, GPIO_IRQ_EDGE_RISE, true, &gpio_irq_callback);
-    gpio_set_irq_enabled_with_callback(NOT_EN_SW, GPIO_IRQ_EDGE_RISE, true, &gpio_irq_callback);
+void tone(uint8_t freq, unsigned long duration_ms){
+    beep_on(freq, 50);
+    sleep_ms(duration_ms);
+    beep_off();
+}
 
-    // SET I2C Pins
-    gpio_set_function(I2C1_SDA, GPIO_FUNC_I2C);
-    gpio_set_function(I2C1_SCL, GPIO_FUNC_I2C);
-    // Make the I2C pins available to picotool
-    bi_decl(bi_2pins_with_func(I2C1_SDA, I2C1_SCL, GPIO_FUNC_I2C));
-    i2c_init(I2C_PERIPHERAL, I2C_PORT1_BAUD_RATE);
+void startup_tone(){
+    int noteDuration        = 0;
+    int pauseBetweenNotes   = 0;
 
-    /* Verify if are needed, probably they are already in the sensor breakout board
-        gpio_pull_up(I2C1_SDA);
-        gpio_pull_up(I2C1_SCL);
-    */
+    int melody[] = {
+        NOTE_FS5, NOTE_FS5, NOTE_D5, NOTE_B4, NOTE_B4, NOTE_E5, 
+        NOTE_E5, NOTE_E5, NOTE_GS5, NOTE_GS5, NOTE_GS5, NOTE_B5, 
+        NOTE_A5, NOTE_A5, NOTE_A5, NOTE_E5, NOTE_D5, NOTE_FS5, 
+        NOTE_FS5, NOTE_FS5, NOTE_E5, NOTE_E5, NOTE_FS5, NOTE_E5
+    };
 
-    int16_t acc_gyro_data = 0;
-    // Init i2c port1 with defined baud rate
-    // I2C MPU port is defined inside every .h device library
-    sleep_ms(1000);
-    hello_salmo();
-    sleep_ms(1000);
-    printf("Peripherals initialization...\r\n");
-    MPU6050_Initialize();
+    // note durations: 4 = quarter note, 8 = eighth note, etc.:
+    int noteDurations[] = {
+        8, 8, 8, 4, 4, 4, 
+        4, 5, 8, 8, 8, 8, 
+        8, 8, 8, 4, 4, 4, 
+        4, 5, 8, 8, 8, 8
+    };
 
-    if (MPU6050_TestConnection())
-    {
-        printf("MPU6050 connection success\n");
+    for (int i = 0; i < sizeof(melody)/sizeof(int); i++) {
+        // to calculate the note duration, take one second divided by the note type.
+        //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+        noteDuration = 1000 / noteDurations[i];
+        tone(melody[i], noteDuration);
+        // to distinguish the notes, set a minimum time between them.
+        // the note's duration + 30% seems to work well:
+        pauseBetweenNotes = noteDuration * 0.2;
+        sleep_ms(pauseBetweenNotes);
     }
-    else
-    {
-        printf("MPU6050 connection failed\n");
-    }
-    MPU6050_GetRawAccelGyro(&acc_gyro_data);
-
-    HMC5883L_initialize();
-    if (isHMC())
-    {
-        printf("HMC5883L connection success\n");
-    }
-    else
-    {
-        printf("HMC5883L connection failed\n");
-    }
-    compute_compass_degree();
-
-    /* Timers initialization */
-    init_position_timer(UPDATE_SUN_POSITION_TIMER_PERIOD_MS);
-    init_gps_timer(GPS_READ_TIMER_PERIOD_MS);
-    init_motor_timer(UPDATE_MOTOR_POSITION_TIMER_PERIOD_MS);
-
-#ifdef GPS_SIMULATIOR
-    // Sample place and its respective conversion into sun position
-    Place manual_place = {2030, 2, 28, 10, 10, 10, 55.751244, 37.618423};
-    Position manual_position = compute_complete_position(&manual_place);
-#endif
-
-    Position sun_position;
-
-// #define FAMOUS_CITIES_SIMULATION
-#ifdef FAMOUS_CITIES_SIMULATION
-    Place rome = {2022, 6, 5, 10, 0, 20, 41.9027835, 12.4963655};
-    Position rome_position = compute_complete_position(&rome);
-
-    // TODO: check why minutes are not mapped correctly
-    Place berlin = {2022, 6, 5, 12, 40, 00, 52.520008, 13.404954};
-    Position berlin_position = compute_complete_position(&berlin);
-
-    Place rio = {2022, 6, 5, 18, 00, 00, -22.908333, -43.196388};
-    Position rio_position = compute_complete_position(&rio);
-#endif
-
-    while (true)
-    {
-        if (go_home_enable_pressed)
-        {
-            go_home();
-            go_home_enable_pressed = false;
-            tracking_enable_pressed = false;
-        }
-
-        if (tracking_enable_pressed)
-        {
-            // muovi motore
-            if (update_motor_position)
-            {
-                move_motor_to_the_sun(&sun_position);
-                update_motor_position = false;
-            }
-        }
-        if (read_gps)
-        {
-            gps_lines = 0;
-            char buff[100];
-            memset(buff, 0, sizeof(buff));
-            while (gps_lines < GPS_MAX_SENTENCES)
-            {
-                while (uart_is_readable(GPS_UART_ID))
-                {
-                    char ch = uart_getc(GPS_UART_ID);
-                    // printf("%c", ch);
-                    strncat(buff, &ch, 1);
-                    if (ch == '\n')
-                    {
-                        strncat(buff, '\0', 1);
-                        strcpy(gps_raw_sentences[gps_lines], buff);
-                        memset(buff, 0, sizeof(buff));
-                        gps_lines++;
-                    }
-                }
-            }
-            printf("--------->GPS PARSING\r\n");
-            read_gps = false;
-            for (int i = 0; i < GPS_MAX_SENTENCES; i++)
-            {
-#ifdef DEBUG_GPS_PARSER
-                printf("PARSED LINE%d | %s\r\n", i, gps_raw_sentences[i]);
-#endif
-                nmea_parse(gps_raw_sentences[i], &gps_parsed_place);
-            }
-            print_place(&gps_parsed_place);
-            printf("<---------END OF GPS PARSING\r\n");
-        }
-
-        if (update_position)
-        {
-#ifdef FAMOUS_CITIES_SIMULATION
-            printf("[ROME] ");
-            print_place(&rome);
-            printf("[ROME] Position elevation %f azimuth %f \r\n\r\n", rome_position.elevation, rome_position.azimuth);
-
-            printf("[BERLIN] ");
-            print_place(&berlin);
-            printf("[BERLIN] Position elevation %f azimuth %f \r\n\r\n", berlin_position.elevation, berlin_position.azimuth);
-
-            printf("[RIO] ");
-            print_place(&rio);
-            printf("[RIO] Position elevation %f azimuth %f \r\n\r\n", rio_position.elevation, rio_position.azimuth);
-#endif
-
-#ifdef GPS_SIMULATOR
-            print_place(&manual_place);
-            manual_position = compute_complete_position(&manual_place);
-            printf("[MANUAL] Position elevation %f azimuth %f \r\n\r\n", manual_position.elevation, manual_position.azimuth);
-            if (manual_place.hour + 1 > 23)
-            {
-                manual_place.hour = 0;
-                manual_place.day++;
-            }
-            else
-            {
-                manual_place.hour++;
-            };
-#endif
-
-            // TODO: check accelerometer and move motors
-            sun_position = compute_complete_position(&gps_parsed_place);
-            printf("Sun elevation %f azimuth %f \r\n\r\n", sun_position.elevation, sun_position.azimuth);
-            printf("Moving motors............damn so heavy\r\n");
-            update_position = false;
-            printf("-------\r\n");
-
-            printf("Go home on: %s, Tracking on: %s \r\n", go_home_enable_pressed ? "true" : "false", tracking_enable_pressed ? "true" : "false");
-        }
-        sleep_ms(200);
-    }
-
-    return 0;
 }

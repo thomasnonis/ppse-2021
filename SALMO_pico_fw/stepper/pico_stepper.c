@@ -1,8 +1,8 @@
 /*
- * pico_stepper.cpp - Stepper library for Raspberry Pi Pico - Version 0.1
+ * pico_stepper.c - Stepper library for Raspberry Pi Pico - Version 0.1
  *
- * Copyright (C) Lisa Santarossa, Tommaso Canova, Thomas Nonis, Gabriele Berretta, Simone Tollardo; Salmo Society TM
  * Copyright (C) Beshr Kayali
+ * Copyright (C) Lisa Santarossa, Tommaso Canova, Thomas Nonis, Gabriele Berretta, Simone Tollardo
  *
  * Based on Arduino Stepper Library
  * Copyright (C) Arduino LLC. Copyright (C) Sebastian Gassner. Copyright (c) Noah Shibley.
