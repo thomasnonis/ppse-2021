@@ -48,7 +48,7 @@ struct repeating_timer gps_read_timer;
 struct repeating_timer update_motors_position_timer;
 #define UPDATE_SUN_POSITION_TIMER_PERIOD_MS 4000
 #define GPS_READ_TIMER_PERIOD_MS 4000
-#define UPDATE_MOTORS_POSITION_TIMER_PERIOD_MS 9900 //100ms are for sleep between buzzer on and off
+#define UPDATE_MOTORS_POSITION_TIMER_PERIOD_MS 9900 // 100ms are for sleep between buzzer on and off
 
 // SALMO Functions state
 bool tracking_enable_pressed = false;
@@ -58,6 +58,8 @@ bool go_home_enable_pressed = false;
 Place gps_parsed_place;
 PicoStepper stepper1 = {0};
 PicoStepper stepper2 = {0};
+struct minmea_sentence_rmc frame_rmc;
+struct minmea_sentence_gga frame_gga;
 
 float compute_compass_degree();
 float compute_acc_degree();
@@ -73,7 +75,6 @@ void beep_on(uint16_t freq, uint8_t duty_perc);
 void beep_off();
 void tone(uint8_t freq, unsigned long duration_ms);
 void startup_tone();
-
 
 void hello_salmo()
 {
@@ -236,8 +237,8 @@ int main()
     {
         /* Go home button relative behaviour */
         if (go_home_enable_pressed)
-        {   
-            beep_on(2000,50);
+        {
+            beep_on(2000, 50);
             sleep_ms(100);
             beep_off();
             go_home(&stepper1, &stepper2);
@@ -246,11 +247,16 @@ int main()
         }
         /* Tracking button relative behaviour */
         if (tracking_enable_pressed)
-        {   
+        {
+            if (frame_gga.satellites_tracked < 1)
+            {
+                printf("ERROR: Zero satellites available to track the sun, please wait...\r\n");
+                tracking_enable_pressed = false;
+            }
             /* When relative timer elapses the motors are powered */
-            if (update_motors_position)
-            {   
-                beep_on(2000,50);
+            if (update_motors_position && frame_gga.satellites_tracked > 0)
+            {
+                beep_on(2000, 50);
                 sleep_ms(100);
                 beep_off();
                 move_motors_to_the_sun(&sun_position, &stepper1, &stepper2);
@@ -276,16 +282,17 @@ int main()
                     }
                 }
             }
-            printf("--------->GPS PARSING\r\n");
+            printf("--------->GPS PARSING\r\n\r\n");
             read_gps = false;
             for (int i = 0; i < GPS_MAX_SENTENCES; i++)
             {
 #ifdef DEBUG_GPS_PARSER
-                printf("PARSED LINE%d | %s\r\n", i, gps_raw_sentences[i]);
+                printf("\tPARSED LINE%d | %s\r\n", i, gps_raw_sentences[i]);
 #endif
                 nmea_parse(gps_raw_sentences[i], &gps_parsed_place);
             }
             print_place(&gps_parsed_place);
+            printf("\tTotal number of satellites available: %d \r\n\r\n", frame_gga.satellites_tracked);
             printf("<---------END OF GPS PARSING\r\n");
         }
 
@@ -324,12 +331,12 @@ int main()
 
             /* Compute sun position */
             sun_position = compute_complete_position(&gps_parsed_place);
-            printf("Sun elevation %f azimuth %f \r\n\r\n", sun_position.elevation, sun_position.azimuth);
+            printf("--------->SUN POSITION AND MCU STATUS\r\n\r\n");
+            printf("\tSun elevation %f azimuth %f \r\n\r\n", sun_position.elevation, sun_position.azimuth);
             update_position = false;
-            printf("Go home active?: %s, Tracking active?: %s \r\n", go_home_enable_pressed ? "true" : "false", tracking_enable_pressed ? "true" : "false");
-            printf("-------\r\n");
+            printf("\tGo home active?: %s, Tracking active?: %s \r\n\r\n", go_home_enable_pressed ? "true" : "false", tracking_enable_pressed ? "true" : "false");
+            printf("<---------END OF SUN POSITION AND MCU STATUS\r\n");
         }
-        sleep_ms(200);
     }
 
     return 0;
@@ -343,7 +350,7 @@ int main()
  */
 void gpio_irq_callback(uint gpio, uint32_t events)
 {
-    printf("GPIO TRIGGERED\r\n");
+    // printf("GPIO TRIGGERED\r\n");
     if (gpio == NOT_HOME_SW)
     {
         printf("Home button pressed\n");
@@ -481,8 +488,7 @@ void move_motors_to_the_sun(Position *pos, PicoStepper *stepper1, PicoStepper *s
 void nmea_parse(const char *msg, Place *parsed_place)
 {
     uint8_t nmea_id = minmea_sentence_id(msg, false);
-    struct minmea_sentence_rmc frame_rmc;
-    struct minmea_sentence_gga frame_gga;
+
     switch (nmea_id)
     {
 
@@ -514,50 +520,53 @@ void nmea_parse(const char *msg, Place *parsed_place)
     }
 }
 
-void beep_on(uint16_t freq, uint8_t duty_perc){
+void beep_on(uint16_t freq, uint8_t duty_perc)
+{
     // Buzzer PWM settings
     // ES: We want a frequency of 2KHz (500us period) and a duty cycle of 50%
     // System clock is running at 125Mhz (8ns period)
     // In order to output a 2KHz square wave we should count from 0 to 500us/8ns=62500
     // When counter reach 62500 we change the state of the pin
     gpio_set_function(BUZZ_EN, GPIO_FUNC_PWM);
-    pwm_set_wrap(0, SYSCLOCK/freq);
-    pwm_set_chan_level(0, PWM_CHAN_A, (SYSCLOCK/freq) * duty_perc);
+    pwm_set_wrap(0, SYSCLOCK / freq);
+    pwm_set_chan_level(0, PWM_CHAN_A, (SYSCLOCK / freq) * duty_perc);
     pwm_set_enabled(0, true);
 }
 
-void beep_off(){
+void beep_off()
+{
     pwm_set_enabled(0, false);
 }
 
-void tone(uint8_t freq, unsigned long duration_ms){
+void tone(uint8_t freq, unsigned long duration_ms)
+{
     beep_on(freq, 50);
     sleep_ms(duration_ms);
     beep_off();
 }
 
-void startup_tone(){
-    int noteDuration        = 0;
-    int pauseBetweenNotes   = 0;
+void startup_tone()
+{
+    int noteDuration = 0;
+    int pauseBetweenNotes = 0;
 
     int melody[] = {
-        NOTE_FS5, NOTE_FS5, NOTE_D5, NOTE_B4, NOTE_B4, NOTE_E5, 
-        NOTE_E5, NOTE_E5, NOTE_GS5, NOTE_GS5, NOTE_GS5, NOTE_B5, 
-        NOTE_A5, NOTE_A5, NOTE_A5, NOTE_E5, NOTE_D5, NOTE_FS5, 
-        NOTE_FS5, NOTE_FS5, NOTE_E5, NOTE_E5, NOTE_FS5, NOTE_E5
-    };
+        NOTE_FS5, NOTE_FS5, NOTE_D5, NOTE_B4, NOTE_B4, NOTE_E5,
+        NOTE_E5, NOTE_E5, NOTE_GS5, NOTE_GS5, NOTE_GS5, NOTE_B5,
+        NOTE_A5, NOTE_A5, NOTE_A5, NOTE_E5, NOTE_D5, NOTE_FS5,
+        NOTE_FS5, NOTE_FS5, NOTE_E5, NOTE_E5, NOTE_FS5, NOTE_E5};
 
     // note durations: 4 = quarter note, 8 = eighth note, etc.:
     int noteDurations[] = {
-        8, 8, 8, 4, 4, 4, 
-        4, 5, 8, 8, 8, 8, 
-        8, 8, 8, 4, 4, 4, 
-        4, 5, 8, 8, 8, 8
-    };
+        8, 8, 8, 4, 4, 4,
+        4, 5, 8, 8, 8, 8,
+        8, 8, 8, 4, 4, 4,
+        4, 5, 8, 8, 8, 8};
 
-    for (int i = 0; i < sizeof(melody)/sizeof(int); i++) {
+    for (int i = 0; i < sizeof(melody) / sizeof(int); i++)
+    {
         // to calculate the note duration, take one second divided by the note type.
-        //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+        // e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
         noteDuration = 1000 / noteDurations[i];
         tone(melody[i], noteDuration);
         // to distinguish the notes, set a minimum time between them.

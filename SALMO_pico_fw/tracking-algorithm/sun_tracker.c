@@ -39,7 +39,7 @@ THE SOFTWARE.
 
 void print_place(Place *p)
 {
-    printf("Place date [YYYY-MM-DD HH-MM-SS]: [%d-%d-%d %d-%d-%.f]\r\nLatitude: %f Longitude %f \r\n",
+    printf("\tPlace date [YYYY-MM-DD HH-MM-SS]: [%d-%d-%d %d-%d-%.f]\r\n\tLatitude: %f Longitude %f \r\n",
            p->year, p->month, p->day, p->hour, p->minute, p->second, p->latitude, p->longitude);
 }
 
@@ -136,7 +136,7 @@ void compute_eq_of_time(Position *pos)
     double y = tan(DEG_TO_RAD * (pos->obliq_corr / 2)) * tan(DEG_TO_RAD * (pos->obliq_corr / 2));
     // printf("! Y: %f \r\n",y);
     double eq = 4 * RAD_TO_DEG * (y * sin(2 * DEG_TO_RAD * (pos->mean_longitude)) - 2 * pos->eccent_earth_orbit * sin(DEG_TO_RAD * (pos->mean_anomaly)) + 4 * pos->eccent_earth_orbit * y * sin(DEG_TO_RAD * (pos->mean_anomaly)) * cos(2 * DEG_TO_RAD * (pos->mean_longitude)) - 0.5 * y * y * sin(4 * DEG_TO_RAD * (pos->mean_longitude)) - 1.25 * pos->eccent_earth_orbit * pos->eccent_earth_orbit * sin(2 * DEG_TO_RAD * (pos->mean_anomaly)));
-    printf("! eq of time %f \r\n", eq);
+    // printf("! eq of time %f \r\n", eq);
     pos->eq_of_time = eq;
 }
 
