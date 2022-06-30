@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "sun_tracker.h"
 
-// #define PICO_SOURCE
+#define PICO_SOURCE
 
 #ifdef PICO_SOURCE
 #include "pico/stdlib.h"
@@ -267,8 +267,8 @@ Position compute_complete_position(Place *place)
     compute_eq_of_time(&pos);
     compute_hour_angle(place, &pos);
     compute_elevation_and_azimuth(place->latitude, &pos);
-// TODO: CHECK AZIMUT
-#define DBG_ALGO
+    // TODO: CHECK AZIMUT
+
 #ifdef DBG_ALGO
     printf("\r\nDate %i/%i/%i %i-%i-%f UTC \r\n", place->year,
            place->month, place->day, place->hour, place->minute, place->second);
