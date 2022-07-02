@@ -41,6 +41,10 @@ now add to your shell profile (`~/.bashrc` or `~/.zshrc`) the current directory 
  
 `export PICO_SDK_PATH=<path_to>/pico-sdk`
 
+Windows:
+
+Follow this [guide](https://shawnhymel.com/2096/how-to-set-up-raspberry-pi-pico-c-c-toolchain-on-windows-with-vs-code/#Install_MinGW-w64_GCC_Tools) 
+
 Finally, in order to compile:
 
     cd SALMO_pico_fw
@@ -75,7 +79,16 @@ If you want to install picotool and easily flash when RP2040 is not in BOOTSEL m
     xcode-select --install
     brew install libusb
     brew link --overwrite libusb
+    
+### Windows:    
+    
+press the bootloader button to go in bootloader mode
 
+    cd build
+    cd src
+    
+then drag and drop SALMO.uf2 into the mounted microcontroller memory (mass storage device)
+   
 ### For all version
 After you have downloaded picotool you have to compile it:
 
