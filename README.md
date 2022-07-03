@@ -43,7 +43,7 @@ now add to your shell profile (`~/.bashrc` or `~/.zshrc`) the current directory 
 
 Windows:
 
-Follow this [guide](https://shawnhymel.com/2096/how-to-set-up-raspberry-pi-pico-c-c-toolchain-on-windows-with-vs-code/#Install_MinGW-w64_GCC_Tools) 
+Follow this [guide](https://shawnhymel.com/2096/how-to-set-up-raspberry-pi-pico-c-c-toolchain-on-windows-with-vs-code/#Install_MinGW-w64_GCC_Tools) and you're good to go.
 
 Finally, in order to compile:
 
