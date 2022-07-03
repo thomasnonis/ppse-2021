@@ -81,15 +81,9 @@ If you want to install picotool and easily flash when RP2040 is not in BOOTSEL m
     brew link --overwrite libusb
     
 ### Windows:    
-    
-press the bootloader button to go in bootloader mode
+For now Picotool doesn't seem to work on Windows, skip these steps and flash "manually" moving the `.uf2` file.
 
-    cd build
-    cd src
-    
-then drag and drop SALMO.uf2 into the mounted microcontroller memory (mass storage device)
-   
-### For all version
+### Compiling Picotool
 After you have downloaded picotool you have to compile it:
 
     cd picotool
