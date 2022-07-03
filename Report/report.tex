@@ -1,0 +1,64 @@
+\documentclass{layout/tudelft-report}
+
+%% Compile faster without images
+%\documentclass[draft]{layout/tudelft-report}
+
+\usepackage{graphicx}
+
+%% Additional packages and commands
+\setlist{itemsep=-2pt} % Reducing white space in lists slightly
+\renewcommand{\deg}{\si{\degree}\xspace} % Use \deg easily, everywhere
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Begin of document %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%% Roman page numbering
+\frontmatter
+
+%% Defining the main parameters
+\title{Relazione finale del corso - modulo due}
+
+\subtitle{SALMO - Solar Azimuth and eLevation Motorized lOcator}
+\author{Lisa Santarossa 209386\\
+        Thomas Nonis 209445\\
+        Tommaso Canova 209270\\
+        Simone Tollardo 209002\\
+        Gabriele Berretta 209466
+        }
+        
+\subject{Corso di Progettazione e Prototipazione di Sistemi Elettronici}
+\emph{Anno accademico 2021/22}
+\affiliation{Università degli Studi di Trento}
+
+\coverimage{layout/salmo.png} % Aspect ratio of 2:3 (portrait) recommended
+\definecolor{title}{HTML}{4884d6} % Color for title
+
+\makecover
+
+\input{frontmatter/title-report}
+
+\tableofcontents
+%\listoffigures
+%\listoftables
+
+%% Arabic page numbering
+\mainmatter
+
+\input{mainmatter/1-Abstract}
+\input{mainmatter/2-Analisi dello schematico}
+\input{mainmatter/3-Analisi Layout PCB}
+\input{mainmatter/4-Firmware}
+\input{mainmatter/5-Assemblaggio della scheda}
+\input{mainmatter/6-Testing della scheda}
+\input{mainmatter/7-Implementazioni future}
+
+\input{mainmatter/8-Conclusioni}
+
+\input{mainmatter/9-Bibliografia}
+
+\input{mainmatter/10-Allegati}
+
+\end{document}

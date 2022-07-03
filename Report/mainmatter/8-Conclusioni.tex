@@ -1,0 +1,61 @@
+\chapter{Conclusioni}
+
+\hypertarget{resoconto-esperienza}{%
+\section{\texorpdfstring{Resoconto esperienza
+}{Resoconto esperienza }}\label{resoconto-esperienza}}
+
+Il corso è stato formativo sotto tutti i punti di vista poiché abbiamo
+potuto realizzare una scheda partendo da zero, cosa che negli altri
+corsi non avevamo mai fatto. Per alcuni quindi è stata la prima PCB
+progettata, perciò una tappa molto importante per il loro lavoro o
+studio futuro. Inoltre il fatto di aver programmato il microcontrollore
+con le poche basi di programmazione che avevamo dai corsi precedenti ci
+ha permesso di imparare molto a livello firmware. Siccome il progetto
+non è ancora completo, l'intenzione è quella di aggiungere man mano i
+componenti mancanti al fine di avere la scheda più simile possibile a
+quanto era stato programmato. Per concludere, i concetti imparati nel
+modulo 1 del corso sono stati di fondamentale importanza per la
+realizzazione della scheda, senza i quali sarebbe stato molto difficile
+avere un'idea di come impostare il lavoro. L'obiettivo di progettare in
+modo consono una scheda elettronica è dunque stato raggiunto.
+
+\hypertarget{lezioni-imparate}{%
+\section{Lezioni imparate}\label{Lezioni-imparate}}
+
+Ragionando a posteriori su quanto abbiamo fatto, abbiamo stilato un
+elenco di cosa avremmo potuto fare meglio e che cercheremo di applicare
+nei progetti futuri:
+
+\begin{itemize}
+\item
+  \begin{quote}
+  Il fanout del microcontrollore lo avremmo potuto fare esclusivamente
+  con tracce da 0.2mm, senza ricorrere ad espansioni a 0.3mm, almeno per
+  le tracce più corte. Questo avrebbe semplificato di non poco il
+  routing di quella sezione;
+  \end{quote}
+\item
+  \begin{quote}
+  Considerare fin da subito i return paths per i condensatori di
+  decoupling. Nella realizzazione non abbiamo pensato a collegare alcuna
+  traccia per il GND, perché ci siamo affidati ai poligoni di
+  riempimento. Questo si è rivelato un problema, perché alla fine del
+  progetto abbiamo riscontrato che molti riempimenti risultavano
+  scollegati da GND e, soprattutto, che i percorsi effettivi delle linee
+  di GND dei condensatori di bypass del microcontrollore sono risultati
+  molto lunghi, il che rende quasi inutile il fatto di posizionarli
+  vicini ai pin;
+  \end{quote}
+\item
+  \begin{quote}
+  Controllare meglio il posizionamento dei refdes sul layer di
+  silkscreen. Abbiamo realizzato solo a scheda prodotta che il refdes di
+  C10 è stato posizionato sopra C14, rendendolo invisibile;
+  \end{quote}
+\item
+  \begin{quote}
+  Controllare meglio i componenti scelti. Abbiamo infatti scelto di
+  utilizzare un led rgb di un formato che in realtà non si trova sul
+  mercato. Anche questo è stato scoperto solo in fase di assemblaggio
+  \end{quote}
+\end{itemize}

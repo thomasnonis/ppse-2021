@@ -1,0 +1,65 @@
+\chapter{Implementazioni future}
+
+Considerando i componenti mancanti, le funzionalità che vorremmo
+implementare in un prossimo futuro sarebbero le seguenti:
+
+\begin{itemize}
+\item
+  \begin{quote}
+  Interfaccia utente attraverso il display OLED
+  \end{quote}
+\item
+  \begin{quote}
+  Sensing di tensione e corrente prodotti dal pannello
+  \end{quote}
+\item
+  \begin{quote}
+  Struttura per pannello, motori e sensori
+  \end{quote}
+\item
+  \begin{quote}
+  Interfaccia Python via COM port con visualizzazione valori,
+  statistiche e controllo manuale motori
+  \end{quote}
+\end{itemize}
+
+L'interfaccia utente nel display OLED mostrerà: tensione pannello e
+corrente pannello, posizione del sole e posizione pannello (angolo di
+Azimuth e angolo di Elevazione), orario e posizione geografica.
+
+\begin{center}
+\includegraphics[width=4.68229in,height=3.4426in]{figures/image27.png}
+\captionsetup{type=figure}
+\captionof{figure}{Esempio di interfaccia utente su display OLED}
+\end{center}
+
+La struttura di supporto per il pannello servirà prima di tutto a
+consentire al pannello di muoversi nei due gradi di libertà (rotazione
+intorno all'asse Z e rotazione intorno all'asse X) e poi per contenere
+magnetometro ed accelerometro in modo che questi rilevino esattamente la
+posizione del pannello (dovranno quindi essere fisicamente attaccati al
+pannello e dovranno muoversi con esso).
+
+\begin{center}
+\includegraphics[width=3.63in,height=2.72in]{figures/image52.png}
+\includegraphics[width=3.63in,height=2.72in]{figures/image68.png}
+\includegraphics[width=3.63in,height=2.72in]{figures/image20.png}
+\captionsetup{type=figure}
+\captionof{figure}{Esempio di struttura di supporto per pannello e motori di tipo servo\\
+(Credits:\href{https://www.thingiverse.com/thing:53321}{\underline{https://www.thingiverse.com/thing:53321}})}
+\end{center}
+
+Per quanto riguarda l'interfaccia grafica per la connessione seriale via
+USB, si pensava di sviluppare in GUI (Graphical User Interface) in
+linguaggio Python che consentisse di controllare manualmente le
+posizioni dei motori, di abilitare il tracking o il return to home e
+che, attraverso l'uso di piccoli grafici, mostrasse delle semplici
+statistiche sulla potenza e l'energia prodotte dal pannello
+fotovoltaico.
+
+\begin{center}
+\includegraphics[width=4.68229in,height=3.4426in]{figures/image47.png}
+\captionsetup{type=figure}
+\captionof{figure}{Esempio di GUI sviluppata in python}
+\end{center}
+
