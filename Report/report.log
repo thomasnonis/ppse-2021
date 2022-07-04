@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.7.2)  3 JUL 2022 17:11
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.7.2)  4 JUL 2022 12:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -868,7 +868,8 @@ File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
 File: listings.cfg 2020/03/24 1.8d listings configuration
 ))
 Package: listings 2020/03/24 1.8d (Carsten Heinz)
-) (./report.aux)
+)
+No file report.aux.
 \openout1 = `report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
@@ -881,7 +882,7 @@ LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
 LaTeX Font Info:    ... okay on input line 16.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 16.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 16.
- (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 16.
@@ -924,9 +925,12 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 16.
 LaTeX Info: Redefining \pageref on input line 16.
 LaTeX Info: Redefining \nameref on input line 16.
- (./report.out) (./report.out)
 \@outlinefile=\write4
 \openout4 = `report.out'.
+
+
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
 
 LaTeX Info: Redefining \microtypecontext on input line 16.
 Package microtype Info: Character protrusion enabled (level 2).
@@ -938,7 +942,6 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `Arial' (encoding: TU).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -1069,7 +1072,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 39--39
 
 ] (./frontmatter/title-report.tex [1
 
-]) (./report.toc)
+])
 \tf@toc=\write5
 \openout5 = `report.toc'.
 
@@ -1152,74 +1155,235 @@ Overfull \hbox (21.62178pt too wide) in paragraph at lines 417--419
  [] 
  []
 
-File: figures/image80.png Graphic file (type bmp)
-<figures/image80.png>
 [10]
-File: figures/image64.png Graphic file (type bmp)
-<figures/image64.png>
+./mainmatter/2-Analisi dello schematico.tex:430: Argument of \@firstoftwo has an extra }.
+<inserted text> 
+                \par 
+l.430 ...exorpdfstring{Input 5V}}\label{input-5V}}
+                                                  
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+./mainmatter/2-Analisi dello schematico.tex:430: Paragraph ended before \@firstoftwo was complete.
+<to be read again> 
+                   \par 
+l.430 ...exorpdfstring{Input 5V}}\label{input-5V}}
+                                                  
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+./mainmatter/2-Analisi dello schematico.tex:430: Argument of \@firstoftwo has an extra }.
+<inserted text> 
+                \par 
+l.430 ...exorpdfstring{Input 5V}}\label{input-5V}}
+                                                  
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+./mainmatter/2-Analisi dello schematico.tex:430: Paragraph ended before \@firstoftwo was complete.
+<to be read again> 
+                   \par 
+l.430 ...exorpdfstring{Input 5V}}\label{input-5V}}
+                                                  
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
 File: figures/image60.png Graphic file (type bmp)
 <figures/image60.png>
 
-Overfull \hbox (21.6217pt too wide) in paragraph at lines 450--452
+Overfull \hbox (21.6217pt too wide) in paragraph at lines 444--446
+ [] 
+ []
+
+./mainmatter/2-Analisi dello schematico.tex:450: Argument of \@firstoftwo has an extra }.
+<inserted text> 
+                \par 
+l.450 ...orpdfstring{Input 12V}}\label{input-12V}}
+                                                  
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+./mainmatter/2-Analisi dello schematico.tex:450: Paragraph ended before \@firstoftwo was complete.
+<to be read again> 
+                   \par 
+l.450 ...orpdfstring{Input 12V}}\label{input-12V}}
+                                                  
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+./mainmatter/2-Analisi dello schematico.tex:450: Argument of \@firstoftwo has an extra }.
+<inserted text> 
+                \par 
+l.450 ...orpdfstring{Input 12V}}\label{input-12V}}
+                                                  
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+./mainmatter/2-Analisi dello schematico.tex:450: Paragraph ended before \@firstoftwo was complete.
+<to be read again> 
+                   \par 
+l.450 ...orpdfstring{Input 12V}}\label{input-12V}}
+                                                  
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+File: figures/image105.png Graphic file (type bmp)
+<figures/image105.png>
+
+Overfull \hbox (21.63673pt too wide) in paragraph at lines 464--466
  [] 
  []
 
 [11]
-File: figures/image57.png Graphic file (type bmp)
-<figures/image57.png>
-File: figures/image71.png Graphic file (type bmp)
-<figures/image71.png>
- [12]
+./mainmatter/2-Analisi dello schematico.tex:470: Argument of \@firstoftwo has an extra }.
+<inserted text> 
+                \par 
+l.470 ...tensione}}\label{regolatore-di-tensione}}
+                                                  
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+./mainmatter/2-Analisi dello schematico.tex:470: Paragraph ended before \@firstoftwo was complete.
+<to be read again> 
+                   \par 
+l.470 ...tensione}}\label{regolatore-di-tensione}}
+                                                  
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+./mainmatter/2-Analisi dello schematico.tex:470: Argument of \@firstoftwo has an extra }.
+<inserted text> 
+                \par 
+l.470 ...tensione}}\label{regolatore-di-tensione}}
+                                                  
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+./mainmatter/2-Analisi dello schematico.tex:470: Paragraph ended before \@firstoftwo was complete.
+<to be read again> 
+                   \par 
+l.470 ...tensione}}\label{regolatore-di-tensione}}
+                                                  
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+./mainmatter/2-Analisi dello schematico.tex:476: Missing $ inserted.
+<inserted text> 
+                $
+l.476 ...1})\), per cui ne consegue che per una V_
+                                                  out di 3.3V,
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+./mainmatter/2-Analisi dello schematico.tex:477: LaTeX Error: Bad math environment delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.477 \(
+        \frac{R10}{R11} = \ 3.3\).
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+File: figures/image103.png Graphic file (type bmp)
+<figures/image103.png>
+
+Overfull \hbox (354.8636pt too wide) in paragraph at lines 482--484
+ [] 
+ []
+
+[12]
 File: figures/image37.png Graphic file (type bmp)
 <figures/image37.png>
+ [13]
 File: figures/image78.png Graphic file (type bmp)
 <figures/image78.png>
 
-Overfull \hbox (7.26263pt too wide) in paragraph at lines 513--515
+Overfull \hbox (7.26263pt too wide) in paragraph at lines 515--517
  [] 
  []
 
 File: figures/image15.png Graphic file (type bmp)
 <figures/image15.png>
 
-Overfull \hbox (21.63306pt too wide) in paragraph at lines 522--524
+Overfull \hbox (21.63306pt too wide) in paragraph at lines 524--526
  [] 
  []
 
-[13]
-Underfull \hbox (badness 10000) in paragraph at lines 530--530
 
- []
+Underfull \hbox (badness 10000) in paragraph at lines 532--532
 
-File: figures/image26.png Graphic file (type bmp)
-<figures/image26.png>
-
-Overfull \hbox (21.6158pt too wide) in paragraph at lines 543--545
- [] 
  []
 
 [14]
+File: figures/image26.png Graphic file (type bmp)
+<figures/image26.png>
+
+Overfull \hbox (21.6158pt too wide) in paragraph at lines 545--547
+ [] 
+ []
+
 File: figures/image30.jpg Graphic file (type bmp)
 <figures/image30.jpg>
- [15]
+[15]
 File: figures/image31.png Graphic file (type bmp)
 <figures/image31.png>
+ [16]
 File: figures/image58.png Graphic file (type bmp)
 <figures/image58.png>
- [16]
-Underfull \hbox (badness 10000) in paragraph at lines 622--622
+
+Underfull \hbox (badness 10000) in paragraph at lines 624--624
 
  []
 
 File: figures/image17.png Graphic file (type bmp)
 <figures/image17.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 645--645
+Underfull \hbox (badness 10000) in paragraph at lines 647--647
 
  []
 
 
-Overfull \hbox (2.54665pt too wide) in paragraph at lines 647--653
+Overfull \hbox (2.54665pt too wide) in paragraph at lines 649--655
 \TU/Arial(0)/m/n/10 Abbiamo previsto un buzzer passivo di tipo elettromagnetico per poter segnalare eventuali stati all’utente
  []
 
@@ -1229,7 +1393,7 @@ File: figures/image38.png Graphic file (type bmp)
 File: figures/image24.png Graphic file (type bmp)
 <figures/image24.png>
 
-Overfull \hbox (21.62617pt too wide) in paragraph at lines 664--666
+Overfull \hbox (21.62617pt too wide) in paragraph at lines 666--668
  [] 
  []
 
@@ -1247,7 +1411,7 @@ File: figures/image70.png Graphic file (type bmp)
 File: figures/image41.png Graphic file (type bmp)
 <figures/image41.png>
 
-Overfull \hbox (21.62425pt too wide) in paragraph at lines 746--748
+Overfull \hbox (21.62425pt too wide) in paragraph at lines 753--755
  [] 
  []
 
@@ -1291,7 +1455,7 @@ File: figures/image100.png Graphic file (type bmp)
 File: figures/image42.png Graphic file (type bmp)
 <figures/image42.png>
  [28]) (./mainmatter/4-Firmware.tex
-Overfull \hbox (10.50323pt too wide) in paragraph at lines 299--1
+Overfull \hbox (10.50323pt too wide) in paragraph at lines 300--1
 []\TU/Arial(0)/m/n/10 A questo punto abbiamo importato i file gerber in \TU/Arial(0)/m/it/10 gerbview \TU/Arial(0)/m/n/10 per un controllo finale. Grazie a quest’ultima
  []
 
@@ -1300,148 +1464,4 @@ Chapter 4.
 File: figures/image73.png Graphic file (type bmp)
 <figures/image73.png>
 File: figures/image45.png Graphic file (type bmp)
-<figures/image45.png>
-[30
-
-]
-File: figures/image66.png Graphic file (type bmp)
-<figures/image66.png>
-File: figures/image67.png Graphic file (type bmp)
-<figures/image67.png>
-
-Overfull \hbox (20.4473pt too wide) in paragraph at lines 82--84
- [] 
- []
-
-[31] [32]
-File: figures/image72.png Graphic file (type bmp)
-<figures/image72.png>
-
-Overfull \hbox (3.5486pt too wide) in paragraph at lines 139--141
- [] 
- []
-
-File: figures/image25.png Graphic file (type bmp)
-<figures/image25.png>
-File: figures/image33.png Graphic file (type bmp)
-<figures/image33.png>
-[33]
-File: figures/image61.png Graphic file (type bmp)
-<figures/image61.png>
- [34]
-File: figures/image51.png Graphic file (type bmp)
-<figures/image51.png>
-
-Overfull \hbox (1.55585pt too wide) in paragraph at lines 266--268
- [] 
- []
-
-
-Overfull \hbox (5.26599pt too wide) in paragraph at lines 271--284
-\TU/Arial(0)/m/n/10 dell’indirizzo del registro (in questo caso da leggere) ed inviare però ora un bit di start seguito dall’indirizzo
- []
-
-File: figures/image39.png Graphic file (type bmp)
-<figures/image39.png>
-
-Overfull \hbox (10.27145pt too wide) in paragraph at lines 286--288
- [] 
- []
-
-File: figures/image35.png Graphic file (type bmp)
-<figures/image35.png>
-
-Overfull \hbox (27.65915pt too wide) in paragraph at lines 292--294
- [] 
- []
-
-[35]
-Overfull \hbox (10.98438pt too wide) in paragraph at lines 303--311
-[]\TU/Arial(0)/m/n/10 Un altro protocollo di comunicazione utilizzato nel progetto è \TU/Arial(0)/m/it/10 UART \TU/Arial(0)/m/n/10 (\TU/Arial(0)/m/it/10 Universal Asynchronous Receiver-
- []
-
-File: figures/image46.png Graphic file (type bmp)
-<figures/image46.png>
-
-Overfull \hbox (11.2429pt too wide) in paragraph at lines 354--359
-[]\TU/Arial(0)/m/n/10 Per tradurre le stringhe NMEA in informazioni utili alla struttura \TU/Arial(0)/m/it/10 Place\TU/Arial(0)/m/n/10 , definita nel modulo dell’algoritmo,
- []
-
-[36]
-File: figures/image50.png Graphic file (type bmp)
-<figures/image50.png>
-
-
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 405.
-See the caption package documentation for explanation.
-
-File: figures/image44.png Graphic file (type bmp)
-<figures/image44.png>
-File: figures/image36.png Graphic file (type bmp)
-<figures/image36.png>
-[37] [38]) (./mainmatter/5-Assemblaggio della scheda.tex [39]
-Chapter 5.
-File: figures/image101.png Graphic file (type bmp)
-<figures/image101.png>
-
-Overfull \hbox (27.23666pt too wide) in paragraph at lines 36--38
- [] 
- []
-
-[40
-
-]) (./mainmatter/6-Testing della scheda.tex [41]
-Chapter 6.
-
-Underfull \hbox (badness 10000) in paragraph at lines 3--15
-
- []
-
-File: figures/image3.png Graphic file (type bmp)
-<figures/image3.png>
-File: figures/image1.png Graphic file (type bmp)
-<figures/image1.png>
-[42
-
-]) (./mainmatter/7-Implementazioni future.tex [43]
-Chapter 7.
-File: figures/image27.png Graphic file (type bmp)
-<figures/image27.png>
-File: figures/image52.png Graphic file (type bmp)
-<figures/image52.png>
-File: figures/image68.png Graphic file (type bmp)
-<figures/image68.png>
-File: figures/image20.png Graphic file (type bmp)
-<figures/image20.png>
-[44
-
-]
-File: figures/image47.png Graphic file (type bmp)
-<figures/image47.png>
- [45]) (./mainmatter/8-Conclusioni.tex [46]
-Chapter 8.
-) (./mainmatter/9-Bibliografia.tex [47
-
-]
-Chapter 9.
-) (./mainmatter/10-Allegati.tex [48
-
-]
-Chapter 10.
-) [49
-
-] (./report.aux)
-Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 4DCEACE00EA3825BFAE2DE5D6B25EC51;3712.
- ) 
-Here is how much of TeX's memory you used:
- 34228 strings out of 478774
- 692043 string characters out of 5864472
- 1043846 words of memory out of 6000000
- 53539 multiletter control sequences out of 15000+600000
- 409013 words of font info for 101 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
- 99i,12n,97p,985b,1076s stack positions out of 5000i,500n,10000p,200000b,80000s
-
-Output written on report.pdf (52 pages).
+<fig
