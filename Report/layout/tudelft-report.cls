@@ -168,7 +168,7 @@
     \node[above=0,inner sep=0] at (current page.south) {\includegraphics[width=\paperwidth]{\@coverimage}};
 
     \node[above=10mm] at (current page.south) {%
-        \includegraphics[width=0.35\linewidth]{layout/UniTN.png}};
+        \includegraphics[width=0.35\linewidth]{layout/UniTN-black.png}};
 
     \node[above=20mm] at (current page.center) {{\color{black}\titlestyle\fontsize{20}{20}\selectfont{Anno Accademico 2021-2022}}};
 
