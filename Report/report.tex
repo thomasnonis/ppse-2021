@@ -1,13 +1,15 @@
-%\documentclass{layout/tudelft-report}
+\documentclass{layout/tudelft-report}
 
 %% Compile faster without images
-\documentclass[draft]{layout/tudelft-report}
+% \documentclass[draft]{layout/tudelft-report}
 
 \usepackage{graphicx}
 
 %% Additional packages and commands
 \setlist{itemsep=-2pt} % Reducing white space in lists slightly
 \renewcommand{\deg}{\si{\degree}\xspace} % Use \deg easily, everywhere
+\renewcommand{\figurename}{Figura}
+\linespread{1.3}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Begin of document %%%%%
@@ -40,6 +42,7 @@
 
 \input{frontmatter/title-report}
 
+\setcounter{tocdepth}{1}
 \tableofcontents
 %\listoffigures
 %\listoftables
