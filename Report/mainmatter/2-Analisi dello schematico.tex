@@ -426,8 +426,8 @@ mentre i 3.3V vengono convertiti da un convertitore switching di tipo buck (step
 È inoltre prevista la possibilità di alimentare la logica di controllo tramite un connettore USB (J3). 
 Suddividiamo quindi il circuito di alimentazione in tre macro-blocchi: input 5V, input 12V e regolatore di tensione.
 
-\hypertarget{input-5V}{%
-\subsubsection{\texorpdfstring{Input 5V}}\label{input-5V}}
+\hypertarget{input-5V}{
+\subsection{\texorpdfstring{Input 5V}{Input 5V}}\label{input-5V}}
 
 Per permettere di alimentare la scheda anche senza la necessità di collegare un 
 alimentatore da 12V, principalmente per il debug e lo sviluppo firmware, abbiamo 
@@ -447,7 +447,7 @@ ridurre i rumoriil rumore ad alta frequenza.
 \end{center}
 
 \hypertarget{input-12V}{%
-\subsubsection{\texorpdfstring{Input 12V}}\label{input-12V}}
+\subsection{\texorpdfstring{Input 12V}{Input 12V}}\label{input-12V}}
 
 Per il regime di funzionamento normale l’alimentazione proviene dal connettore J4 ad una tensione nominale di 12V. 
 Questo fornisce alimentazione sia ai motori e al led RGB, che al convertitore switching, tramite due rami separati.
@@ -467,14 +467,18 @@ dalle sovracorrenti avviene tramite un fusibile resettabile, o PPTC (Polymeric P
 \end{center}
 
 \hypertarget{regolatore-di-tensione}{%
-\subsubsection{\texorpdfstring{Regolatore di tensione}}\label{regolatore-di-tensione}}
+\subsection{\texorpdfstring{Regolatore di tensione}{Regolatore di tensione}}\label{regolatore-di-tensione}}
 
 I diodi D4 e D5 svolgono la funzione equivalente di OR logico per garantire in ogni caso l’alimentazione al regolatore switching,
 un \emph{TPS563201}, con tensione in ingresso minima di 4.5V e massima di 17V.\\
 Per avere in output una tensione di 3.3V, il pin di feedback VFB del regolatore deve essere connesso, tramite un partitore, alla linea di uscita.\\
 Il rapporto di partizione è dettato dalla seguente formula:
-\(Vout = 0.768(1 + \frac{R10}{R11})\), per cui ne consegue che per una V_out di 3.3V,
-\(\frac{R10}{R11} = \ 3.3\).
+
+\(Vout = 0.768(1 + \frac{R10}{R11})\)
+
+per cui ne consegue che per avere V\_OUT=3.3V, deve essere
+\(\frac{R10}{R11} = \ 3.3\).\\
+
 Al fine di segnalare la presenza dei 3.3V, abbiamo previsto un led rosso
 con resistenza in serie da 510 Ω.
 
