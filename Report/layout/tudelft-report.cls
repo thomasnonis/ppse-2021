@@ -167,8 +167,6 @@
 
     \node[above=0,inner sep=0] at (current page.south) {\includegraphics[width=\paperwidth]{\@coverimage}};
 
-    \node[rotate=90,below right=40mm and 3mm] at (current page.west) {\ifdefvoid{\@affiliation}{}{\color{black}\titlestyle\@affiliation}};
-
     \node[above=10mm] at (current page.south) {%
         \includegraphics[width=0.35\linewidth]{layout/UniTN.png}};
 
