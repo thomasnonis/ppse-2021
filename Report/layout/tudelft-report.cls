@@ -96,10 +96,10 @@
 %% Formatting chapter titles and spacing
 \titleformat{\chapter}[display]
     {\flushright}
-    {\fontsize{60}{60}\selectfont\largetitlestyle\thechapter}
+    {\fontsize{40}{40}\selectfont\largetitlestyle\thechapter}
     {0pt}
     {\Huge\titlestyle}
-\titlespacing*{\chapter}{0pt}{0pt}{2\baselineskip}
+\titlespacing*{\chapter}{0pt}{0pt}{0\baselineskip}
 
 %% Formatting section titles and spacing
 \titleformat{\section}

@@ -273,7 +273,7 @@ Per il progetto \emph{SALMO} abbiamo previsto quattro pulsanti tattili:
 \item
   \begin{quote}
   Un pulsante per portare il microcontrollore in modalità
-  \emph{bootloader (SW1)}, in modo tale da poter ``flashare'' il
+  \emph{bootloader (SW1)}, in modo tale da poter "flashare" il
   programma via USB.
   \end{quote}
 \item
@@ -284,7 +284,7 @@ Per il progetto \emph{SALMO} abbiamo previsto quattro pulsanti tattili:
   \end{quote}
 \item
   \begin{quote}
-  Un pulsante (\emph{SW4}), denominato ``Tracking Enable'', che permette
+  Un pulsante (\emph{SW4}), denominato "Tracking Enable", che permette
   di far partire il sistema di puntamento del pannello;
   \end{quote}
 \end{itemize}
@@ -388,10 +388,9 @@ linee \emph{I2C}, i due canali non utilizzati del convertitore analogico
 digitale ed i rimanenti \emph{GPIO} non utilizzati.\\
 Abbiamo previsto anche un connettore per il debug con interfaccia SWD
 (\emph{Serial Wire Debug}), alimentazione per il microcontrollore e bus
-\emph{I2C}. Per il debug è necessario utilizzare un altro \emph{RP2040},
-potrebbe essere particolarmente conveniente utilizzare un Pi Pico come
-debugger, viste le due dimensioni. Basta collegare le linee di SWData e
-SWClock tra loro e la relativa alimentazione necessaria al debugger,
+\emph{I2C}. Per il debug è possibile persino utilizzare un altro \emph{RP2040}.\\
+È sufficiente collegare le linee di SWData e
+SWClock e l'alimentazione necessaria al debugger,
 dopodichè si può flashare quest'ultimo con \emph{picoprobe.uf2}
 (programma situato nella cartella degli esempi offerti per RP2040,
 vedesi capitolo
@@ -469,9 +468,9 @@ Per avere in output una tensione di 3.3V, il pin di feedback VFB del regolatore 
 Il rapporto di partizione è dettato dalla seguente formula:\\
 \(Vout = 0.768(1 + \frac{R10}{R11})\),\\
 per cui ne consegue che per avere V\_OUT=3.3V dobbiamo avere:\\
-\(\frac{R10}{R11} = \ 3.3\).\\
+\(\frac{R10}{R11} = \ 3.3\).
 
-\noindent Al fine di segnalare la presenza dei 3.3V, abbiamo previsto un led rosso
+Al fine di segnalare la presenza dei 3.3V, abbiamo previsto un led rosso
 con resistenza in serie da 510 Ω.
 
 \begin{center}
@@ -694,23 +693,18 @@ utilizzare amplificatori operazionali o integrati specifici, abbiamo
 scelto di utilizzare il metodo del partitore di tensione, posizionando
 due resistenze da 33k e 47k per avere un rapporto di partizione di circa
 \(\frac{4,7}{4,7 + 33} \simeq \ 0.125\) e quindi un consumo pari a 
-
-
-
-se ipotizziamo una tensione di open circuit \emph{Voc} di 20V.
+\(P=\frac{V^{2}}{R}=\frac{20^{2}}{33k+47k}=5mW\)
+se ipotizziamo una tensione di open circuit \emph{Voc} di 20V.\\
 Assumendo le stesse ipotesi, i valori in ingresso al
 GPIO 26 (canale numero 1 dell'ADC) andranno da 0V a 2.5V (la tensione
 massima è comunque fissata dal diodo zener di protezione posto in
-parallelo).
-
-
-
-\noindent Nel caso in cui il pannello avesse tensione di open circuit più alta o
+parallelo).\\
+\(V_{MAXADC}=V_{PANEL}*(\frac{R_{25}}{R_{25}+R_{24}})=20*0.125 =2.5 V\)\\
+Nel caso in cui il pannello avesse tensione di open circuit più alta o
 volessimo usare più pannelli in serie tra di loro è possibile montare la
 resistenza ausiliaria R23, che permette di avere un rapporto di
-partizione di 0.067.
-
-
+partizione di 0.067.\\
+\(V_{MAXADC}=V_{PANEL}*(\frac{R_{25}||R_{23}}{(R_{25}||R_{23})+R_{24}})=20*0.067 =1.34 V \) 
 
 \begin{center}
 \includegraphics[scale=0.7]{figures/image62.png}
@@ -848,5 +842,5 @@ nostra scheda abbiamo provveduto a fare un controllo globale. Per questo abbiamo
 sia un’analisi manuale, valutando tutte le connessioni ed i valori inseriti, sia un’analisi 
 automatizzata tramite il DRC. Dopo aver riscontrato e risolto qualche inevitabile errore 
 abbiamo reputato concluso il processo di progettazione elettrica. A questo punto il DRC 
-segnala comunque 2 errori e molti warning, che però sono dovuti alle dichiarazioni di alcuni 
-pin dei simboli e non influenzano in alcun modo il funzionamento.
+segnala comunque 2 errori ed alcuni warning, che però sono dovuti alle dichiarazioni di alcuni 
+pin dei simboli e non influenzano in alcun modo il funzionamento della scheda.
