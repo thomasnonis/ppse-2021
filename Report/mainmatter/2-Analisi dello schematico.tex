@@ -5,53 +5,53 @@ sono:
 
 \begin{itemize}
 \item
-  \begin{quote}
+  
   microcontrollore \emph{RP2040};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   memoria flash \emph{QSPI} \emph{W25Q16JV};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   regolatore di tensione \emph{TPS563201};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   \emph{GPS PAM7Q};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   magnetometro \emph{HMC5883L};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   accelerometro e giroscopio \emph{MPU6050};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   2 motori stepper unipolari con riduttore \emph{28BYJ (ADAFRUIT 918)};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   circuiti di misura tensione e corrente;
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   display \emph{OLED} 128x64;
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   USB type B-mini;
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   buzzer;
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   led \emph{RGB 1210}.
-  \end{quote}
+  
 \end{itemize}
 
 \noindent Per una maggior chiarezza abbiamo deciso di dividere lo schematico in
@@ -59,27 +59,27 @@ più fogli, ognuno con una funzione ben precisa:
 
 \begin{itemize}
 \item
-  \begin{quote}
+  
   \textbf{Control}: \emph{MCU}, \emph{Flash}, Oscillatore al quarzo,
   pulsanti ecc..
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   \textbf{Power}: Regolatore di tensione, \emph{USB}
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   \textbf{Peripherals}: GPS, Magnetometro, Accelerometro, \emph{OLED},
   Buzzer, Led \emph{RGB}
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   \textbf{Panel} \textbf{sensing}: Current sensing, Voltage Sensing
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   \textbf{Actuation}: Stepper Driver
-  \end{quote}
+  
 \end{itemize}
 
 \begin{center}
@@ -96,25 +96,25 @@ della scheda, quali:
 
 \begin{itemize}
 \item
-  \begin{quote}
+  
   microcontrollore \emph{RP2040};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   memoria flash SPI \emph{W25Q16JV};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   cristallo al quarzo a 12 \emph{MHz};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   pulsanti di reset, boot, home e tracking enable;
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   connettori di debug ed espansione.
-  \end{quote}
+  
 \end{itemize}
 
 \begin{center}
@@ -133,73 +133,73 @@ Caratteristiche principali:
 
 \begin{itemize}
 \item
-  \begin{quote}
+  
   133 \emph{MHz} dual core 32 bit ARM Cortex-M0+;
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   264 \emph{KB} SRAM;
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Nessuna memoria flash interna;
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Controller bus \emph{QSPI}, che supporta fino a 16 MB di memoria flash
   esterna;
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Controllore \emph{DMA};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Crossbar \emph{AHB} (Advanced High-performance Bus);
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Regolatore \emph{LDO} programmabile per generare la tensione del core
   integrato;
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   2 \emph{PLL} su chip per generare clock USB e core;
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   30 pin \emph{GPIO}, di cui 4 utilizzabili opzionalmente come ingressi
   analogici.
-  \end{quote}
+  
 \end{itemize}
 
 \noindent Periferiche:
 
 \begin{itemize}
 \item
-  \begin{quote}
+  
   2 \emph{UART};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   2 controller \emph{SPI};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   2 controller \emph{I²C};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   16 canali \emph{PWM};
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Controller USB 1.1 e \emph{PHY}, con supporto per host e dispositivo;
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   8 macchine a stati di input-output (\emph{PIO}) programmate.
-  \end{quote}
+  
 \end{itemize}
 
 \noindent Il microcontrollore ha il compito di gestire le periferiche. In
@@ -207,38 +207,38 @@ particolare:
 
 \begin{itemize}
 \item
-  \begin{quote}
+  
   genera il segnale di rotazione dei motori quando previsto
   dall'algoritmo implementato (\emph{GPIO} da 10 a 17);
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   comunica con il GPS tramite interfaccia UART (\emph{GPIO} 24 e 25);
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   comunica con il magnetometro, con l'accelerometro e con il display
   OLED mediante interfaccia I2C (\emph{GPIO} 18 \emph{SDA}, \emph{GPIO}
   19 \emph{SCL});
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   effettua le misure di corrente e di tensione del pannello (\emph{GPIO}
   26 e 27);
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   gestisce il buzzer (\emph{GPIO} 0) ed un led \emph{RGB} (\emph{GPIO}
   7, 8, 9);
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   comunica con la memoria \emph{flash} (pin da 51 a 56);
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   gestisce l'interfaccia \emph{USB} (pin 46 e 47).
-  \end{quote}
+  
 \end{itemize}
 
 \begin{center}
@@ -266,27 +266,27 @@ Per il progetto \emph{SALMO} abbiamo previsto quattro pulsanti tattili:
 
 \begin{itemize}
 \item
-  \begin{quote}
+  
   Un pulsante di reset (\emph{SW2}) per poter resettare il
   microcontrollore;
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Un pulsante per portare il microcontrollore in modalità
   \emph{bootloader (SW1)}, in modo tale da poter "flashare" il
   programma via USB.
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Un pulsante (\emph{SW3}), denominato "Home", che permette di portare
   il sistema di puntamento del pannello solare ad una posizione
   predefinita (0° Nord, 45° Elevazione);
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Un pulsante (\emph{SW4}), denominato "Tracking Enable", che permette
   di far partire il sistema di puntamento del pannello;
-  \end{quote}
+  
 \end{itemize}
 
 \begin{center}
@@ -799,19 +799,19 @@ tensione critici tra drain e source dello stesso.
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  \begin{quote}
+  
   di poter essere pilotato con una tensione di gate di almeno 3.3V
   (livello logico alto dei GPIO del MCU scelto);
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   una corrente di drain di almeno 0.5A (corrente nominale dei motori);
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   una differenza di potenziale tra drain e source di almeno 12V
   (tensione di alimentazione dei motori).
-  \end{quote}
+  
 \end{enumerate}
 
 \noindent Considerando le specifiche appena elencate abbiamo scelto dei transistor

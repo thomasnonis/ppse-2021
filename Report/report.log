@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.7.2)  4 JUL 2022 19:00
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2022.7.2)  4 JUL 2022 19:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -926,6 +926,7 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 19.
 LaTeX Info: Redefining \pageref on input line 19.
 LaTeX Info: Redefining \nameref on input line 19.
+ (./report.out) (./report.out)
 \@outlinefile=\write4
 \openout4 = `report.out'.
 
@@ -1079,4 +1080,310 @@ Chapter 1.
 
 ] [2]
 Chapter 2.
-Pa
+File: figures/image32.png Graphic file (type bmp)
+<figures/image32.png>
+[3
+
+]
+File: figures/image40.png Graphic file (type bmp)
+<figures/image40.png>
+ [4] [5]
+File: figures/image54.png Graphic file (type bmp)
+<figures/image54.png>
+ [6]
+File: figures/image23.png Graphic file (type bmp)
+<figures/image23.png>
+File: figures/image16.png Graphic file (type bmp)
+<figures/image16.png>
+ [7]
+File: figures/image76.png Graphic file (type bmp)
+<figures/image76.png>
+ [8]
+File: figures/image28.png Graphic file (type bmp)
+<figures/image28.png>
+File: figures/image49.png Graphic file (type bmp)
+<figures/image49.png>
+ [9]
+File: figures/image90.png Graphic file (type bmp)
+<figures/image90.png>
+
+Overfull \hbox (9.17099pt too wide) in paragraph at lines 385--399
+\TU/Arial(0)/m/n/10 È sufficiente collegare le linee di SWData e SWClock e l’alimentazione necessaria al debugger, dopodichè
+ []
+
+File: figures/image18.png Graphic file (type bmp)
+<figures/image18.png>
+[10]
+File: figures/image65.png Graphic file (type bmp)
+<figures/image65.png>
+ [11]
+File: figures/image60.png Graphic file (type bmp)
+<figures/image60.png>
+File: figures/image105.png Graphic file (type bmp)
+<figures/image105.png>
+ [12]
+File: figures/image103.png Graphic file (type bmp)
+<figures/image103.png>
+ [13]
+File: figures/image37.png Graphic file (type bmp)
+<figures/image37.png>
+File: figures/image78.png Graphic file (type bmp)
+<figures/image78.png>
+File: figures/image15.png Graphic file (type bmp)
+<figures/image15.png>
+ [14]
+File: figures/image26.png Graphic file (type bmp)
+<figures/image26.png>
+ [15]
+File: figures/image30.jpg Graphic file (type bmp)
+<figures/image30.jpg>
+ [16]
+File: figures/image31.png Graphic file (type bmp)
+<figures/image31.png>
+File: figures/image58.png Graphic file (type bmp)
+<figures/image58.png>
+ [17]
+File: figures/image17.png Graphic file (type bmp)
+<figures/image17.png>
+
+Overfull \hbox (2.54665pt too wide) in paragraph at lines 631--637
+\TU/Arial(0)/m/n/10 Abbiamo previsto un buzzer passivo di tipo elettromagnetico per poter segnalare eventuali stati all’utente
+ []
+
+[18]
+File: figures/image38.png Graphic file (type bmp)
+<figures/image38.png>
+File: figures/image24.png Graphic file (type bmp)
+<figures/image24.png>
+ [19]
+File: figures/image19.png Graphic file (type bmp)
+<figures/image19.png>
+File: figures/image62.png Graphic file (type bmp)
+<figures/image62.png>
+ [20]
+File: figures/image48.png Graphic file (type bmp)
+<figures/image48.png>
+File: figures/image70.png Graphic file (type bmp)
+<figures/image70.png>
+ [21]
+File: figures/image41.png Graphic file (type bmp)
+<figures/image41.png>
+ [22]
+File: figures/image75.png Graphic file (type bmp)
+<figures/image75.png>
+File: figures/image63.png Graphic file (type bmp)
+<figures/image63.png>
+ [23]
+File: figures/image69.png Graphic file (type bmp)
+<figures/image69.png>
+) (./mainmatter/3-Analisi Layout PCB.tex [24] [25]
+Chapter 3.
+File: figures/image29.png Graphic file (type bmp)
+<figures/image29.png>
+[26
+
+]
+File: figures/image55.png Graphic file (type bmp)
+<figures/image55.png>
+File: figures/image56.png Graphic file (type bmp)
+<figures/image56.png>
+ [27]
+File: figures/image21.png Graphic file (type bmp)
+<figures/image21.png>
+ [28]
+File: figures/image77.png Graphic file (type bmp)
+<figures/image77.png>
+File: figures/image59.png Graphic file (type bmp)
+<figures/image59.png>
+File: figures/image22.png Graphic file (type bmp)
+<figures/image22.png>
+ [29]
+File: figures/image100.png Graphic file (type bmp)
+<figures/image100.png>
+ [30]
+File: figures/image42.png Graphic file (type bmp)
+<figures/image42.png>
+) (./mainmatter/4-Firmware.tex [31] [32]
+Chapter 4.
+File: figures/image73.png Graphic file (type bmp)
+<figures/image73.png>
+[33
+
+]
+File: figures/image45.png Graphic file (type bmp)
+<figures/image45.png>
+File: figures/image66.png Graphic file (type bmp)
+<figures/image66.png>
+ [34]
+File: figures/image67.png Graphic file (type bmp)
+<figures/image67.png>
+ [35]
+File: figures/image72.png Graphic file (type bmp)
+<figures/image72.png>
+File: figures/image25.png Graphic file (type bmp)
+<figures/image25.png>
+File: figures/image33.png Graphic file (type bmp)
+<figures/image33.png>
+ [36]
+File: figures/image61.png Graphic file (type bmp)
+<figures/image61.png>
+ [37]
+File: figures/image51.png Graphic file (type bmp)
+<figures/image51.png>
+
+Overfull \hbox (5.26599pt too wide) in paragraph at lines 265--278
+\TU/Arial(0)/m/n/10 dell’indirizzo del registro (in questo caso da leggere) ed inviare però ora un bit di start seguito dall’indirizzo
+ []
+
+File: figures/image39.png Graphic file (type bmp)
+<figures/image39.png>
+[38]
+File: figures/image35.png Graphic file (type bmp)
+<figures/image35.png>
+File: figures/image46.png Graphic file (type bmp)
+<figures/image46.png>
+ [39]
+File: figures/image50.png Graphic file (type bmp)
+<figures/image50.png>
+File: figures/image44.png Graphic file (type bmp)
+<figures/image44.png>
+ [40]
+File: figures/image36.png Graphic file (type bmp)
+<figures/image36.png>
+ [41] [42]) (./mainmatter/5-Assemblaggio della scheda.tex [43]
+Chapter 5.
+File: figures/image106.jpg Graphic file (type bmp)
+<figures/image106.jpg>
+[44
+
+]
+File: figures/image107.jpg Graphic file (type bmp)
+<figures/image107.jpg>
+ [45]
+File: figures/image108.png Graphic file (type bmp)
+<figures/image108.png>
+File: figures/image101.png Graphic file (type bmp)
+<figures/image101.png>
+ [46]) (./mainmatter/6-Testing della scheda.tex [47]
+Chapter 6.
+File: figures/image3.png Graphic file (type bmp)
+<figures/image3.png>
+[48
+
+]
+File: figures/image1.png Graphic file (type bmp)
+<figures/image1.png>
+File: figures/image101.png Graphic file (type bmp)
+<figures/image101.png>
+ [49]) (./mainmatter/7-Implementazioni future.tex [50]
+Chapter 7.
+File: figures/image27.png Graphic file (type bmp)
+<figures/image27.png>
+File: figures/image52.png Graphic file (type bmp)
+<figures/image52.png>
+File: figures/image68.png Graphic file (type bmp)
+<figures/image68.png>
+File: figures/image20.png Graphic file (type bmp)
+<figures/image20.png>
+[51
+
+] [52]
+File: figures/image47.png Graphic file (type bmp)
+<figures/image47.png>
+) (./mainmatter/8-Conclusioni.tex [53]
+Chapter 8.
+) (./mainmatter/9-Bibliografia.tex [54
+
+]
+Chapter 9.
+) (./mainmatter/10-Allegati.tex [55
+
+]
+Chapter 10.
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 1>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 1>
+[56
+
+]
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 1>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 1>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 1>
+ [57]
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 2>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 2>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 2>
+ [58]
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 3>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 3>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 3>
+ [59]
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 4>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 4>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 4>
+ [60]
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 5>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 5>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 5>
+ [61]
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 6>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 6>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 6>
+ [62]
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 7>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 7>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 7>
+ [63]
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 8>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 8>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 8>
+ [64]
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 9>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 9>
+File: figures/gerbers.pdf Graphic file (type pdf)
+<use figures/gerbers.pdf, page 9>
+ [65]) (./report.aux)
+Package rerunfilecheck Info: File `report.out' has not changed.
+(rerunfilecheck)             Checksum: 695943D1F265D674A797BA23ACFD9F0E;3900.
+ ) 
+Here is how much of TeX's memory you used:
+ 34281 strings out of 478774
+ 693506 string characters out of 5864472
+ 1045666 words of memory out of 6000000
+ 53590 multiletter control sequences out of 15000+600000
+ 408997 words of font info for 99 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 99i,17n,97p,1218b,1072s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on report.pdf (68 pages).

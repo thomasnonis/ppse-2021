@@ -204,25 +204,25 @@ codice:
 
 \begin{itemize}
 \item
-  \begin{quote}
+  
   \textless drivername\textgreater\_defines.h
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   \textless drivername\textgreater\_I2C.h
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   \textless drivername\textgreater\_I2C.c
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   \textless drivername\textgreater.c
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   \textless drivername\textgreater.h
-  \end{quote}
+  
 \end{itemize}
 
 \noindent Utilizzando questa struttura è possibile innanzitutto separare tutte le
@@ -304,25 +304,25 @@ assumendo la seguente configurazione:
 
 \begin{itemize}
 \item
-  \begin{quote}
+  
   Hardware flow: no
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Baud rate: 9600 bit/s
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Bit di dato: 8
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Bit di stop: 1
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Bit di parità: no
-  \end{quote}
+  
 \end{itemize}
 
 \begin{center}
@@ -355,14 +355,14 @@ messaggi:
 
 \begin{itemize}
 \item
-  \begin{quote}
+  
   \$\emph{GPRMC}: fornisce la data (Anno, Mese, Giorno)
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   \$\emph{GPGGA}: fornisce tempo (Ore, Minuti, Secondi), Latitudine,
   Longitudine.
-  \end{quote}
+  
 \end{itemize}
 
 \noindent Abbiamo valutato la correttezza del parsing utilizzando un tool online
@@ -415,29 +415,29 @@ ovvero:
 
 \begin{itemize}
 \item
-  \begin{quote}
+  
   UART
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   USB CDC
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   I2C
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Accelerometro
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Magnetometro
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Motore stepper
-  \end{quote}
+  
 \end{itemize}
 
 \noindent Dopodiché il microcontrollore entra in loop infinito in cui vengono
@@ -446,17 +446,17 @@ Sono presenti tre timer che scandiscono:
 
 \begin{itemize}
 \item
-  \begin{quote}
+  
   Lettura input gps (ogni 4 secondi)
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Aggiornamento della posizione del motore (ogni 10 secondi)
-  \end{quote}
+  
 \item
-  \begin{quote}
+  
   Aggiornamento posizione del sole mediante algoritmo (ogni 4 secondi)
-  \end{quote}
+  
 \end{itemize}
 
 \noindent Entrati nel loop infinito viene controllato, tramite interrupt, se il
