@@ -4,39 +4,39 @@
 \contentsline {subsubsection}{\hfill \break Microcontrollore: RP 2040}{5}{figure.caption.3}%
 \contentsline {subsubsection}{\hfill \break Pulsanti}{7}{figure.caption.5}%
 \contentsline {subsubsection}{Quarzo}{8}{figure.caption.6}%
-\contentsline {subsubsection}{\hfill \break Memoria flash}{10}{figure.caption.8}%
-\contentsline {subsubsection}{\hfill \break Debug ed espansione}{11}{figure.caption.9}%
-\contentsline {section}{\numberline {2.2}Power}{12}{section.2.2}%
+\contentsline {subsubsection}{\hfill \break Memoria flash}{9}{figure.caption.8}%
+\contentsline {subsubsection}{\hfill \break Debug ed espansione}{10}{figure.caption.9}%
+\contentsline {section}{\numberline {2.2}Power}{11}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Input 5V}{12}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Input 12V}{13}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Regolatore di tensione}{14}{subsection.2.2.3}%
-\contentsline {section}{\numberline {2.3}Peripherals}{16}{section.2.3}%
-\contentsline {subsubsection}{\hfill \break \hfill \break GPS }{16}{figure.caption.18}%
-\contentsline {subsubsection}{\hfill \break Magnetometro ed Accelerometro\\ }{18}{figure.caption.20}%
-\contentsline {subsubsection}{Connettore display OLED\\ }{19}{figure.caption.21}%
-\contentsline {subsubsection}{\hfill \break \hfill \break LED RGB}{20}{figure.caption.22}%
-\contentsline {subsubsection}{\hfill \break \hfill \break Buzzer}{20}{figure.caption.23}%
-\contentsline {section}{\numberline {2.4}Panel sensing}{21}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Actuation}{24}{section.2.5}%
-\contentsline {section}{\numberline {2.6}Finalizzazione schematico}{27}{section.2.6}%
-\contentsline {chapter}{\numberline {3}Analisi del Layout PCB}{28}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Layout}{28}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Routing}{31}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Finitura}{33}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Firmware}{35}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Ambiente di sviluppo}{35}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Compilazione}{35}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Algoritmo per ottenere la posizione del sole}{37}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Implementazione software delle periferiche}{39}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Implementazione driver motori}{42}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Funzionamento generale del codice}{44}{section.4.6}%
-\contentsline {chapter}{\numberline {5}Assemblaggio della scheda}{46}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Testing della scheda}{52}{chapter.6}%
-\contentsline {chapter}{\numberline {7}Implementazioni future}{55}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Conclusioni}{58}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Resoconto esperienza }{58}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Lezioni imparate}{58}{section.8.2}%
-\contentsline {chapter}{\numberline {9}Bibliografia}{60}{chapter.9}%
-\contentsline {chapter}{\numberline {10}Allegati}{61}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Gerber}{61}{section.10.1}%
+\contentsline {subsection}{\numberline {2.2.2}Input 12V}{12}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Regolatore di tensione}{13}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}Peripherals}{15}{section.2.3}%
+\contentsline {subsubsection}{\hfill \break \hfill \break GPS }{15}{figure.caption.18}%
+\contentsline {subsubsection}{\hfill \break Magnetometro ed Accelerometro\\ }{17}{figure.caption.20}%
+\contentsline {subsubsection}{Connettore display OLED\\ }{17}{figure.caption.21}%
+\contentsline {subsubsection}{\hfill \break \hfill \break LED RGB}{18}{figure.caption.22}%
+\contentsline {subsubsection}{\hfill \break \hfill \break Buzzer}{19}{figure.caption.23}%
+\contentsline {section}{\numberline {2.4}Panel sensing}{19}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Actuation}{22}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Finalizzazione schematico}{24}{section.2.6}%
+\contentsline {chapter}{\numberline {3}Analisi del Layout PCB}{26}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Layout}{26}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Routing}{29}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Finitura}{31}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Firmware}{33}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Ambiente di sviluppo}{33}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Compilazione}{33}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Algoritmo per ottenere la posizione del sole}{35}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Implementazione software delle periferiche}{37}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Implementazione driver motori}{40}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Funzionamento generale del codice}{42}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Assemblaggio della scheda}{44}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Testing della scheda}{47}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Implementazioni future}{50}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Conclusioni}{53}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Resoconto esperienza }{53}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Lezioni imparate}{53}{section.8.2}%
+\contentsline {chapter}{\numberline {9}Bibliografia}{55}{chapter.9}%
+\contentsline {chapter}{\numberline {10}Allegati}{56}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Gerber}{56}{section.10.1}%
 \contentsfinish 

@@ -290,9 +290,9 @@ Per il progetto \emph{SALMO} abbiamo previsto quattro pulsanti tattili:
 \end{itemize}
 
 \begin{center}
-\includegraphics[scale=0.5]{figures/image16.png}
-\captionsetup{type=figure}
-\captionof{figure}{Pulsanti SALMO}
+  \includegraphics[width=\textwidth]{figures/image16.png}
+  \captionsetup{type=figure}
+  \captionof{figure}{Pulsanti SALMO}
 \end{center}
 
 \noindent Per ogni pulsante abbiamo previsto un resistore di pull-up da 10kΩ, che
@@ -325,9 +325,9 @@ Ipotizzando quindi una capacità parassita pari a 5pF ed una capacità di
 load di 14pF otteniamo \(C_{1} = C_{2} =18pF\).
 
 \begin{center}
-\includegraphics[scale=0.8]{figures/image76.png}
+\includegraphics[width=0.5\textwidth]{figures/image76.png}
 \captionsetup{type=figure}
-\captionof{figure}{Circuito del cristallo di quarzo di SALMO\newline}
+\captionof{figure}{Circuito del cristallo di quarzo di SALMO}
 \end{center}
 
 \noindent La capacità di carico è particolarmente importante perché, essendo la
@@ -360,7 +360,7 @@ permettono un trasferimento dati dalle 4 alle 6 volte più veloce
 rispetto ad una normale interfaccia SPI.
 
 \begin{center}
-\includegraphics[scale=0.9]{figures/image49.png}
+\includegraphics[width=0.8\textwidth]{figures/image49.png}
 \captionsetup{type=figure}
 \captionof{figure}{Circuito flash SALMO}
 \end{center}
@@ -377,7 +377,7 @@ frequenza sulla linea di alimentazione.
 Debug ed espansione}{ Debug ed espansione}}\label{debug-ed-espansione}}
 
 \begin{center}
-\includegraphics[scale=0.8]{figures/image90.png}
+\includegraphics[width=0.8\textwidth]{figures/image90.png}
 \captionsetup{type=figure}
 \captionof{figure}{Connettori Debug ed Expansion SALMO\newline}
 \end{center}
@@ -432,7 +432,7 @@ necessari alla scheda. Per evitare che i 12V possano propagarsi sulla rail di al
 aggiunto in serie un diodo (D5) di tipo Schottky, così da avere perdite minori grazie alla caduta di tensione 
 caratteristica di soli 0,33V.
 Abbiamo inoltre aggiunto una ferrite bead, caratterizzata da una resistenza di 120Ω a 100MHz, per
-ridurre i rumoriil rumore ad alta frequenza.
+ridurre il rumore ad alta frequenza.
 
 \begin{center}
 \includegraphics[scale=0.4]{figures/image60.png}
@@ -493,7 +493,7 @@ Sul nodo di uscita abbiamo inserito in serie
 un’induttanza da 2.2uH ed in parallelo due condensatori da 22u.
 
 \begin{center}
-\includegraphics[scale=0.8]{figures/image37.png}
+\includegraphics[scale=0.6]{figures/image37.png}
 \captionsetup{type=figure}
 \captionof{figure}{Modello RLC di un condensatore reale\newline}
 \end{center}
@@ -590,7 +590,7 @@ Tuttavia, non avendo avuto a disposizione l'accelerometro durante la
 fase di assemblaggio, in questa release non è fisicamente presente.
 
 \begin{center}
-\includegraphics[scale=0.6]{figures/image31.png}
+\includegraphics[width=0.8\textwidth]{figures/image31.png}
 \captionsetup{type=figure}
 \captionof{figure}{Connettori Accelerometro e Magnetometro}
 \end{center}
@@ -646,7 +646,7 @@ cicalino per poter scaricare la tensione imposta dall'induttanza del
 buzzer, che altrimenti danneggerebbe il transistor.
 
 \begin{center}
-\includegraphics[width=3.08958in,height=2.51619in]{figures/image38.png}
+\includegraphics[width=0.5\textwidth]{figures/image38.png}
 \captionsetup{type=figure}
 \captionof{figure}{Circuito buzzer}
 \end{center}
@@ -657,7 +657,7 @@ buzzer, che altrimenti danneggerebbe il transistor.
 \begin{center}
 \includegraphics[scale=0.5]{figures/image24.png}
 \captionsetup{type=figure}
-\captionof{figure}{Foglio "Panel Sensing" SALMO\newline}
+\captionof{figure}{Foglio "Panel Sensing" SALMO}
 \end{center}
 
 \noindent Il panel sensing è stato progettato per la misura dei parametri di
@@ -686,7 +686,7 @@ Data la Vmax di segnale pari a 0.25 V è possibile sfruttare solamente il
 \begin{center}
 \includegraphics[width=4.19954in,height=3.53646in]{figures/image19.png}
 \captionsetup{type=figure}
-\captionof{figure}{Circuito Current Sensing SALMO\newline}
+\captionof{figure}{Circuito Current Sensing SALMO}
 \end{center}
 
 \noindent Per la misura di tensione del pannello, non volendo nuovamente
@@ -715,7 +715,7 @@ partizione di 0.067.
 \begin{center}
 \includegraphics[scale=0.7]{figures/image62.png}
 \captionsetup{type=figure}
-\captionof{figure}{Circuito Voltage Sensing SALMO\newline}
+\captionof{figure}{Circuito Voltage Sensing SALMO}
 \end{center}
 
 \noindent In questo foglio abbiamo inoltre deciso di posizionare i connettori per
@@ -724,7 +724,7 @@ il collegamento del pannello e del relativo carico/utilizzatore.
 \begin{center}
 \includegraphics[scale=0.8]{figures/image48.png}
 \captionsetup{type=figure}
-\captionof{figure}{Connettori per carico e pannello SALMO\newline}
+\captionof{figure}{Connettori per carico e pannello SALMO}
 \end{center}
 
 \noindent Abbiamo infine inserito dei test point per consentirci di misurare
@@ -744,7 +744,7 @@ di tensione sulla resistenza di shunt si ottiene
 \begin{center}
 \includegraphics[scale=0.5]{figures/image41.png}
 \captionsetup{type=figure}
-\captionof{figure}{Foglio "Actuation" SALMO\newline}
+\captionof{figure}{Foglio "Actuation" SALMO}
 \end{center}
 
 \noindent Nella pagina \emph{Actuation} abbiamo inserito i circuiti di controllo per 
@@ -773,9 +773,9 @@ sequenziale di attivazione dei transistor. A seguito è illustrato il
 circuito base a confronto:
 
 \begin{center}
-\includegraphics[scale=0.6]{figures/image75.png}
+\includegraphics[width=0.9\textwidth]{figures/image75.png}
 \captionsetup{type=figure}
-\captionof{figure}{Driver per stepper unipolare vs driver per stepper bipolare\newline}
+\captionof{figure}{Driver per stepper unipolare vs driver per stepper bipolare}
 \end{center}
 
 \noindent Il driver è costituito da un n-mos pilotato dal MCU, con resistenza tra gate e source da 10kΩ 
@@ -792,9 +792,9 @@ elevata. Il valore di 22Ω è stato scelto arbitrariamente e fa sì che sul
 gate del transistor ci sia una tensione di circa 3.3V (considerando il
 partitore tra R26 e R27) quando il pin di output del microcontrollore è
 a livello logico alto e, inoltre, determina una costante di
-carica/scarica della capacità di ingresso di Q6 di:\\
+carica/scarica della capacità di ingresso di Q6 di:
 %TODO: scarica e carica non hanno la stessa equazione, correggere!
-\(\tau = R_{ 26} * C_{gate - source} = 22 \Omega * 7.3nF \approx 160ns\)\\
+\[\tau = R_{ 26} * C_{gate - source} = 22 \Omega * 7.3nF \approx 160ns\]
 Una costante di tempo di tale grandezza è considerata accettabile,
 perché ipotizzando una frequenza di lavoro dei mosfet di circa 20Hz,
 quindi con un periodo di 55ms, permette allo switch di commuttare come
@@ -806,7 +806,7 @@ tensione critici tra drain e source dello stesso.
 \begin{center}
 \includegraphics[scale=0.5]{figures/image63.png}
 \captionsetup{type=figure}
-\captionof{figure}{Circuito driver per un avvolgimento\newline}
+\captionof{figure}{Circuito driver per un avvolgimento}
 \end{center}
 
 \noindent Nel circuito in questione lo switch deve garantire:
