@@ -54,7 +54,7 @@ sono:
   \end{quote}
 \end{itemize}
 
-Per una maggior chiarezza abbiamo deciso di dividere lo schematico in
+\noindent Per una maggior chiarezza abbiamo deciso di dividere lo schematico in
 più fogli, ognuno con una funzione ben precisa:
 
 \begin{itemize}
@@ -128,8 +128,7 @@ della scheda, quali:
 Microcontrollore: RP
 2040}{ Microcontrollore: RP 2040}}\label{microcontrollore-rp-2040}}
 
-La scheda si avvale dell'ormai celeberrimo \emph{MCU} di Raspberry Pi Ltd: \emph{RP2040}.
-
+La scheda si avvale dell'ormai celeberrimo \emph{MCU} di Raspberry Pi Ltd: \emph{RP2040}.\\
 Caratteristiche principali:
 
 \begin{itemize}
@@ -174,7 +173,7 @@ Caratteristiche principali:
   \end{quote}
 \end{itemize}
 
-Periferiche:
+\noindent Periferiche:
 
 \begin{itemize}
 \item
@@ -203,7 +202,7 @@ Periferiche:
   \end{quote}
 \end{itemize}
 
-Il microcontrollore ha il compito di gestire le periferiche. In
+\noindent Il microcontrollore ha il compito di gestire le periferiche. In
 particolare:
 
 \begin{itemize}
@@ -248,7 +247,7 @@ particolare:
 \captionof{figure}{Schema pin microcontrollore RP2040\newline}
 \end{center}
 
-Per ridurre il rumore ad alta frequenza presente sulla linea di
+\noindent Per ridurre il rumore ad alta frequenza presente sulla linea di
 alimentazione abbiamo previsto dei condensatori di filtro per
 cortocircuitare a massa la componente alternata (andranno poi
 posizionati il più vicino possibile ai pin del MCU).
@@ -296,23 +295,20 @@ Per il progetto \emph{SALMO} abbiamo previsto quattro pulsanti tattili:
 \captionof{figure}{Pulsanti SALMO}
 \end{center}
 
-Per ogni pulsante abbiamo previsto un resistore di pull-up da 10kΩ, che
+\noindent Per ogni pulsante abbiamo previsto un resistore di pull-up da 10kΩ, che
 nel caso del pulsante di programmazione è contrassegnato come \emph{DNP}
 (Do Not Place), poiché la memoria fornisce un \emph{pull-up} interno che
-lo rende non necessario.
-
+lo rende non necessario.\\
 Per i pulsanti di \emph{reset} e programmazione non abbiamo previsto
 alcun filtro di debouncing come consigliato dai relativi datasheet,
 mentre per i restanti abbiamo aggiunto un condensatore da \emph{100nF}
-per introdurre una costante di tempo di \emph{1ms}.
-
+per introdurre una costante di tempo di \emph{1ms}.\\
 La resistenza R2 in serie al pulsante di programmazione è stata inserita
 seguendo i consigli del manuale di sviluppo hardware del RP2040
 (probabilmente il pin $\overline{\rm {CS}}$ della flash non ha una
-resistenza di limitazione interna).
-
+resistenza di limitazione interna).\\
 I pulsanti scelti sono dei generici \emph{tactile switch} da 6mm a
-tecnologia TH .
+tecnologia TH.
 
 \hypertarget{quarzo}{%
 \subsubsection{Quarzo}\label{quarzo}}
@@ -322,11 +318,9 @@ selezionato un quarzo da 12 \emph{MHz}. In particolare abbiamo
 utilizzato un quarzo a 4 pin con package \emph{3225}, essendo questo uno
 dei constraint imposti dal professore ad inizio progetto. Per il
 dimensionamento del resistore in serie e dei condensatori abbiamo
-seguito le linee guida del manuale di sviluppo hardware del RP2040.
-
+seguito le linee guida del manuale di sviluppo hardware del RP2040.\\
 \(C_{1} = C_{2} = 2 \cdot (C_{L} - C_{\text{Parassita}})\)
-, dove \(C_{L}\) è la capacità di load ottimale del quarzo.
-
+, dove \(C_{L}\) è la capacità di load ottimale del quarzo.\\
 Ipotizzando quindi una capacità parassita pari a 5pF ed una capacità di
 load di 14pF otteniamo \(C_{1} = C_{2} =18pF\).
 
@@ -336,7 +330,7 @@ load di 14pF otteniamo \(C_{1} = C_{2} =18pF\).
 \captionof{figure}{Circuito del cristallo di quarzo di SALMO\newline}
 \end{center}
 
-La capacità di carico è particolarmente importante perché, essendo la
+\noindent La capacità di carico è particolarmente importante perché, essendo la
 capacità totale vista dai due pin del cristallo XIN e XOUT, può portare
 il cristallo ad oscillare in un punto specifico tra la sua frequenza
 minima e massima. Cambiando la capacità del carico si otterrà quindi una
@@ -371,7 +365,7 @@ rispetto ad una normale interfaccia SPI.
 \captionof{figure}{Circuito flash SALMO}
 \end{center}
 
-Il pin $\overline{\rm {CS}}$ permette di abilitare o
+\noindent Il pin $\overline{\rm {CS}}$ permette di abilitare o
 disabilitare la comunicazione \emph{QSPI}, quando $\overline{\rm {CS}}$=1 i pin di
 comunicazione rimangono ad alta impedenza, mentre quando $\overline{\rm {CS}}$=0 è
 possibile interfacciarsi con la memoria per memorizzare il programma.
@@ -388,7 +382,7 @@ Debug ed espansione}{ Debug ed espansione}}\label{debug-ed-espansione}}
 \captionof{figure}{Connettori Debug ed Expansion SALMO\newline}
 \end{center}
 
-Per permettere al microcontrollore di comunicare con eventuali unità
+\noindent Per permettere al microcontrollore di comunicare con eventuali unità
 esterne, sulla scheda abbiamo inserito un connettore a 10 pin con le
 linee \emph{I2C}, i due canali non utilizzati del convertitore analogico
 digitale ed i rimanenti \emph{GPIO} non utilizzati.\\
@@ -419,7 +413,7 @@ interfacciarsi via usb utilizzando GDB ed OpenOCD.
 \captionof{figure}{Foglio "Power" SALMO\newline}
 \end{center}
 
-Per il funzionamento della scheda sono necessari due livelli di tensione: 
+\noindent Per il funzionamento della scheda sono necessari due livelli di tensione: 
 12V per il controllo dei motori e per il led RGB e 3.3V per tutto il resto. 
 I 12V provengono direttamente da un alimentatore esterno (collegato al connettore J4), 
 mentre i 3.3V vengono convertiti da un convertitore switching di tipo buck (step-down). 
@@ -461,7 +455,7 @@ Il ramo che riguarda l’alimentazione del convertitore switching è protetto in
 dalle sovracorrenti avviene tramite un fusibile resettabile, o PPTC (Polymeric Positive Temperature Coefficient).
 
 \begin{center}
-\includegraphics[width=6.5in,height=2.80556in]{figures/image105.png}
+\includegraphics[scale=0.5]{figures/image105.png}
 \captionsetup{type=figure}
 \captionof{figure}{Rami 12V e regolatore di tensione}
 \end{center}
@@ -472,23 +466,21 @@ dalle sovracorrenti avviene tramite un fusibile resettabile, o PPTC (Polymeric P
 I diodi D4 e D5 svolgono la funzione equivalente di OR logico per garantire in ogni caso l’alimentazione al regolatore switching,
 un \emph{TPS563201}, con tensione in ingresso minima di 4.5V e massima di 17V.\\
 Per avere in output una tensione di 3.3V, il pin di feedback VFB del regolatore deve essere connesso, tramite un partitore, alla linea di uscita.\\
-Il rapporto di partizione è dettato dalla seguente formula:
-
-\(Vout = 0.768(1 + \frac{R10}{R11})\)
-
-per cui ne consegue che per avere V\_OUT=3.3V, deve essere
+Il rapporto di partizione è dettato dalla seguente formula:\\
+\(Vout = 0.768(1 + \frac{R10}{R11})\),\\
+per cui ne consegue che per avere V\_OUT=3.3V dobbiamo avere:\\
 \(\frac{R10}{R11} = \ 3.3\).\\
 
-Al fine di segnalare la presenza dei 3.3V, abbiamo previsto un led rosso
+\noindent Al fine di segnalare la presenza dei 3.3V, abbiamo previsto un led rosso
 con resistenza in serie da 510 Ω.
 
 \begin{center}
-\includegraphics[scale=0.7]{figures/image103.png}
+\includegraphics[scale=0.4]{figures/image103.png}
 \captionsetup{type=figure}
 \captionof{figure}{Circuito regolatore di tensione buck}
 \end{center}
 
-Per il dimensionamento dei filtri di ingresso e uscita ci siamo affidati alle 
+\noindent Per il dimensionamento dei filtri di ingresso e uscita ci siamo affidati alle 
 design guidelines del datasheet del dispositivo.\\
 All'ingresso del regolatore di tensione abbiamo posto tre condensatori
 (due da 10u e uno da 100n) con lo scopo di ridurre il ripple in uscita dal regolatore switching. 
@@ -506,12 +498,11 @@ un’induttanza da 2.2uH ed in parallelo due condensatori da 22u.
 \captionof{figure}{Modello RLC di un condensatore reale\newline}
 \end{center}
 
-Sempre seguendo le linee guida del costruttore, prima dell’induttore, 
+\noindent Sempre seguendo le linee guida del costruttore, prima dell’induttore, 
 quindi sul nodo di commutazione, abbiamo inserito un condensatore da 100n collegato al pin di ballast.
 Il regolatore prevede inoltre un pin di abilitazione che abbiamo deciso di collegare permanentemente, 
 tramite un resistore da 10k, alla linea di ingresso, cosicché la scheda venga alimentata non appena ci 
-sia una tensione adeguata in ingresso.
-
+sia una tensione adeguata in ingresso.\\
 Abbiamo infine previsto dei test point per il controllo delle varie
 tensioni sul pannello in fase di debug.
 
@@ -551,13 +542,12 @@ essere configurato anche per utilizzare il protocollo proprietario
 \captionof{figure}{Circuito del GPS PAM7Q\newline}
 \end{center}
 
-Il dispositivo è alimentato a \emph{3.3V} tramite i pin 4 e 5,
+\noindent Il dispositivo è alimentato a \emph{3.3V} tramite i pin 4 e 5,
 accompagnati dai solito condensatori di decoupling da 100n.\\
 Si noti che \emph{V\_BCKP} e \emph{VCC} sono entrambe connesse alla stessa
 alimentazione, in quanto non è stata prevista una batteria tampone. Sono
 presenti nuovamente i condensatori da 100nF tra \emph{GPS\_VCC} e ground
-servono a bypassare il rumore ad alta frequenza verso massa.
-
+servono a bypassare il rumore ad alta frequenza verso massa.\\
 L'alimentazione è interrotta da un transistor \emph{PMOS} (\emph{Q1}) e
 viene abilitata solo quando il transistor viene polarizzato
 correttamente, ovvero quando \textasciitilde(\emph{GPS\_EN}) si trova a
@@ -595,8 +585,7 @@ accelerometro+giroscopio entrambi a 3 assi, a 16 bit \emph{TDK}
 ad una velocità massima di 400KHz.\\
 Questi, saranno posizionati \textbf{direttamente sul pannello} e
 provvederanno a restituire all'algoritmo la sua posizione
-rispetto ai due assi di movimento (Azimuth ed Elevazione).
-
+rispetto ai due assi di movimento (Azimuth ed Elevazione).\\
 Tuttavia, non avendo avuto a disposizione l'accelerometro durante la
 fase di assemblaggio, in questa release non è fisicamente presente.
 
@@ -634,8 +623,7 @@ collettore ed emettitore del transistor cadranno circa
 Conseguentemente ai capi dei diodi led cadrà una tensione molto bassa,
 probabilmente nemmeno sufficiente per portarli in conduzione.\\
 Purtroppo il problema non è sistemabile, se non modificando il circuito
-ed il layout della PCB.
-
+ed il layout della PCB.\\
 Considerando che il componente è del tutto ausiliario abbiamo potuto
 testare comunque la scheda senza alcun problema.
 
@@ -651,8 +639,8 @@ testare comunque la scheda senza alcun problema.
 Buzzer}{  Buzzer}}\label{buzzer}}
 
 Abbiamo previsto un buzzer passivo di tipo elettromagnetico per poter
-segnalare eventuali stati all'utente e/o errori. Per amplificare il
-segnale proveniente dall'RP2040 abbiamo utilizzato un transistor NPN con
+segnalare eventuali stati all'utente e/o errori.\\
+Per amplificare il segnale proveniente dall'RP2040 abbiamo utilizzato un transistor NPN con
 rete di polarizzazione integrata ed un resistore in parallelo al
 cicalino per poter scaricare la tensione imposta dall'induttanza del
 buzzer, che altrimenti danneggerebbe il transistor.
@@ -672,7 +660,7 @@ buzzer, che altrimenti danneggerebbe il transistor.
 \captionof{figure}{Foglio "Panel Sensing" SALMO\newline}
 \end{center}
 
-Il panel sensing è stato progettato per la misura dei parametri di
+\noindent Il panel sensing è stato progettato per la misura dei parametri di
 tensione e di corrente del pannello solare. La misura di corrente del
 pannello tiene conto di una corrente di cortocircuito (\emph{Isc}) pari
 a \emph{500 mA}. Per effettuare la misura è stata posta una resistenza
@@ -701,7 +689,7 @@ Data la Vmax di segnale pari a 0.25 V è possibile sfruttare solamente il
 \captionof{figure}{Circuito Current Sensing SALMO\newline}
 \end{center}
 
-Per la misura di tensione del pannello, non volendo nuovamente
+\noindent Per la misura di tensione del pannello, non volendo nuovamente
 utilizzare amplificatori operazionali o integrati specifici, abbiamo
 scelto di utilizzare il metodo del partitore di tensione, posizionando
 due resistenze da 33k e 47k per avere un rapporto di partizione di circa
@@ -717,7 +705,7 @@ parallelo).
 
 
 
-Nel caso in cui il pannello avesse tensione di open circuit più alta o
+\noindent Nel caso in cui il pannello avesse tensione di open circuit più alta o
 volessimo usare più pannelli in serie tra di loro è possibile montare la
 resistenza ausiliaria R23, che permette di avere un rapporto di
 partizione di 0.067.
@@ -730,7 +718,7 @@ partizione di 0.067.
 \captionof{figure}{Circuito Voltage Sensing SALMO\newline}
 \end{center}
 
-In questo foglio abbiamo inoltre deciso di posizionare i connettori per
+\noindent In questo foglio abbiamo inoltre deciso di posizionare i connettori per
 il collegamento del pannello e del relativo carico/utilizzatore.
 
 \begin{center}
@@ -739,7 +727,7 @@ il collegamento del pannello e del relativo carico/utilizzatore.
 \captionof{figure}{Connettori per carico e pannello SALMO\newline}
 \end{center}
 
-Abbiamo infine inserito dei test point per consentirci di misurare
+\noindent Abbiamo infine inserito dei test point per consentirci di misurare
 manualmente la tensione e la corrente del pannello (misurando la caduta
 di tensione sulla resistenza di shunt si ottiene
 \(i\  = \frac{V_{\text{misurata}}}{R_{21}}\)).
@@ -759,16 +747,14 @@ di tensione sulla resistenza di shunt si ottiene
 \captionof{figure}{Foglio "Actuation" SALMO\newline}
 \end{center}
 
-Nella pagina \emph{Actuation} abbiamo inserito i circuiti di controllo per 
+\noindent Nella pagina \emph{Actuation} abbiamo inserito i circuiti di controllo per 
 i due motori stepper unipolari tramite driver separati a
 componentistica discreta e i relativi connettori. I due attuatori hanno
 la funzione di orientare il pannello fotovoltaico nella direzione
-desiderata, ruotando il pannello attorno agli assi \emph{z} e \emph{y}.
-
+desiderata, ruotando il pannello attorno agli assi \emph{z} e \emph{y}.\\
 Abbiamo scelto i motori passo-passo \emph{Adafruit 918}, con tensione e
 corrente nominali rispettivamente di 12V e 500mA, unipolari con
-motoriduttore e coppia statica di 250gr/cm.
-
+motoriduttore e coppia statica di 250gr/cm.\\
 Da evidenziare è la presenza del motoriduttore (\emph{gearbox}) che
 permette di ottenere una maggiore risoluzione (da 200 step fino a ben
 512) e soprattutto una \emph{maggior coppia statica}; quest'ultima ci
@@ -777,11 +763,7 @@ disalimentato così da limitare i consumi totali. Ipotizzando, infatti,
 il peso medio di un pannello fotovoltaico da 1W disponibile in commercio
 di circa 20gr, una coppia statica di 250gr/cm risulta sufficiente per
 consentire di ancorare meccanicamente a dovere il pannello all'asse del
-motore.
-
-\hypertarget{section-4}{%
-\subsubsection{}\label{section-4}}
-
+motore.\\
 Per giunta, ogni motore essendo di tipo unipolare è dotato di due
 avvolgimenti separati con presa intermedia comune pertanto sono
 sufficienti solo quattro transistor per il comando del singolo. Infatti
@@ -796,7 +778,7 @@ circuito base a confronto:
 \captionof{figure}{Driver per stepper unipolare vs driver per stepper bipolare\newline}
 \end{center}
 
-Il driver è costituito da un n-mos pilotato dal MCU, con resistenza tra gate e source da 10kΩ 
+\noindent Il driver è costituito da un n-mos pilotato dal MCU, con resistenza tra gate e source da 10kΩ 
 e resistenza di limitazione tra pin del MCU e gate da 22Ω. 
 La prima funge da pull-down nel caso in cui il pin
 del MCU sia flottante, al fine di evitare accensioni involontarie del
@@ -810,15 +792,13 @@ elevata. Il valore di 22Ω è stato scelto arbitrariamente e fa sì che sul
 gate del transistor ci sia una tensione di circa 3.3V (considerando il
 partitore tra R26 e R27) quando il pin di output del microcontrollore è
 a livello logico alto e, inoltre, determina una costante di
-carica/scarica della capacità di ingresso di Q6 di:
-
-\(\backslash tau = R\_\{ 26\}\ \backslash cdot\ C\_\{ gate - source\} = \ 22\backslash Omega\ \backslash cdot\ 7.3nF\ \backslash approx\ 160ns\)\(\)
-
+carica/scarica della capacità di ingresso di Q6 di:\\
+%TODO: scarica e carica non hanno la stessa equazione, correggere!
+\(\tau = R_{ 26} * C_{gate - source} = 22 \Omega * 7.3nF \approx 160ns\)\\
 Una costante di tempo di tale grandezza è considerata accettabile,
 perché ipotizzando una frequenza di lavoro dei mosfet di circa 20Hz,
 quindi con un periodo di 55ms, permette allo switch di commuttare come
-previsto.
-
+previsto.\\
 In parallelo alle sezioni degli avvolgimenti abbiamo inserito un diodo di
 flyback cosicché all'apertura dello switch non si verifichino spike di
 tensione critici tra drain e source dello stesso.
@@ -829,7 +809,7 @@ tensione critici tra drain e source dello stesso.
 \captionof{figure}{Circuito driver per un avvolgimento\newline}
 \end{center}
 
-Nel circuito in questione lo switch deve garantire:
+\noindent Nel circuito in questione lo switch deve garantire:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -849,7 +829,7 @@ Nel circuito in questione lo switch deve garantire:
   \end{quote}
 \end{enumerate}
 
-Considerando le specifiche appena elencate abbiamo scelto dei transistor
+\noindent Considerando le specifiche appena elencate abbiamo scelto dei transistor
 Vishay SI2300DS nel comune package SOT23, con tensione di soglia 1.5V e
 valori massimi supportati tra drain e source di 30V, tra gate e source
 di 12V e una corrente di 3A.

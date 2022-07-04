@@ -5,12 +5,10 @@
 
 Come detto inizialmente, l'intero codice del progetto è open-source ed è
 visionabile al seguente link:\\
-\href{https://github.com/thomasnonis/ppse-2021}{\underline{https://github.com/thomasnonis/ppse-2021}}.
-
+\href{https://github.com/thomasnonis/ppse-2021}{\underline{https://github.com/thomasnonis/ppse-2021}}.\\
 Per lo sviluppo del codice abbiamo scelto di lavorare con l'ambiente
 \emph{Microsoft Visual Studio Code}, in quanto molto versatile e
-continuamente supportato dagli sviluppatori.
-
+continuamente supportato dagli sviluppatori.\\
 Per poter utilizzare le librerie del microcontrollore \emph{RP2040} è
 stato necessario includere nel progetto il \emph{pico-sdk}, un kit di
 sviluppo che permette di implementare le istruzioni \emph{HAL} (Hardware
@@ -23,8 +21,7 @@ allo stesso tempo a capire il processo di compilazione via
 \emph{Makefile}, in quanto la libreria era dotata di molteplici esempi
 base per ogni periferica offerta dal micro, mentre \emph{picotool} è
 stata utilizzata per poter automatizzare il processo di flashing del
-codice.
-
+codice.\\
 Le librerie citate appaiono nel progetto come \emph{submodules}, in
 quanto, grazie al software di controllo versione \emph{git} è possibile
 tenerle aggiornate senza che siano presenti vincoli legati a delle
@@ -33,7 +30,7 @@ specifiche versioni.
 \hypertarget{compilazione}{%
 \section{Compilazione}\label{compilazione}}
 
-Durante una fase iniziale di testing abbiamo trovato delle difficoltà
+\noindent Durante una fase iniziale di testing abbiamo trovato delle difficoltà
 per compilare il codice, in quanto nella documentazione ufficiale non
 era ben chiaro come si dovessero scrivere e disporre in modo corretto i
 file CMakeLists. Con un po' di lavoro abbiamo deciso di strutturare la
@@ -45,7 +42,7 @@ compilazione nel seguente modo:
 \captionof{figure}{Struttura del codice di SALMO}
 \end{center}
 
-Ogni libreria contiene un proprio CMakeLists in cui viene specificato il
+\noindent Ogni libreria contiene un proprio CMakeLists in cui viene specificato il
 nome della libreria (linkando i file .c e .h) e linkando altre librerie
 esterne (come \emph{pico\_stdlib}).
 
@@ -55,7 +52,7 @@ esterne (come \emph{pico\_stdlib}).
 \captionof{figure}{CMakeLists della libreria per il calcolo della posizione del sole}
 \end{center}
 
-Dopodichè nel main principale in cui verrà eseguito il codice (presente
+\noindent Dopodichè nel main principale in cui verrà eseguito il codice (presente
 in \emph{SALMO.c}), viene definito l'eseguibile (ovvero si linka il file
 .c attribuendolo ad un nome), dopodiché si linkano le librerie definite
 precedentemente per poi includere anche le cartelle in cui queste sono
@@ -68,7 +65,7 @@ come \emph{usb output} o \emph{uart output.}
 \captionof{figure}{CMakeLists di SALMO.c}
 \end{center}
 
-I file CMakeLists vengono ``eseguiti'' in ordine gerarchico, per cui è
+\noindent I file CMakeLists vengono ``eseguiti'' in ordine gerarchico, per cui è
 necessario avere un CMakeLists esterno che ha il compito di tenere
 traccia di tutti gli altri \emph{CMakeLists} e di definire i parametri
 relativi alla versione del \emph{CMAKE} e della versione del compilatore
@@ -84,7 +81,7 @@ microcontrollore.
 \captionof{figure}{CMakeLists del progetto}
 \end{center}
 
-Per rendere più veloce la fase di compilazione abbiamo deciso di
+\noindent Per rendere più veloce la fase di compilazione abbiamo deciso di
 scrivere tre piccoli script \emph{bash}, situati nella cartella
 \emph{src}: \emph{build.sh}, \emph{flash.sh},
 \emph{build\_and\_flash.sh}: lo script di build utilizza \emph{cmake}
@@ -113,7 +110,7 @@ operazioni di compilazione sia l'operazione di flashing.
 \section{Algoritmo per ottenere la posizione del
 sole}\label{algoritmo-per-ottenere-la-posizione-del-sole}}
 
-Al fine di poter pilotare correttamente i motori verso il sole abbiamo
+\noindent Al fine di poter pilotare correttamente i motori verso il sole abbiamo
 dovuto trovare un modo per convertire i dati ottenuti dal GPS in
 elevazione ed azimuth del sole (espressi in gradi). Per approcciare
 correttamente il problema abbiamo iniziato a leggere vari \emph{papers}
@@ -129,8 +126,7 @@ siderale è 4 minuti più corto di un giorno solare) e \emph{LMST} (Local
 Mean Sidereal Time). Nonostante nel paper di \emph{Michalsky} fosse
 presente del codice \emph{FORTRAN} per l'implementazione dell'algoritmo,
 non lo abbiamo ritenuto abbastanza ``solido'' ed efficiente per il
-nostro tipo di applicazione.
-
+nostro tipo di applicazione.\\
 Per poter verificare la corretta posizione del sole abbiamo utilizzato
 questo sito come contro prova dei nostri calcoli:
 \href{https://gml.noaa.gov/grad/solcalc/}{\underline{https://gml.noaa.gov/grad/solcalc/}}.
@@ -141,7 +137,7 @@ questo sito come contro prova dei nostri calcoli:
 \captionof{figure}{Interfaccia web NOAA solcalc}
 \end{center}
 
-Fortunatamente la \emph{NOAA} (National Oceanic and Atmospheric
+\noindent Fortunatamente la \emph{NOAA} (National Oceanic and Atmospheric
 Administration) oltre a fornire questa interfaccia web, condivide anche
 i file \emph{excel} con cui vengono eseguiti i calcoli al fine di
 ottenere gli stessi risultati presenti sul loro sito. Di conseguenza,
@@ -150,8 +146,7 @@ poter verificare i nostri calcoli, abbiamo deciso di riportare le
 formule del file \emph{excel} in codice C per ottenere gli stessi
 risultati. I calcoli intermedi non verranno riportati nel dettaglio in
 quanto sono computazioni astronomiche che non rientrano nelle tematiche
-trattate nel corso.
-
+trattate nel corso.\\
 Per la computazione abbiamo fatto riferimento a due strutture dati, una
 denominata \emph{Place} in cui viene salvata la data, l'orario e
 latitudine e longitudine ``\emph{parsate}'' dal GPS (mediante una
@@ -171,7 +166,7 @@ della posizione del sole (basato sull'algoritmo della \emph{NOAA}).
 \captionof{figure}{Struct "Position"}
 \end{center}
 
-Per calcolare la posizione esatta del sole infatti i dati contenuti in
+\noindent Per calcolare la posizione esatta del sole infatti i dati contenuti in
 \emph{Place} ven gono utilizzati per ottenere una \emph{Julian Date},
 una \emph{Julian Date} conteggiata a partire dalle 12 del primo Gennaio
 2000 e successivamente tutti i parametri intermedi per poi ottenere
@@ -184,8 +179,7 @@ addirittura nell'ordine del grado!
 periferiche}\label{implementazione-software-delle-periferiche}}
 
 Tutte le periferiche, a meno di GPS, utilizzano interfaccia di
-comunicazione \emph{I2C}.
-
+comunicazione \emph{I2C}.\\
 Il protocollo hardware \emph{I2C} prevede due linee seriali di
 comunicazione: \emph{SDA} (Serial DAta) per i dati e \emph{SCL} (Serial
 CLock) per il clock (la comunicazione I2C è di tipo sincrono).\\
@@ -204,7 +198,7 @@ dagli altri).
 \captionof{figure}{Esempio di bus I2C}
 \end{center}
 
-La struttura dei driver di HMC5883L e MPU6050 segue una logica ben
+\noindent La struttura dei driver di HMC5883L e MPU6050 segue una logica ben
 precisa, in modo da rendere particolarmente semplice e versatile il
 codice:
 
@@ -231,7 +225,7 @@ codice:
   \end{quote}
 \end{itemize}
 
-Utilizzando questa struttura è possibile innanzitutto separare tutte le
+\noindent Utilizzando questa struttura è possibile innanzitutto separare tutte le
 definizioni di registri ed indirizzi in un file header separato
 (\textless drivername\textgreater\_defines.h) ed in secondo luogo, forse
 vantaggio principale, è possibile dichiarare e definire le funzioni di
@@ -268,7 +262,7 @@ read/write (anch'esso seguito da un bit di acknowledge).
 \captionof{figure}{Data frame protocollo I2C}
 \end{center}
 
-Nel caso, ad esempio, in cui si voglia scrivere il contenuto di un
+\noindent Nel caso, ad esempio, in cui si voglia scrivere il contenuto di un
 registro del MPU6050 è sufficiente inviare: bit di start, 7 bit di
 indirizzo (LSB configurabile), bit di read (es. 0 1101000 1) che saranno
 seguiti da un bit di acknowledge ed infine invieremo gli 8 bit
@@ -294,12 +288,11 @@ registro richiesto.
 \captionof{figure}{Funzioni di write e read I2C (driver MPU6050)}
 \end{center}
 
-Per quanto concerne l'implementazione software del display OLED, abbiamo
+\noindent Per quanto concerne l'implementazione software del display OLED, abbiamo
 deciso di utilizzare la libreria già presente negli SDK di Raspberry
 Pico (seppur per nulla completa). Sottolineiamo che attualmente il
 driver di questa periferica non è stato completato poiché, non avendola
-sotto mano, abbiamo deciso di prioritizzare il resto del lavoro.
-
+sotto mano, abbiamo deciso di prioritizzare il resto del lavoro.\\
 Un altro protocollo di comunicazione utilizzato nel progetto è
 \emph{UART} (\emph{Universal Asynchronous Receiver-Transmitter}), come
 visto nel primo modulo del corso, permette il trasferimento e ricezione
@@ -338,7 +331,7 @@ assumendo la seguente configurazione:
 \captionof{figure}{Pacchetto gestito con comunicazione UART}
 \end{center}
 
-Il modulo GPS comunica in \emph{UART} con il microcontrollore mediante
+\noindent Il modulo GPS comunica in \emph{UART} con il microcontrollore mediante
 protocollo a 9600 bit/s, codificando i messaggi con standard NMEA 1803
 (National Marine Electronics Association). Per la lettura dei dati viene
 popolato un buffer, di lunghezza 100 bytes, con ogni carattere ricevuto.
@@ -349,16 +342,13 @@ successivamente svuotato e ricomincia la lettura per un numero pari a
 GPS in polling, anzichè utilizzare un interrupt, poiché interagendo con
 il modulo ad intervalli ben definiti la seconda opzione avrebbe portato
 ad un inutile overhead a causa della continua interruzione del
-microcontrollore rispetto alle sue principali task.
-
+microcontrollore rispetto alle sue principali task.\\
 Per tradurre le stringhe NMEA in informazioni utili alla struttura
 \emph{Place}, definita nel modulo dell'algoritmo, è stata utilizzata una
 libreria open source in grado di analizzare questi messaggi (vedasi
 bibliografia). Tipicamente una stringa NMEA è composta nel seguente
-modo:
-
-\(\$ PREFISSO,dato1,dato2\ ...\ datoN - 1,datoN*CHECKSUM\)
-
+modo:\\
+\(\$ PREFISSO,dato1,dato2\ ...\ datoN - 1,datoN*CHECKSUM\)\\
 In base al tipo di prefisso vengono trasferiti diversi tipi di dati, per
 la nostra applicazione abbiamo fatto principale affidamento ai due
 messaggi:
@@ -375,21 +365,19 @@ messaggi:
   \end{quote}
 \end{itemize}
 
-Abbiamo valutato la correttezza del parsing utilizzando un tool online
+\noindent Abbiamo valutato la correttezza del parsing utilizzando un tool online
 (vedasi bibliografia)
 
 \hypertarget{implementazione-driver-motori}{%
 \section{Implementazione driver
 motori}\label{implementazione-driver-motori}}
 
-Il firmware di controllo dei motori è stato sviluppato partendo da una
+\noindent Il firmware di controllo dei motori è stato sviluppato partendo da una
 libreria già esistente e open source disponibile su github ed è composta
-da due file: \emph{pico\_stepper.h} e \emph{pico\_stepper.c}.
-
+da due file: \emph{pico\_stepper.h} e \emph{pico\_stepper.c}.\\
 Nel primo è definita la \emph{struct} necessaria per inizializzare ogni
 motore e gli \emph{header} delle funzioni implementate poi nel secondo
-file.
-
+file.\\
 Per interfacciarsi ai motori è stato necessario inizializzare la
 \emph{struct} e i pin fisici delle 4 fasi, definire la velocità di
 rotazione del motore, successivamente i motori vengono comandati
@@ -421,7 +409,7 @@ codice}\label{funzionamento-generale-del-codice}}
 \captionof{figure}{Flowchart del funzionamento del codice}
 \end{center}
 
-Come prima cosa vengono inizializzate le varie periferiche e moduli
+\noindent Come prima cosa vengono inizializzate le varie periferiche e moduli
 ovvero:
 
 \begin{itemize}
@@ -451,7 +439,7 @@ ovvero:
   \end{quote}
 \end{itemize}
 
-Dopodiché il microcontrollore entra in loop infinito in cui vengono
+\noindent Dopodiché il microcontrollore entra in loop infinito in cui vengono
 controllati degli input e delle variabili interne impostate dai timer.
 Sono presenti tre timer che scandiscono:
 
@@ -470,7 +458,7 @@ Sono presenti tre timer che scandiscono:
   \end{quote}
 \end{itemize}
 
-Entrati nel loop infinito viene controllato, tramite interrupt, se il
+\noindent Entrati nel loop infinito viene controllato, tramite interrupt, se il
 pulsante di \emph{``Go home''} (\emph{SW3}) viene premuto, qualora
 succeda, i motori vengono azionati per dirigere il pannello verso il
 \emph{Nord} ottenuto dalla bussola ed a 45° di elevazione (tilt).
@@ -488,8 +476,7 @@ lettura via uart ed il relativo parsing, infine viene controllato se il
 timer relativo alla posizione del sole è scaduto, e di conseguenza viene
 o meno eseguito il calcolo della posizione del sole basandosi sui dati
 ottenuti dal GPS. Il programma poi ritorna nel loop principale e
-continua il controllo delle variabili.
-
+continua il controllo delle variabili.\\
 A causa della mancanza di accelerometro, pannello e struttura di
 supporto per i motori, ulteriori \emph{feature} verranno implementate in
 futuro.

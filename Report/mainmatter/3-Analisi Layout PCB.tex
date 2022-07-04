@@ -11,8 +11,7 @@ componenti.
 
 Come primo passo abbiamo raggruppato i vari componenti per sezione
 circuitale (alimentazione, microcontrollore, controllo motori,
-ecc\ldots) in modo da avere un primo ordine.
-
+ecc\ldots) in modo da avere un primo ordine.\\
 Fino a questo punto non abbiamo posto alcun riguardo verso la posizione
 dei componenti, ma abbiamo semplicemente effettuato una suddivisione
 funzionale. Con il passo successivo abbiamo invece collocato, per
@@ -21,8 +20,7 @@ sembrato adeguato, tenendo in mente gli aspetti elettrici (per esempio
 il posizionamento del GPS lontano dalla sezione di potenza e dal
 microcontrollore), di distanziamento, di funzionalità (per esempio
 posizionamento di connettori e pulsanti), di comodità per l'utente
-finale ed infine di estetica.
-
+finale ed infine di estetica.\\
 Per quanto riguarda la sezione legata al microcontrollore abbiamo
 posizionato, in ordine di priorità:
 
@@ -54,7 +52,7 @@ posizionato, in ordine di priorità:
 \captionof{figure}{Primo posizionamento componenti principali foglio Control\newline}
 \end{center}
 
-Il fatto di posizionare i componenti il più vicino possibile ai relativi
+\noindent Il fatto di posizionare i componenti il più vicino possibile ai relativi
 pin è necessario per ridurre di quanto possibile l'impedenza della linea
 di alimentazione, e quindi la lunghezza del percorso del segnale.
 Maggiore è la lunghezza del percorso tra condensatore e pin e maggiore
@@ -66,8 +64,7 @@ decoupling. In questo modo siamo in grado fornire un percorso a bassa
 impedenza tra condensatore e pin del MCU, perciò la restante lunghezza
 che va dal condensatore al pin di alimentazione deve rimanere il più
 breve possibile. Si noti che ai fini del calcolo si deve considerare sia
-la linea di andata (es: alimentazione) che quella di ritorno (GND).
-
+la linea di andata (es: alimentazione) che quella di ritorno (GND).\\
 Per quanto riguarda la sezione di controllo dei motori abbiamo
 posizionato i connettori, i transistor, i diodi ed i resistori di
 polarizzazione in modo da ridurre al minimo le tracce necessarie e da
@@ -79,7 +76,7 @@ allineare il tutto per renderlo il più esteticamente bello possibile.
 \captionof{figure}{Primo posizionamento componenti driver motori stepper\newline}
 \end{center}
 
-Parlando dello stadio di alimentazione, abbiamo posizionato tutti i
+\noindent Parlando dello stadio di alimentazione, abbiamo posizionato tutti i
 componenti in modo da minimizzare il numero di tracce necessario e da
 facilitare il routing di tracce di grande spessore. Abbiamo rivolto
 particolare attenzione al regolatore a commutazione, cercando di rendere
@@ -92,22 +89,19 @@ ripple.
 \captionof{figure}{Primo posizionamento componenti foglio Power\newline}
 \end{center}
 
-Le restanti sezioni non includono componenti particolarmente critici,
+\noindent Le restanti sezioni non includono componenti particolarmente critici,
 quindi il posizionamento è stato fatto seguendo il principio di
-semplicità di routing delle tracce e di bellezza estetica.
-
+semplicità di routing delle tracce e di bellezza estetica.\\
 A questo punto, dopo aver ottenuto un insieme di diversi blocchi
 circuitali, abbiamo provato a posizionarli in modo da capire che
 dimensioni imporci come limite per la scheda ed abbiamo appurato che
-100x60mm fosse una misura adeguata per contenere il tutto.
-
+100x60mm fosse una misura adeguata per contenere il tutto.\\
 Avendo definito le dimensioni siamo passati alla creazione del disegno
 del contorno della scheda sul layer Edge.Cuts, introducendo un
 arrotondamento degli angoli per fini puramente estetici. Successivamente
 abbiamo disegnato i rettangoli di riempimento, assegnandoli alla net di
 GND e con priorità minima per entrambi i layer, in modo che coprissero
-la scheda intera.
-
+la scheda intera.\\
 Abbiamo quindi posizionato i blocchi circuitali discussi in precedenza,
 non prima di aver posizionato i fori di montaggio ed i fiducials,
 facendo in modo di avere i connettori lungo il bordo. Anche il GPS è
@@ -124,7 +118,7 @@ inserito anche una \emph{keepout zone}, come richiesto da datasheet.
 \hypertarget{routing}{%
 \section{Routing}\label{routing}}
 
-Una volta definite le posizioni dei vari componenti siamo passati alla
+\noindent Una volta definite le posizioni dei vari componenti siamo passati alla
 fase di routing, cominciando dalle linee particolarmente sensibili e poi
 quelle di alimentazione. Prima di iniziare abbiamo creato una serie di
 dimensioni predefinite per le tracce:
@@ -148,7 +142,7 @@ dimensioni predefinite per le tracce:
   \end{quote}
 \end{itemize}
 
-Abbiamo inoltre creato due dimensioni predefinite per le vias (diametro
+\noindent Abbiamo inoltre creato due dimensioni predefinite per le vias (diametro
 pad/diametro foro):
 
 \begin{itemize}
@@ -162,12 +156,11 @@ pad/diametro foro):
   \end{quote}
 \end{itemize}
 
-Una volta preparato l'ambiente di lavoro abbiamo cominciato a collegare
+\noindent Una volta preparato l'ambiente di lavoro abbiamo cominciato a collegare
 tutte le linee di alimentazione, partendo prima da quelle più corte che,
 per esempio, collegano un pin di un dispositivo al relativo condensatore
 di decoupling, per effettuare solo alla fine i collegamenti più lunghi
-facendo in modo di lasciare sufficiente spazio per le linee di segnale.
-
+facendo in modo di lasciare sufficiente spazio per le linee di segnale.\\
 Per quanto riguarda il routing dell'alimentazione vogliamo sottolineare
 3 accorgimenti che abbiamo preso:
 
@@ -198,11 +191,10 @@ Per quanto riguarda il routing dell'alimentazione vogliamo sottolineare
 \captionof{figure}{Prima bozza routing tracce\newline}
 \end{center}
 
-Una volta concluso il routing delle linee di alimentazione siamo passati
+\noindent Una volta concluso il routing delle linee di alimentazione siamo passati
 alle restanti linee di segnale iniziando dal fanout del
 microcontrollore, anche in questo caso partendo con tracce da 0.2mm per
-poi allargarle a 0.3mm.
-
+poi allargarle a 0.3mm.\\
 Abbiamo considerato per primi i segnali critici, ovvero le linee del
 quarzo, quelle per la trasmissione QSPI della flash e quelle
 differenziali per l'USB. Sebbene non sia di apprezzabile effetto dal
@@ -211,14 +203,12 @@ personale, il tool di \emph{length matching} per rendere le linee
 differenziali D+ e D- dell'USB più simili possibile in termini di
 lunghezza. Questo è stato fatto, perché abbiamo riscontrato alcune
 difficoltà nell'utilizzo del router differenziale, che avrebbe gestito
-il \emph{length matching} in autonomia.
-
+il \emph{length matching} in autonomia.\\
 Avendo definito le tracce critiche siamo poi passati al fanout e al
 routing dei restanti segnali. Durante questo processo abbiamo iterato
 più volte spostando le assegnazioni di alcuni pin del microcontrollore,
 grazie alle matrici di assegnazione dei GPIO, in modo da trovare le
-posizioni ottimali.
-
+posizioni ottimali.\\
 Questa parte dello sbroglio è stata la più complessa a causa della
 necessità di avere molti dispositivi vicini al microcontrollore e alla
 ridotta \emph{clearance} tra i pin.
@@ -230,17 +220,15 @@ ridotta \emph{clearance} tra i pin.
 \captionof{figure}{Primo risultato routing PCB\newline}
 \end{center}
 
-Terminato il routing di tutte le tracce abbiamo fatto un'analisi per
+\noindent Terminato il routing di tutte le tracce abbiamo fatto un'analisi per
 cercare eventuali sviste o errori commessi, sia facendo un'ispezione
 visiva, sia utilizzando il DRC. Prevedibilmente abbiamo riscontrato
-qualche errore che abbiamo prontamente corretto senza troppe difficoltà.
-
+qualche errore che abbiamo prontamente corretto senza troppe difficoltà.\\
 Anche dopo queste correzioni il DRC restituisce alcuni errori, che però
 sono previsti e non causano problemi nella realizzazione. Questi sono di
 due tipi, il primo è il \emph{Courtyards overlap} per i componenti che
 stanno vicino al GPS, mentre il secondo è l' \emph{Items not allowed} ed
-è dovuto a come sono stati realizzati i footprint dei fiducials.
-
+è dovuto a come sono stati realizzati i footprint dei fiducials.\\
 Il primo lo si può ignorare, perché in realtà il GPS sarà montato su un
 header rialzato e quindi la superficie del PCB sarà libera da
 occlusioni. Il secondo errore invece è dovuto al fatto che il footprint
@@ -251,10 +239,9 @@ quindi possiamo ignorarlo.
 \hypertarget{finitura}{%
 \section{Finitura}\label{finitura}}
 
-Arrivati a questo punto abbiamo appurato che l'aspetto elettrico della
+\noindent Arrivati a questo punto abbiamo appurato che l'aspetto elettrico della
 scheda era corretto, quindi ci siamo concentrati sugli aspetti estetico
-e utilitario.
-
+e utilitario.\\
 Prima di tutto abbiamo aggiunto un pad di GND a lato scheda per poter
 collegare una pinza a coccodrillo in modo da semplificare le misurazioni
 per il debug hardware. Poi abbiamo fatto in modo di posizionare, sul
@@ -269,7 +256,7 @@ potenziali problemi di lettura.
 \captionof{figure}{Esempio Silkscreen SALMO}
 \end{center}
 
-Sistemati tutti i refdes abbiamo aggiunto sui layer di silkscreen
+\noindent Sistemati tutti i refdes abbiamo aggiunto sui layer di silkscreen
 ulteriori descrizioni per chiarire le funzioni dei connettori e per
 aggiungere informazioni utili. In particolare abbiamo aggiunto 
 l’indicazione di polarità sul connettore di alimentazione e, ad ogni
@@ -277,8 +264,7 @@ connettore il suo nome e, sul retro, la descrizione di ogni pin. Per i
 connettori di espansione e debug non c'era spazio a sufficienza, quindi
 abbiamo creato sul retro una grafica apposita composta da una tabella,
 che rappresenta la funzione di ogni pin, e da un segmento di retta che
-riconduce la tabella al connettore a cui fa riferimento.
-
+riconduce la tabella al connettore a cui fa riferimento.\\
 Abbiamo successivamente aggiunto, sempre sul retro, il titolo del
 progetto con il nome del corso, nomi, cognomi e matricole dei membri del
 gruppo e data e numero di revisione.
@@ -289,14 +275,12 @@ gruppo e data e numero di revisione.
 \captionof{figure}{Vista del retro della PCB SALMO}
 \end{center}
 
-Per poter facilmente identificare i layer top e bottom abbiamo aggiunto,
-a lato scheda, i testi TOP e BOT sui layer corrispondenti.
-
+\noindent Per poter facilmente identificare i layer top e bottom abbiamo aggiunto,
+a lato scheda, i testi TOP e BOT sui layer corrispondenti.\\
 A questo punto la scheda si può considerare terminata e non è rimasto
 altro da fare che generare i teardrops, tramite un plugin dedicato, ed
 esportare i file gerber e drill (che riportiamo negli allegati della
-presente relazione).
-
+presente relazione).\\
 A questo punto abbiamo importato i file gerber in \emph{gerbview} per un
 controllo finale. Grazie a quest'ultima ispezione abbiamo identificato
 qualche piccolo errore che abbiamo prontamente corretto. Abbiamo infine
