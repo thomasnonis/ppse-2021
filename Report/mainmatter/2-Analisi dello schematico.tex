@@ -244,7 +244,7 @@ particolare:
 \begin{center}
 \includegraphics[scale=0.45]{figures/image54.png}
 \captionsetup{type=figure}
-\captionof{figure}{Schema pin microcontrollore RP2040\newline}
+\captionof{figure}{Schema pin microcontrollore RP2040}
 \end{center}
 
 \noindent Per ridurre il rumore ad alta frequenza presente sulla linea di
@@ -325,7 +325,7 @@ Ipotizzando quindi una capacità parassita pari a 5pF ed una capacità di
 load di 14pF otteniamo \(C_{1} = C_{2} =18pF\).
 
 \begin{center}
-\includegraphics[width=0.5\textwidth]{figures/image76.png}
+\includegraphics[scale=0.2]{figures/image76.png}
 \captionsetup{type=figure}
 \captionof{figure}{Circuito del cristallo di quarzo di SALMO}
 \end{center}
@@ -339,7 +339,7 @@ cristalli fornisce la frequenza del cristallo a una capacità di carico
 specifica, che in questo caso è di 14pF.
 
 \begin{center}
-\includegraphics[width=2.38542in,height=2.45833in]{figures/image28.png}
+\includegraphics[scale=0.75]{figures/image28.png}
 \captionsetup{type=figure}
 \captionof{figure}{Modello RLC di un cristallo al quarzo in risonanza parallelo}
 \end{center}
@@ -360,7 +360,7 @@ permettono un trasferimento dati dalle 4 alle 6 volte più veloce
 rispetto ad una normale interfaccia SPI.
 
 \begin{center}
-\includegraphics[width=0.8\textwidth]{figures/image49.png}
+\includegraphics[scale=0.2]{figures/image49.png}
 \captionsetup{type=figure}
 \captionof{figure}{Circuito flash SALMO}
 \end{center}
@@ -377,9 +377,9 @@ frequenza sulla linea di alimentazione.
 Debug ed espansione}{ Debug ed espansione}}\label{debug-ed-espansione}}
 
 \begin{center}
-\includegraphics[width=0.8\textwidth]{figures/image90.png}
+\includegraphics[scale=0.2]{figures/image90.png}
 \captionsetup{type=figure}
-\captionof{figure}{Connettori Debug ed Expansion SALMO\newline}
+\captionof{figure}{Connettori Debug ed Expansion SALMO}
 \end{center}
 
 \noindent Per permettere al microcontrollore di comunicare con eventuali unità
@@ -409,7 +409,7 @@ interfacciarsi via usb utilizzando GDB ed OpenOCD.
 \begin{center}
 \includegraphics[scale=0.45]{figures/image65.png}
 \captionsetup{type=figure}
-\captionof{figure}{Foglio "Power" SALMO\newline}
+\captionof{figure}{Foglio "Power" SALMO}
 \end{center}
 
 \noindent Per il funzionamento della scheda sono necessari due livelli di tensione: 
@@ -494,7 +494,7 @@ un’induttanza da 2.2uH ed in parallelo due condensatori da 22u.
 \begin{center}
 \includegraphics[scale=0.6]{figures/image37.png}
 \captionsetup{type=figure}
-\captionof{figure}{Modello RLC di un condensatore reale\newline}
+\captionof{figure}{Modello RLC di un condensatore reale}
 \end{center}
 
 \noindent Sempre seguendo le linee guida del costruttore, prima dell’induttore, 
@@ -521,9 +521,7 @@ tensioni sul pannello in fase di debug.
 \end{center}
 
 \hypertarget{gps}{%
-\subsubsection{\texorpdfstring{\hfill\break
-\hfill\break
-GPS }{  GPS }}\label{gps}}
+\subsubsection{\texorpdfstring{GPS}{GPS}}\label{gps}}
 
 Il dispositivo \emph{GPS} utilizzato è lo \emph{U-BLOX PAM7Q}. Questo
 componente permette di interfacciari con i satelliti della rete \emph{GPS}
@@ -538,7 +536,7 @@ essere configurato anche per utilizzare il protocollo proprietario
 \begin{center}
 \includegraphics[scale=0.5]{figures/image26.png}
 \captionsetup{type=figure}
-\captionof{figure}{Circuito del GPS PAM7Q\newline}
+\captionof{figure}{Circuito del GPS PAM7Q}
 \end{center}
 
 \noindent Il dispositivo è alimentato a \emph{3.3V} tramite i pin 4 e 5,
@@ -572,9 +570,7 @@ indicato da datasheet.
 \end{center}
 
 \hypertarget{magnetometro-ed-accelerometro}{%
-\subsubsection{\texorpdfstring{\hfill\break
-Magnetometro ed Accelerometro\\
-}{ Magnetometro ed Accelerometro }}\label{magnetometro-ed-accelerometro}}
+\subsubsection{\texorpdfstring{Magnetometro ed Accelerometro}{Magnetometro ed Accelerometro}}\label{magnetometro-ed-accelerometro}}
 
 Al fine di poter gestire la posizione del pannello mediante controllo ad
 anello chiuso abbiamo deciso di sfruttare due sensori: un magnetometro a
@@ -595,8 +591,7 @@ fase di assemblaggio, in questa release non è fisicamente presente.
 \end{center}
 
 \hypertarget{connettore-display-oled}{%
-\subsubsection{\texorpdfstring{Connettore display OLED\\
-}{Connettore display OLED }}\label{connettore-display-oled}}
+\subsubsection{\texorpdfstring{Connettore display OLED}{Connettore display OLED }}\label{connettore-display-oled}}
 
 Abbiamo previsto un connettore per un display \emph{OLED 128 x 64} con
 controller integrato \emph{SSD1306} al fine di presentare all'utente una
@@ -611,9 +606,7 @@ di assemblaggio, in questa release non è fisicamente presente.
 \end{center}
 
 \hypertarget{led-rgb}{%
-\subsubsection{\texorpdfstring{\hfill\break
-\hfill\break
-LED RGB}{  LED RGB}}\label{led-rgb}}
+\subsubsection{\texorpdfstring{LED RGB}{LED RGB}}\label{led-rgb}}
 
 Per quanto riguarda il circuito del led \emph{RGB 1210} abbiamo commesso
 un errore in fase di progettazione: considerandone la posizione, tra
@@ -633,9 +626,7 @@ testare comunque la scheda senza alcun problema.
 \end{center}
 
 \hypertarget{buzzer}{%
-\subsubsection{\texorpdfstring{\hfill\break
-\hfill\break
-Buzzer}{  Buzzer}}\label{buzzer}}
+\subsubsection{\texorpdfstring{Buzzer}{Buzzer}}\label{buzzer}}
 
 Abbiamo previsto un buzzer passivo di tipo elettromagnetico per poter
 segnalare eventuali stati all'utente e/o errori.\\
