@@ -7,16 +7,18 @@ Abbiamo poi ispezionato anche lo stencil per la pasta saldante ed abbiamo notato
 Per iniziare l’assemblaggio abbiamo fissato una PCB con altre 4 utilizzando del nastro ed abbiamo allineato lo stencil fissandolo da un lato con altro nastro per poterlo alzare una volta finito, come in figura.
 
 
+%TODO: replace images and captions
+
 \begin{center}
-    \includegraphics[width=10cm]{figures/image106.jpg}
-    \captionsetup{type=figure}
-    \captionof{figure}{Sistema di applicazione della pasta termica}
+\includegraphics[scale=0.35]{figures/image101.png}
+\captionsetup{type=figure}
+\captionof{figure}{Scheda SALMO completa di componenti essenziali}
 \end{center}
 
 \noindent Abbiamo quindi depositato, con l’aiuto di una spatola, la pasta saldante, controllando di riempire ogni apertura con una quantità adeguata. Verificata la corretta applicazione abbiamo tolto la scheda dal supporto da noi creato ed abbiamo cominciato ad applicare i componenti SMD con l’aiuto di pinzette di precisione e controllando continuamente il layout.
 
 \begin{center}
-\includegraphics[width=10cm]{figures/image107.jpg}
+\includegraphics[scale=0.35]{figures/image101.png}
 \captionsetup{type=figure}
 \captionof{figure}{PCB con pasta applicata ed i primi componenti posizionati}
 \end{center}
@@ -24,7 +26,7 @@ Per iniziare l’assemblaggio abbiamo fissato una PCB con altre 4 utilizzando de
 \noindent Per tenere traccia del progresso abbiamo usato estensivamente un utilissimo plugin per KiCad chiamato iBOM, che permette di visualizzare il layout del PCB, associando ad ogni componente la sua posizione in una grafica molto intuitiva, e di contrassegnare ogni componente come piazzato.
 
 \begin{center}
-\includegraphics[width=\textwidth]{figures/image108.png}
+\includegraphics[scale=0.35]{figures/image101.png}
 \captionsetup{type=figure}
 \captionof{figure}{Interfaccia del plugin iBOM}
 \end{center}
@@ -33,11 +35,24 @@ Per iniziare l’assemblaggio abbiamo fissato una PCB con altre 4 utilizzando de
 
 % TODO: aggiungere immagine scheda finita
 \begin{center}
-    \includegraphics[width=10cm]{figures/image101.png}
-    \captionsetup{type=figure}
-    \captionof{figure}{PCBA SALMO completa}
+\includegraphics[scale=0.35]{figures/image101.png}
+\captionsetup{type=figure}
+\captionof{figure}{Scheda SALMO completa di componenti essenziali}
 \end{center}
 
-\noindent Abbiamo ripetuto questi passaggi per sei volte, realizzando così sei PCBA, uno per ogni membro del gruppo più uno per il professore. \\
-Finito l’assemblaggio ci siamo accorti che, per una particolare scheda, alcuni pin del microcontrollore non sembravano essere fissati a dovere ed infatti, testando la sua alimentazione, abbiamo potuto constatare il surriscaldamento eccessivo del componente. Per rimediare all’errore il microcontrollore è stato dissaldato, ma nel farlo tre piste che collegavano si sono alzate, non consentendo così l’utilizzo della scheda. \\
-Come già anticipato, l’unico componente che non abbiamo potuto montare è il led RGB, a causa del footprint sbagliato.
+\noindent Abbiamo ripetuto questi passaggi per sei volte, realizzando così sei PCBA, uno per ogni membro del gruppo più uno per il professore.\\
+Finito l’assemblaggio, ci siamo accorti che per una particolare scheda i pin del microcontrollore non sembravano 
+essere fissati a dovere ed infatti testando la sua alimentazione abbiamo potuto constatare il surriscaldamento eccessivo 
+del componente. Perciò per rimediare all’errore il microcontrollore è stato dissaldato, ma nel farlo, le tre piste che collegavano 
+i rispettivi pin si sono alzate, non consentendo così l’utilizzo della scheda. Un altro errore è sorto durante la fase di testing, 
+infatti, misurando il segnale di comando in input ai motori, ci siamo accorti che al transistor a canale N montato sulla scheda era 
+stata assegnata la piedinatura scorretta. Pertanto, abbiamo dovuto dissaldare i transistor atti al pilotaggio dei motori per poi 
+saldarli nuovamente nel verso corretto.\\
+Come già anticipato non abbiamo potuto montare il led RGB a causa dell'errore nell'assegnamento del pinout e dell'errore nello schematico.
+
+\begin{center}
+\includegraphics[scale=0.35]{figures/image101.png}
+\captionsetup{type=figure}
+\captionof{figure}{Scheda SALMO completa di componenti essenziali}
+\end{center}
+>>>>>>> 60be90c (docs: scale image in order to suppress warnings)
