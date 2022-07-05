@@ -167,22 +167,22 @@
 
     \node[above=0,inner sep=0] at (current page.south) {\includegraphics[width=\paperwidth]{\@coverimage}};
 
-    \node[above=10mm] at (current page.south) {%
-        \includegraphics[width=0.35\linewidth]{layout/UniTN-black.png}};
+    % \node[above=10mm] at (current page.south) {%
+    %     \includegraphics[width=0.35\linewidth]{layout/UniTN-black.png}};
 
-    \node[above=20mm] at (current page.center) {{\color{black}\titlestyle\fontsize{20}{20}\selectfont{Anno Accademico 2021-2022}}};
+    % \node[above=20mm] at (current page.center) {{\color{black}\titlestyle\fontsize{20}{20}\selectfont{Anno Accademico 2021-2022}}};
 
-    \node[below=2cm,fill=black!100,minimum width={\paperwidth},inner ysep=25pt,opacity=0.8,text opacity=1] at (current page.north) {%
-        \begin{minipage}{0.9\paperwidth}
-            \begin{center}
-            \titlestyle\fontsize{25}{25}\selectfont\color{title}
-            \ifdefvoid{\@subtitle}{}{\@subtitle \\[1ex]}%
-            \color{white}\titlestyle\fontsize{25}{25}\selectfont
-            \ifdefvoid{\@subject}{}{\@subject \\[1ex]}
-            \color{white}\titlestyle\fontsize{30}{30}\selectfont
-            \@title \\[0.5ex]
-            \end{center}
-        \end{minipage}};
+    % \node[below=2cm,fill=black!100,minimum width={\paperwidth},inner ysep=25pt,opacity=0.8,text opacity=1] at (current page.north) {%
+    %     \begin{minipage}{0.9\paperwidth}
+    %         \begin{center}
+    %         \titlestyle\fontsize{25}{25}\selectfont\color{title}
+    %         \ifdefvoid{\@subtitle}{}{\@subtitle \\[1ex]}%
+    %         \color{white}\titlestyle\fontsize{25}{25}\selectfont
+    %         \ifdefvoid{\@subject}{}{\@subject \\[1ex]}
+    %         \color{white}\titlestyle\fontsize{30}{30}\selectfont
+    %         \@title \\[0.5ex]
+    %         \end{center}
+    %     \end{minipage}};
 
     \end{tikzpicture}
     \newpage

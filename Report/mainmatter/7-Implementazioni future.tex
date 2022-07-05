@@ -1,28 +1,28 @@
 \chapter{Implementazioni future}
 
 Considerando i componenti mancanti, le funzionalità che vorremmo
-implementare in un prossimo futuro sarebbero le seguenti:
+implementare in un prossimo futuro sono le seguenti:
 
 \begin{itemize}
-\item Interfaccia utente attraverso il display OLED
+\item Interfaccia utente attraverso il display \textit{OLED}
 \item Sensing di tensione e corrente prodotti dal pannello
 \item Struttura per pannello, motori e sensori
-\item Interfaccia Python via COM port con visualizzazione valori, statistiche e controllo manuale motori
+\item Interfaccia \textit{Python} via \textit{COM} port con visualizzazione valori, statistiche e controllo manuale motori
 \end{itemize}
 
-\noindent L'interfaccia utente nel display OLED mostrerà: tensione pannello e
-corrente pannello, posizione del sole e posizione pannello (angolo di
+\noindent L'interfaccia utente nel display OLED mostrerà: tensione e
+corrente del pannello, posizione del sole e posizione pannello (angolo di
 Azimuth e angolo di Elevazione), orario e posizione geografica.
 
 \begin{center}
-\includegraphics[width=4.68229in,height=3.4426in]{figures/image27.png}
+\includegraphics[width=0.4\textwidth]{figures/image27.png}
 \captionsetup{type=figure}
 \captionof{figure}{Esempio di interfaccia utente su display OLED}
 \end{center}
 
 \noindent La struttura di supporto per il pannello servirà prima di tutto a
 consentire al pannello di muoversi nei due gradi di libertà (rotazione
-intorno all'asse Z e rotazione intorno all'asse X) e poi per contenere
+intorno all'asse Z e rotazione intorno all'asse Y) e poi per contenere
 magnetometro ed accelerometro in modo che questi rilevino esattamente la
 posizione del pannello (dovranno quindi essere fisicamente attaccati al
 pannello e dovranno muoversi con esso).
@@ -37,8 +37,8 @@ pannello e dovranno muoversi con esso).
 \end{center}
 
 \noindent Per quanto riguarda l'interfaccia grafica per la connessione seriale via
-USB, si pensava di sviluppare in GUI (Graphical User Interface) in
-linguaggio Python che consentisse di controllare manualmente le
+USB, si pensava di sviluppare in \textit{GUI} (Graphical User Interface) in
+linguaggio \textit{Python} che consentisse di controllare manualmente le
 posizioni dei motori, di abilitare il tracking o il return to home e
 che, attraverso l'uso di piccoli grafici, mostrasse delle semplici
 statistiche sulla potenza e l'energia prodotte dal pannello

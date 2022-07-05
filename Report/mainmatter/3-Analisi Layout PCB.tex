@@ -29,7 +29,7 @@ posizionato, in ordine di priorità:
 \item
   
   il quarzo con i suoi condensatori ed il suo resistore il più vicino
-  possibile ai pin XIN e XOUT;
+  possibile ai pin \textit{XIN} e \textit{XOUT};
   
 \item
   
@@ -49,7 +49,7 @@ posizionato, in ordine di priorità:
 \begin{center}
 \includegraphics[scale=0.3]{figures/image29.png}
 \captionsetup{type=figure}
-\captionof{figure}{Primo posizionamento componenti principali foglio Control\newline}
+\captionof{figure}{Primo posizionamento componenti principali foglio Control}
 \end{center}
 
 \noindent Il fatto di posizionare i componenti il più vicino possibile ai relativi
@@ -57,7 +57,7 @@ pin è necessario per ridurre di quanto possibile l'impedenza della linea
 di alimentazione, e quindi la lunghezza del percorso del segnale.
 Maggiore è la lunghezza del percorso tra condensatore e pin e maggiore
 sarà l'induttanza parassita della traccia, che porta a problemi di
-integrità di segnale quando si tratta con segnali ad alta velocità.
+integrità di segnale quando si ha a che fare con segnali ad alta velocità.
 Considerando a titolo di esempio una linea di alimentazione,
 l'induttanza parassita è contrastata dalla presenza dei condensatori di
 decoupling. In questo modo siamo in grado fornire un percorso a bassa
@@ -77,14 +77,14 @@ allineare il tutto per renderlo il più esteticamente bello possibile.
 \end{center}
 
 \noindent Parlando dello stadio di alimentazione, abbiamo posizionato tutti i
-componenti in modo da minimizzare il numero di tracce necessario e da
+componenti in modo da minimizzare il numero di tracce necessarie e da
 facilitare il routing di tracce di grande spessore. Abbiamo rivolto
 particolare attenzione al regolatore a commutazione, cercando di rendere
 il nodo di switching più piccolo possibile per ridurre al minimo il
-ripple.
+\textit{ripple}.
 
 \begin{center}
-\includegraphics[scale=0.25]{figures/image56.png}
+\includegraphics[width=0.5\textwidth]{figures/image56.png}
 \captionsetup{type=figure}
 \captionof{figure}{Primo posizionamento componenti foglio Power}
 \end{center}
@@ -97,14 +97,14 @@ circuitali, abbiamo provato a posizionarli in modo da capire che
 dimensioni imporci come limite per la scheda ed abbiamo appurato che
 100x60mm fosse una misura adeguata per contenere il tutto.\\
 Avendo definito le dimensioni siamo passati alla creazione del disegno
-del contorno della scheda sul layer Edge.Cuts, introducendo un
+del contorno della scheda sul layer \textit{Edge.Cuts}, introducendo un
 arrotondamento degli angoli per fini puramente estetici. Successivamente
 abbiamo disegnato i rettangoli di riempimento, assegnandoli alla net di
 GND e con priorità minima per entrambi i layer, in modo che coprissero
 la scheda intera.\\
 Abbiamo quindi posizionato i blocchi circuitali discussi in precedenza,
-non prima di aver posizionato i fori di montaggio ed i fiducials,
-facendo in modo di avere i connettori lungo il bordo. Anche il GPS è
+non prima di aver posizionato i fori di montaggio ed i \textit{fiducials},
+facendo in modo di avere i connettori lungo il bordo. Anche il \textit{GPS} è
 stato posizionato in un angolo in modo da tenerlo il più lontano
 possibile da ogni altro componente; sotto il suo ingombro abbiamo
 inserito anche una \emph{keepout zone}, come richiesto da datasheet.
@@ -126,7 +126,7 @@ dimensioni predefinite per le tracce:
 \begin{itemize}
 \item
   
-  0.2mm per il fanout del microcontrollore
+  0.2mm per il \textit{fanout} del microcontrollore
   
 \item
   
@@ -142,7 +142,7 @@ dimensioni predefinite per le tracce:
   
 \end{itemize}
 
-\noindent Abbiamo inoltre creato due dimensioni predefinite per le vias (diametro
+\noindent Abbiamo inoltre creato due dimensioni predefinite per le \textit{vias} (diametro
 pad/diametro foro):
 
 \begin{itemize}
@@ -196,7 +196,7 @@ alle restanti linee di segnale iniziando dal fanout del
 microcontrollore, anche in questo caso partendo con tracce da 0.2mm per
 poi allargarle a 0.3mm.\\
 Abbiamo considerato per primi i segnali critici, ovvero le linee del
-quarzo, quelle per la trasmissione QSPI della flash e quelle
+quarzo, quelle per la trasmissione \textit{QSPI} della flash e quelle
 differenziali per l'USB. Sebbene non sia di apprezzabile effetto dal
 punto di vista funzionale, abbiamo voluto provare, a titolo di esercizio
 personale, il tool di \emph{length matching} per rendere le linee
@@ -222,17 +222,17 @@ ridotta \emph{clearance} tra i pin.
 
 \noindent Terminato il routing di tutte le tracce abbiamo fatto un'analisi per
 cercare eventuali sviste o errori commessi, sia facendo un'ispezione
-visiva, sia utilizzando il DRC. Prevedibilmente abbiamo riscontrato
+visiva, sia utilizzando il \textit{DRC}. Prevedibilmente abbiamo riscontrato
 qualche errore che abbiamo prontamente corretto senza troppe difficoltà.\\
-Anche dopo queste correzioni il DRC restituisce alcuni errori, che però
+Anche dopo queste correzioni il \textit{DRC} restituisce alcuni errori, che però
 sono previsti e non causano problemi nella realizzazione. Questi sono di
 due tipi, il primo è il \emph{Courtyards overlap} per i componenti che
-stanno vicino al GPS, mentre il secondo è l' \emph{Items not allowed} ed
+stanno vicino al \textit{GPS}, mentre il secondo è l' \emph{Items not allowed} ed
 è dovuto a come sono stati realizzati i footprint dei fiducials.\\
-Il primo lo si può ignorare, perché in realtà il GPS sarà montato su un
+Il primo lo si può ignorare, perché in realtà il \textit{GPS} sarà montato su un
 header rialzato e quindi la superficie del PCB sarà libera da
 occlusioni. Il secondo errore invece è dovuto al fatto che il footprint
-dei fiducials è stato realizzato con due pad che sovrappongono una
+dei \textit{fiducials} è stato realizzato con due pad che sovrappongono una
 \emph{keepout zone}, questo però è comunque un effetto desiderato,
 quindi possiamo ignorarlo.
 
@@ -245,18 +245,18 @@ e utilitario.\\
 Prima di tutto abbiamo aggiunto un pad di GND a lato scheda per poter
 collegare una pinza a coccodrillo in modo da semplificare le misurazioni
 per il debug hardware. Poi abbiamo fatto in modo di posizionare, sul
-layer silkscreen tutti i refdes dei componenti, in modo tale che fossero
+layer \textit{silkscreen} tutti i \textit{refdes} dei componenti, in modo tale che fossero
 ordinati e ben visibili, facendo particolare attenzione, per quanto
 possibile, a non posizionarli sopra vias che avrebbero causato
 potenziali problemi di lettura.
 
 \begin{center}
-\includegraphics[scale=1]{figures/image100.png}
+\includegraphics[width=0.5\textwidth]{figures/image100.png}
 \captionsetup{type=figure}
 \captionof{figure}{Esempio Silkscreen SALMO}
 \end{center}
 
-\noindent Sistemati tutti i refdes abbiamo aggiunto sui layer di silkscreen
+\noindent Sistemati tutti i \textit{refdes} abbiamo aggiunto sui layer di \textit{silkscreen}
 ulteriori descrizioni per chiarire le funzioni dei connettori e per
 aggiungere informazioni utili. In particolare abbiamo aggiunto 
 l’indicazione di polarità sul connettore di alimentazione e, ad ogni
@@ -275,13 +275,13 @@ gruppo e data e numero di revisione.
 \captionof{figure}{Vista del retro della PCB SALMO}
 \end{center}
 
-\noindent Per poter facilmente identificare i layer top e bottom abbiamo aggiunto,
+\noindent Per poter facilmente identificare i layer \textit{top} e \textit{bottom} abbiamo aggiunto,
 a lato scheda, i testi TOP e BOT sui layer corrispondenti.\\
 A questo punto la scheda si può considerare terminata e non è rimasto
-altro da fare che generare i teardrops, tramite un plugin dedicato, ed
-esportare i file gerber e drill (che riportiamo negli allegati della
+altro da fare che generare i \textit{teardrops}, tramite un plugin dedicato, ed
+esportare i file \textit{gerber} e \textit{drill} (che riportiamo negli allegati della
 presente relazione).\\
-A questo punto abbiamo importato i file gerber in \emph{gerbview} per un
+A questo punto abbiamo importato i file \textit{gerber} in \emph{gerbview} per un
 controllo finale. Grazie a quest'ultima ispezione abbiamo identificato
 qualche piccolo errore che abbiamo prontamente corretto. Abbiamo infine
 mandato tutti i file al Professore, che ha provveduto all'invio di
