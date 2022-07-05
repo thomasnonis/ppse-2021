@@ -1,0 +1,47 @@
+\begin{titlepage}
+
+\begin{center}
+
+%% Print the title
+{\makeatletter
+\largetitlestyle\fontsize{35}{35}\selectfont\@title
+\makeatother}
+
+%% Print the subtitle
+{\makeatletter
+\ifdefvoid{\@subtitle}{}{\bigskip\bigskip\qquad \; \titlestyle\fontsize{15}{15}\selectfont\@subtitle}
+\makeatother}
+
+\bigskip
+\bigskip
+
+by
+ 
+\bigskip
+\bigskip
+
+%% Print table with names and student numbers
+\setlength\extrarowheight{2pt}
+\begin{tabular}{lc}
+    Student Name & Student Number \\\midrule
+    Lisa Santarossa & 209386\\
+    Thomas Nonis & 209445\\
+    Tommaso Canova & 209270\\
+    Simone Tollardo & 209002\\
+    Gabriele Berretta & 209466 \\
+\end{tabular}
+
+\vfill
+
+%% Print some more information at the bottom
+\begin{tabular}{ll}
+    Docente: & Michele Corrà \\
+    Dipartimento: & Dipartimento di Ingegneria e Scienza dell'Informazione
+\end{tabular}
+
+\bigskip
+\bigskip
+
+\end{center}
+
+\end{titlepage}

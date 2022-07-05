@@ -1,0 +1,66 @@
+\chapter{Abstract}
+
+La seconda parte del corso di Progettazione e Prototipazione di Sistemi
+Elettronici prevede la completa progettazione di una scheda elettronica
+che, nel nostro caso, ha come scopo quello di orientare in maniera
+ottimale un pannello fotovoltaico verso la posizione del sole nel
+cielo.\\
+Per rendere più funzionale possibile la scheda \textit{Solar Azimuth and eLevation Motorized lOcator} (``\emph{SALMO}'') si è deciso di
+rendere il tutto indipendente dalla posizione geografica, dall'orientamento del pannello fotovoltaico ed ovviamente
+% //TODO : rivedere
+dall'orario e dal giorno dell'anno. Il movimento del pannello è stato
+progettato in modo che la sua posizione sia sempre il più possibile
+perpendicolare ai raggi solari affinché la potenza generata dal pannello
+possa essere sempre massima.\\
+Per raggiungere l'obiettivo sono state stilate le seguenti specifiche:
+due motori passo-passo unipolari per il movimento sui due assi (Azimuth
+e Elevation), \emph{GPS} per rilevare la posizione geografica,
+magnetometro ed accelerometro per il feedback della posizione del
+pannello, circuiti di misura per tensione e corrente del pannello,
+display \textit{OLED} per la visualizzazione dei dati mediante interfaccia utente
+ed ovviamente un pannello fotovoltaico.
+La progettazione della scheda è stata svolta in maniera precisa,
+rigorosa ed organizzata, seguendo quindi dei passi ben definiti in modo
+che ogni membro del team potesse lavorare parallelamente agli altri ed
+allo stesso tempo contribuire al lavoro di tutti senza perdere step
+fondamentali.\\
+Inizialmente, facendo uso dei datasheet, abbiamo studiato
+approfonditamente le caratteristiche del microcontrollore \emph{RP2040}
+e dei componenti principali della scheda, al fine di poter progettare la
+\emph{PCB} in maniera più consapevole. Ogni studente del corso ha poi
+esposto alcune caratteristiche del microcontrollore, a partire dalla
+memoria fino alla struttura fisica passando per le varie interfacce di
+comunicazione, \emph{l'ADC}, i \emph{GPIO} e l'alimentazione.\\
+Ogni gruppo ha poi concordato con il professore il progetto da
+realizzare, fissando delle scadenze per la consegna dei vari schematici
+ed infine per la \emph{BOM}.\\
+Sono state decise inoltre delle specifiche di progetto uguali per ogni
+gruppo, come ad esempio le dimensioni della scheda (10x6 cm) ed il
+regolatore di tensione, in modo da avere delle BOM più uniformi
+possibili, senza decine di componenti alternativi non necessari. Dopo
+l'avvio vero e proprio del progetto in autonomia, le lezioni svolte in
+classe o in laboratorio erano principalmente volte alla correzione, alla
+revisione ed al debugging, facendo sì che ogni dubbio potesse essere
+chiarito immediatamente.\\
+Finito lo sbroglio circuitale siamo passati alla generazione e all'invio
+dei file gerber al Professore, che ha successivamente provveduto a
+spedire questi ultimi al produttore. Analogamente, dopo aver completato
+la \emph{BOM}, questa è stata inviata al Professore per il conseguente
+acquisto del materiale necessario. In seguito all'arrivo delle
+\emph{PCB} e dei componenti essenziali, abbiamo iniziato l'assemblaggio
+sfruttando la strumentazione offerta dal laboratorio di elettronica
+presente all'interno del FabLab. Dopo aver completato l'assemblaggio,
+realizzato gran parte del firmware, e svolto test a freddo prima (senza
+alimentazione) ed a caldo successivamente (con +5V USB e +12V), possiamo
+affermare che, benché ci siano ancora dei componenti mancanti, il
+prototipo è completamente funzionante (a meno di un piccolo errore, vedasi
+cap. \protect\hyperlink{led-rgb}{\underline{LED RGB}} ).
+Tutto il progetto della \emph{PCB} è stato svolto utilizzando il
+software open-source \emph{KiCad 6.0}, mentre per la progettazione del firmware
+abbiamo utilizzato l'\emph{IDE VS Code} e la compilazione manuale via
+\emph{CMake}.\\
+Per la gestione dell'intero progetto abbiamo deciso di avvalerci di un
+\emph{VCS (Version Control System)}: git.\\
+La repository è hostata su GitHub e può essere visionata cliccando sul
+seguente link:\\
+\href{https://github.com/thomasnonis/ppse-2021}{\underline{https://github.com/thomasnonis/ppse-2021}}.
