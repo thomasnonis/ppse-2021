@@ -247,7 +247,10 @@ int main()
         }
         /* Tracking button relative behaviour */
         if (tracking_enable_pressed)
-        {
+        {   
+            beep_on(2000, 50);
+            sleep_ms(100);
+            beep_off();
             if (frame_gga.satellites_tracked < 1)
             {
                 printf("ERROR: Zero satellites available to track the sun, please wait...\r\n");
@@ -256,9 +259,6 @@ int main()
             /* When relative timer elapses the motors are powered */
             if (update_motors_position && frame_gga.satellites_tracked > 0)
             {
-                beep_on(2000, 50);
-                sleep_ms(100);
-                beep_off();
                 move_motors_to_the_sun(&sun_position, &stepper1, &stepper2);
                 update_motors_position = false;
             }
@@ -559,15 +559,11 @@ void startup_tone()
     int pauseBetweenNotes = 0;
 
     int melody[] = {
-        NOTE_FS5, NOTE_FS5, NOTE_D5, NOTE_B4, NOTE_B4, NOTE_E5,
-        NOTE_E5, NOTE_E5, NOTE_GS5, NOTE_GS5, NOTE_GS5, NOTE_B5,
         NOTE_A5, NOTE_A5, NOTE_A5, NOTE_E5, NOTE_D5, NOTE_FS5,
         NOTE_FS5, NOTE_FS5, NOTE_E5, NOTE_E5, NOTE_FS5, NOTE_E5};
 
     // note durations: 4 = quarter note, 8 = eighth note, etc.:
     int noteDurations[] = {
-        8, 8, 8, 4, 4, 4,
-        4, 5, 8, 8, 8, 8,
         8, 8, 8, 4, 4, 4,
         4, 5, 8, 8, 8, 8};
 
