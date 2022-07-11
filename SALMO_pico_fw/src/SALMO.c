@@ -332,10 +332,18 @@ int main()
             /* Compute sun position */
             sun_position = compute_complete_position(&gps_parsed_place);
             printf("--------->SUN POSITION AND MCU STATUS\r\n\r\n");
-            printf("\tSun elevation %f azimuth %f \r\n\r\n", sun_position.elevation, sun_position.azimuth);
+            if (frame_gga.satellites_tracked > 0)
+            {
+                printf("\tSun elevation %f azimuth %f \r\n\r\n", sun_position.elevation, sun_position.azimuth);
+
+                printf("\tGo home active?: %s, Tracking active?: %s \r\n\r\n", go_home_enable_pressed ? "true" : "false", tracking_enable_pressed ? "true" : "false");
+                printf("<---------END OF SUN POSITION AND MCU STATUS\r\n");
+            }
+            else
+            {
+                printf("\t GPS SIGNAL Weak! \r\n\tWaiting for more satellites...\r\n");
+            }
             update_position = false;
-            printf("\tGo home active?: %s, Tracking active?: %s \r\n\r\n", go_home_enable_pressed ? "true" : "false", tracking_enable_pressed ? "true" : "false");
-            printf("<---------END OF SUN POSITION AND MCU STATUS\r\n");
         }
     }
 
