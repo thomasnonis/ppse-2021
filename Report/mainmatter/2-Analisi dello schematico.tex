@@ -197,11 +197,12 @@ Caratteristiche principali:
   
 \item
   
-  8 macchine a stati di input-output (\emph{PIO}) programmate.
+  8 macchine a stati di input-output (\emph{PIO}) programmabili.
   
 \end{itemize}
 
-\noindent Il microcontrollore ha il compito di gestire le periferiche. In
+\noindent Il microcontrollore, oltre ad eseguire l'algoritmo di calcolo della 
+posizione della nostra stella, ha il compito di gestire le periferiche, in
 particolare:
 
 \begin{itemize}
@@ -467,7 +468,7 @@ per cui ne consegue che per avere $V_{out}=3.3V$ dobbiamo avere:\\
 \[\frac{R10}{R11} = \ 3.3\]
 
 Al fine di segnalare la presenza dei 3.3V, abbiamo previsto un led rosso con $V_F=2V$.
-Imponendo quindi una corrente di 250mA abbiamo scelto una resistenza in serie al diodo da 510 Ω.
+Imponendo quindi una corrente di 2.5mA abbiamo scelto una resistenza in serie al diodo da 510 Ω.
 
 \begin{center}
 \includegraphics[scale=0.3]{figures/image103.png}
@@ -484,7 +485,7 @@ Imponendo quindi una corrente di 250mA abbiamo scelto una resistenza in serie al
 \end{center}
 
 \noindent Sempre seguendo le linee guida del costruttore, prima dell’induttore, 
-quindi sul nodo di commutazione, abbiamo inserito un condensatore da 100n collegato al pin di \textit{ballast}.
+quindi sul nodo di commutazione, abbiamo inserito un condensatore da 100n collegato al pin di \textit{bootstrap}.
 Il regolatore prevede inoltre un pin di abilitazione che abbiamo deciso di collegare permanentemente, 
 tramite un resistore da 10k, alla linea di ingresso, cosicché la scheda venga alimentata non appena ci 
 sia una tensione adeguata in ingresso.\\
@@ -578,7 +579,7 @@ fase di assemblaggio, in questa \textit{release} non è fisicamente presente.
 Abbiamo previsto un connettore per un display \emph{OLED 128 x 64} px con
 controller integrato \emph{SSD1306}, al fine di presentare all'utente una
 immediata visualizzazione dei dati della scheda e del pannello solare. La comunicazione tra il microcontrollore ed il display avviene mediante bus \textit{I2C}. \\
-Tuttavia, non avendo avuto a disposizione il componente durante la fase
+Tuttavia, anche in questo caso, non avendo avuto a disposizione il componente durante la fase
 di assemblaggio, in questa \textit{release} non è fisicamente presente.
 
 \begin{center}
@@ -600,7 +601,9 @@ Purtroppo il problema non è sistemabile, se non modificando il circuito
 ed il layout della PCB.\\
 Considerando che il componente è del tutto ausiliario abbiamo potuto
 testare comunque la scheda senza alcun problema.
-Oltre a questo abbiamo commesso un ulteriore errore nell'assegnazione del footprint. Abbiamo infatti inserito una sequenza di pin che non è presente in commercio, anche se avessimo progettato il circuito correttamenterendendo, il montaggio sarebbe comunque risultato impossibile.
+Oltre a questo abbiamo commesso un ulteriore errore nell'assegnazione del footprint. 
+Abbiamo infatti inserito una sequenza di pin che non è presente in commercio, anche se avessimo progettato il circuito 
+correttamente, il montaggio sarebbe comunque risultato impossibile.
 
 \begin{center}
 \includegraphics[width=0.45\textwidth]{figures/image17.png}

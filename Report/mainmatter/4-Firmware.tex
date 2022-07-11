@@ -83,7 +83,7 @@ microcontrollore.
 \noindent Per rendere più veloce la fase di compilazione abbiamo deciso di
 scrivere tre piccoli script \emph{bash}, situati nella cartella
 \emph{src}: \emph{build.sh}, \emph{flash.sh},
-\emph{build\_and\_flash.sh}: lo script di build utilizza \emph{cmake}
+\emph{build\_and\_flash.sh}. Lo script di build utilizza \emph{cmake}
 per compilare i \emph{Makefile} e salvare i relativi eseguibili dentro
 la cartella \emph{build}, mentre quello di flash utilizza
 \emph{picotool} per caricare l'eseguibile in formato \emph{.uf2}
@@ -336,7 +336,7 @@ popolato un buffer, di lunghezza 100 bytes, con ogni carattere ricevuto.
 All'occorrenza del carattere \emph{``\textbackslash n''} la stringa
 ricevuta viene salvata in un array di supporto, il buffer viene
 successivamente svuotato e ricomincia la lettura per un numero di volte pari a
-%GPS\_MAX\_SENTENCES$. Abbiamo inoltre deciso di comunicare con il
+GPS\_MAX\_SENTENCES. Abbiamo inoltre deciso di comunicare con il
 GPS in \textit{polling}, anzichè utilizzare un interrupt, poiché interagendo con
 il modulo ad intervalli ben definiti la seconda opzione avrebbe portato
 ad un inutile \textit{overhead} a causa della continua interruzione del

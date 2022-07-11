@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.7.4)  5 JUL 2022 04:12
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.7.4)  11 JUL 2022 10:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1098,7 +1098,7 @@ File: figures/image49.png Graphic file (type bmp)
 File: figures/image90.png Graphic file (type bmp)
 <figures/image90.png>
 
-Overfull \hbox (9.7081pt too wide) in paragraph at lines 381--395
+Overfull \hbox (9.7081pt too wide) in paragraph at lines 382--396
 \TU/Arial(0)/m/n/10 È sufficiente collegare le linee di \TU/Arial(0)/m/it/10 SWData \TU/Arial(0)/m/n/10 e \TU/Arial(0)/m/it/10 SWClock \TU/Arial(0)/m/n/10 e l’alimentazione necessaria al debugger, dopodichè
  []
 
@@ -1113,12 +1113,12 @@ File: figures/image60.png Graphic file (type bmp)
 File: figures/image105.png Graphic file (type bmp)
 <figures/image105.png>
  [12]
-Underfull \hbox (badness 10000) in paragraph at lines 461--465
+Underfull \hbox (badness 10000) in paragraph at lines 462--466
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 465--467
+Underfull \hbox (badness 10000) in paragraph at lines 466--468
 
  []
 
@@ -1146,24 +1146,24 @@ File: figures/image58.png Graphic file (type bmp)
 File: figures/image17.png Graphic file (type bmp)
 <figures/image17.png>
 
-Overfull \hbox (2.54665pt too wide) in paragraph at lines 614--620
+Overfull \hbox (2.54665pt too wide) in paragraph at lines 617--623
 \TU/Arial(0)/m/n/10 Abbiamo previsto un buzzer passivo di tipo elettromagnetico per poter segnalare eventuali stati all’utente
  []
 
 File: figures/image38.png Graphic file (type bmp)
 <figures/image38.png>
-[18]
 File: figures/image24.png Graphic file (type bmp)
 <figures/image24.png>
+[18]
 File: figures/image19.png Graphic file (type bmp)
 <figures/image19.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 665--676
+Underfull \hbox (badness 10000) in paragraph at lines 668--679
 
  []
 
 [19]
-Underfull \hbox (badness 10000) in paragraph at lines 676--681
+Underfull \hbox (badness 10000) in paragraph at lines 679--684
 
  []
 
@@ -1465,7 +1465,7 @@ Package rerunfilecheck Info: File `report.out' has not changed.
 Here is how much of TeX's memory you used:
  36571 strings out of 476179
  773777 string characters out of 5809545
- 1086550 words of memory out of 5000000
+ 1086551 words of memory out of 5000000
  56617 multiletter control sequences out of 15000+600000
  474762 words of font info for 92 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
